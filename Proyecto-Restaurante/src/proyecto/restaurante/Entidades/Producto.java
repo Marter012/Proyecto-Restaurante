@@ -6,5 +6,9 @@ public class Producto {
 
     private String nombre;
 
+    private int cantidad;
+
     private double precio;
+
+    private Categoria rubro;
 }

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="superdetodosa">
+  <ClassDiagramComponents>
+    <Class name="BusquedaPorPrecioView" package="superdetodosa" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="modelo" type="DefaultTableModel" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel3" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jScrollPane1" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jtPrecioFinal" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jtPrecioInicial" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jtProductos" type="javax.swing.JTable" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jtPrecioFinalActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jtPrecioInicialKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="jtPrecioFinalKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="armarCabecera" returnType="void" visibility="private"/>
+        <Method name="borrarFilas" returnType="void" visibility="private"/>
+        <Method name="completarTabla" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="SuperDeTodoSA" package="superdetodosa" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CargaProductosView" package="superdetodosa" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="JbEliminar" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel3" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel4" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel5" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel6" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jbCargar" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jbCheck" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jbGuardar" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jbSalir" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jcbCategoria" type="javax.swing.JComboBox&lt;Categoria&gt;" visibility="private"/>
+        <Field name="jtCodigo" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jtDescripcion" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jtPrecio" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jtStock" type="javax.swing.JTextField" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jbCheckMouseClicked" returnType="void" visibility="private">
+          <Argument type="java.awt.event.MouseEvent" name="evt"/>
+        </Method>
+        <Method name="jtCodigoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jtDescripcionActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jtPrecioActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jtStockActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jbCargarMouseClicked" returnType="void" visibility="private">
+          <Argument type="java.awt.event.MouseEvent" name="evt"/>
+        </Method>
+        <Method name="jbGuardarMouseClicked" returnType="void" visibility="private">
+          <Argument type="java.awt.event.MouseEvent" name="evt"/>
+        </Method>
+        <Method name="JbEliminarMouseClicked" returnType="void" visibility="private">
+          <Argument type="java.awt.event.MouseEvent" name="evt"/>
+        </Method>
+        <Method name="jbSalirActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jbCheckActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="cargarCombo" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Menu" package="superdetodosa" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="listaProductos" type="TreeSet&lt;Producto&gt;" visibility="public" isStatic="true"/>
+        <Field name="escritorio" type="javax.swing.JDesktopPane" visibility="private"/>
+        <Field name="jMenu1" type="javax.swing.JMenu" visibility="private"/>
+        <Field name="jMenu2" type="javax.swing.JMenu" visibility="private"/>
+        <Field name="jMenuBar1" type="javax.swing.JMenuBar" visibility="private"/>
+        <Field name="jMenuItem1" type="javax.swing.JMenuItem" visibility="private"/>
+        <Field name="jmBusquedaNombre" type="javax.swing.JMenuItem" visibility="private"/>
+        <Field name="jmBusquedaPrecio" type="javax.swing.JMenuItem" visibility="private"/>
+        <Field name="jmBusquedaRUbro" type="javax.swing.JMenuItem" visibility="private"/>
+        <Field name="jmCargaProductos" type="javax.swing.JMenuItem" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jmCargaProductosActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jmBusquedaNombreActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jmBusquedaPrecioActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jmBusquedaRUbroActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="cargarProductos" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="BusquedaPorRubroView" package="superdetodosa" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="modelo" type="DefaultTableModel" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jScrollPane2" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jcbCategoria" type="javax.swing.JComboBox&lt;Categoria&gt;" visibility="private"/>
+        <Field name="jtProductos" type="javax.swing.JTable" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jcbCategoriaActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="cargarCombo" returnType="void" visibility="private"/>
+        <Method name="armarCabecera" returnType="void" visibility="private"/>
+        <Method name="borrarFilas" returnType="void" visibility="private"/>
+        <Method name="completarTabla" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="BusquedaPorNombreView" package="superdetodosa" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="modelo" type="DefaultTableModel" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jScrollPane1" type="javax.swing.JScrollPane" visibility="private"/>
+        <Field name="jtNombre" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jtProductos" type="javax.swing.JTable" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jtNombreKeyReleased" returnType="void" visibility="private">
+          <Argument type="java.awt.event.KeyEvent" name="evt"/>
+        </Method>
+        <Method name="armarCabecera" returnType="void" visibility="private"/>
+        <Method name="borrarFilas" returnType="void" visibility="private"/>
+        <Method name="completarTabla" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Producto" package="superdetodosa" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="codigo" type="int" visibility="private"/>
+        <Field name="descripcion" type="String" visibility="private"/>
+        <Field name="precio" type="double" visibility="private"/>
+        <Field name="Stock" type="int" visibility="private"/>
+        <Field name="rubro" type="Categoria" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="codigo"/>
+          <Argument type="String" name="descripcion"/>
+          <Argument type="double" name="precio"/>
+          <Argument type="int" name="Stock"/>
+          <Argument type="Categoria" name="rubro"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getCodigo" returnType="int" visibility="public"/>
+        <Method name="setCodigo" returnType="void" visibility="public">
+          <Argument type="int" name="codigo"/>
+        </Method>
+        <Method name="getDescripcion" returnType="String" visibility="public"/>
+        <Method name="setDescripcion" returnType="void" visibility="public">
+          <Argument type="String" name="descripcion"/>
+        </Method>
+        <Method name="getPrecio" returnType="double" visibility="public"/>
+        <Method name="setPrecio" returnType="void" visibility="public">
+          <Argument type="double" name="precio"/>
+        </Method>
+        <Method name="getStock" returnType="int" visibility="public"/>
+        <Method name="setStock" returnType="void" visibility="public">
+          <Argument type="int" name="Stock"/>
+        </Method>
+        <Method name="getRubro" returnType="Categoria" visibility="public"/>
+        <Method name="setRubro" returnType="void" visibility="public">
+          <Argument type="Categoria" name="rubro"/>
+        </Method>
+        <Method name="compareTo" returnType="int" visibility="public">
+          <Argument type="Producto" name="t"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Enum name="Categoria" package="superdetodosa" visibility="public" xPosition="1684.0" yPosition="405.0">
+      <Literals>
+        <Literal name="COMESTIBLE"/>
+        <Literal name="LIMPIEZA"/>
+        <Literal name="PERFUMERIA"/>
+      </Literals>
+    </Enum>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="jcbCategoria" source="superdetodosa.CargaProductosView" target="superdetodosa.Categoria" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="superdetodosa.Producto" target="superdetodosa.Categoria" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="listaProductos" source="superdetodosa.Menu" target="superdetodosa.Producto" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="TreeSet&lt;Producto&gt;"/>
+    <HasRelation name="rubro" source="superdetodosa.Producto" target="superdetodosa.Categoria" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="jcbCategoria" source="superdetodosa.BusquedaPorRubroView" target="superdetodosa.Categoria" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="superdetodosa.Producto" target="superdetodosa.Producto" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
