@@ -5,6 +5,8 @@
  */
 package proyecto.restaurante.Entidades;
 
+import proyecto.restaurante.Control.ProductoData;
+
 /**
  *
  * @author Emito
@@ -15,7 +17,13 @@ public class ProyectoRestaurante {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        //Producto p = new Producto("Pizza", 10, Categoria.ALIMENTO, 900.50,true);
+        ProductoData pd = new ProductoData();
+        Producto p = new Producto("Coca Cola", 20, Categoria.BEBIDA, 700,true);
+        pd.guardarProducto(p);
+        System.out.println(pd.listarProductos());
+        
+        
     }
     
 }
