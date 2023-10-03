@@ -13,4 +13,6 @@ public class Mesero {
     private boolean estado;
 
     private Pedido pedido;
+    
+    private String password;
 }

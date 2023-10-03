@@ -10,5 +10,5 @@ public class Producto {
 
     private double precio;
 
-    private Categoria rubro;
+    private Categoria categoria;
 }

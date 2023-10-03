@@ -2,39 +2,39 @@
 
 <ClassDiagram name="Restaurante">
   <ClassDiagramComponents>
-    <Class name="Mesa" package="" visibility="public" xPosition="96.0" yPosition="46.0">
+    <Class name="Mesa" package="" visibility="public" xPosition="82.0" yPosition="129.0">
       <Fields>
         <Field name="idMesa" type="int" visibility="private"/>
         <Field name="capacidad" type="int" visibility="private"/>
-        <Field name="estado" type="boolean" visibility="private"/>
-        <Field name="pedido" type="Pedido" visibility="private"/>
+        <Field name="estado" type="Estado" visibility="private"/>
+        <Field name="listaPedidos" type="List&lt;Pedido&gt;" visibility="private"/>
         <Field name="reserva" type="Reserva" visibility="private"/>
       </Fields>
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Pedido" package="" visibility="public" xPosition="403.0" yPosition="46.0">
+    <Class name="Pedido" package="" visibility="public" xPosition="403.0" yPosition="100.0">
       <Fields>
         <Field name="idPedido" type="int" visibility="private"/>
         <Field name="mesero" type="Mesero" visibility="private"/>
-        <Field name="producto" type="Producto" visibility="private"/>
+        <Field name="listaProductos" type="List&lt;Producto&gt;" visibility="private"/>
         <Field name="mesa" type="Mesa" visibility="private"/>
       </Fields>
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Producto" package="" visibility="public" xPosition="728.0" yPosition="46.0">
+    <Class name="Producto" package="" visibility="public" xPosition="728.0" yPosition="119.0">
       <Fields>
         <Field name="IdProducto" type="int" visibility="private"/>
         <Field name="nombre" type="String" visibility="private"/>
         <Field name="cantidad" type="int" visibility="private"/>
         <Field name="precio" type="double" visibility="private"/>
-        <Field name="rubro" type="Categoria" visibility="private"/>
+        <Field name="categoria" type="Categoria" visibility="private"/>
       </Fields>
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Reserva" package="" visibility="public" xPosition="96.0" yPosition="277.0">
+    <Class name="Reserva" package="" visibility="public" xPosition="96.0" yPosition="318.0">
       <Fields>
         <Field name="idReserva" type="int" visibility="private"/>
         <Field name="nombreCliente" type="String" visibility="private"/>
@@ -47,7 +47,7 @@
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Mesero" package="" visibility="public" xPosition="403.0" yPosition="277.0">
+    <Class name="Mesero" package="" visibility="public" xPosition="428.0" yPosition="318.0">
       <Fields>
         <Field name="idMesero" type="int" visibility="private"/>
         <Field name="nombre" type="String" visibility="private"/>
@@ -55,23 +55,31 @@
         <Field name="dni" type="int" visibility="private"/>
         <Field name="estado" type="boolean" visibility="private"/>
         <Field name="pedido" type="Pedido" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
       </Fields>
       <Constructors/>
       <Methods/>
     </Class>
-    <Enum name="Categoria" package="" visibility="public" xPosition="728.0" yPosition="277.0">
+    <Enum name="Categoria" package="" visibility="public" xPosition="728.0" yPosition="318.0">
       <Literals>
         <Literal name="ALIMENTO"/>
         <Literal name="BEBIDA"/>
       </Literals>
     </Enum>
+    <Enum name="Estado" package="" visibility="public" xPosition="96.0" yPosition="1.0">
+      <Literals>
+        <Literal name="LIBRE"/>
+        <Literal name="OCUPADA"/>
+        <Literal name="ATENDIDA"/>
+      </Literals>
+    </Enum>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <HasRelation name="Corresponde" source="Pedido" target="Mesa" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
-    <HasRelation name="Contiene" source="Pedido" target="Producto" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="Corresponde" source="Mesa" target="Pedido" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <HasRelation name="Tiene" source="Mesa" target="Reserva" type="Default" sourceCardinality="0..1" targetCardinality="0..1"/>
+    <HasRelation name="Corresponde" source="Mesa" target="Pedido" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <HasRelation name="Tiene" source="Pedido" target="Mesero" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="Contiene" source="Pedido" target="Producto" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="Corresponde" source="Pedido" target="Mesa" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
     <HasRelation name="Tiene" source="Mesero" target="Pedido" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
   </ClassDiagramRelations>
 </ClassDiagram>
