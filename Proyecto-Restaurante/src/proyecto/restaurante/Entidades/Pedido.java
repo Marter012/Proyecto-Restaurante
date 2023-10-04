@@ -9,4 +9,6 @@ public class Pedido {
     private Producto producto;
 
     private Mesa mesa;
+    
+    private EstadoPedido estado;
 }

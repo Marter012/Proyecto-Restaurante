@@ -10,5 +10,5 @@ package proyecto.restaurante.Entidades;
  * @author Emito
  */
 public enum EstadoPedido {
-    
+    PENDIENTE, EN_PROCESO, ENTREGADO, CANCELADO
 }

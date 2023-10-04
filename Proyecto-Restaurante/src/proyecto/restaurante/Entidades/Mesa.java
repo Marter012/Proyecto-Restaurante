@@ -6,9 +6,7 @@ public class Mesa {
 
     private int capacidad;
 
-    private boolean estado;
+    private Estado estado;
 
     private Pedido pedido;
-
-    private Reserva reserva;
 }
