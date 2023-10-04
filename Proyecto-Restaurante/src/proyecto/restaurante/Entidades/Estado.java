@@ -10,5 +10,5 @@ package proyecto.restaurante.Entidades;
  * @author Emito
  */
 public enum Estado {
-    OCUPADA, LIBRE
+    OCUPADA, LIBRE, RESERVADA
 }

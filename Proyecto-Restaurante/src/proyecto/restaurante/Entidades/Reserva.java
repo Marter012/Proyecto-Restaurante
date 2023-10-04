@@ -3,6 +3,7 @@ package proyecto.restaurante.Entidades;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Reserva {
 
@@ -14,7 +15,7 @@ public class Reserva {
 
     private LocalDate fecha;
 
-    private LocalDateTime hora;
+    private LocalTime hora;
 
     private boolean estado;
 

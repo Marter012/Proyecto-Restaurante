@@ -11,8 +11,6 @@ public class Mesero {
     private int dni;
 
     private boolean estado;
-
-    private Pedido pedido;
     
     private String password;
 }

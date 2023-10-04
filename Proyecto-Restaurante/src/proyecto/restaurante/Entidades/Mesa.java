@@ -8,5 +8,4 @@ public class Mesa {
 
     private Estado estado;
 
-    private Pedido pedido;
 }
