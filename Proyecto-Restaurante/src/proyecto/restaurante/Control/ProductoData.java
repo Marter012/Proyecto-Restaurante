@@ -34,7 +34,7 @@ public class ProductoData {
     //Método que recibe un objeto(materia), para guardar informacion en la base de datos.
     public void guardarProducto(Producto p){
     // >>Signos "?" son propiedades asignadas a traves del preparedStatement.<<
-        sql = "INSERT INTO producto(nombre, cantidad, categoria, precio, estado) VALUES (?,?,?,?,?)";                
+        sql = "INSERT INTO productos(nombre, cantidad, categoria, precio, estado) VALUES (?,?,?,?,?)";                
         try {
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,p.getNombre());
@@ -61,7 +61,7 @@ public class ProductoData {
     //Método que realiza la busqueda en la base de datos, a traves de ID.
     public Producto buscarProducto(int id){
         p = null;
-        sql = "SELECT * FROM producto WHERE idProducto=?" ;
+        sql = "SELECT * FROM productos WHERE idProducto=?" ;
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1,id);            
@@ -86,7 +86,7 @@ public class ProductoData {
     
     //Método que recibe Objeto(materia) para su modificación en la base de datos.
     public void modificarProducto (Producto p){
-        sql ="UPDATE producto SET nombre=?,cantidad=?,categoria=?,precio=?,estado=? WHERE idProducto=?";     
+        sql ="UPDATE productos SET nombre=?,cantidad=?,categoria=?,precio=?,estado=? WHERE idProducto=?";     
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1,p.getNombre());
@@ -110,7 +110,7 @@ public class ProductoData {
     
     //Método que recibe ID para la eliminación en la base de datos.
     public void eliminarProducto(int id){
-        sql = "UPDATE producto SET estado=? WHERE idProducto=?";   
+        sql = "UPDATE productos SET estado=? WHERE idProducto=?";   
         try {
             ps = con.prepareStatement(sql);
             ps.setBoolean(1, false);
@@ -131,7 +131,7 @@ public class ProductoData {
     //Método que permite listar las Materias encontradas en la base de datos.
     public List<Producto> listarProductos(){
         List<Producto> listaProductos= new ArrayList();
-        sql = "SELECT * FROM producto WHERE estado = ? ORDER BY nombre";
+        sql = "SELECT * FROM productos WHERE estado = ? ORDER BY nombre";
         try {
             ps = con.prepareStatement(sql);
             ps.setBoolean(1, true);
