@@ -6,6 +6,9 @@
 package proyecto.restaurante.Vistas;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
+import proyecto.restaurante.Control.MeseroData;
+import proyecto.restaurante.Entidades.Mesero;
 
 /**
  *
@@ -92,6 +95,11 @@ public class LoginMesero extends javax.swing.JFrame {
 
         jbIngresar.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jbIngresar.setText("Ingresar");
+        jbIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbIngresarActionPerformed(evt);
+            }
+        });
         background.add(jbIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 490, 150, -1));
 
         jtPassword.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
@@ -149,6 +157,30 @@ public class LoginMesero extends javax.swing.JFrame {
         jtUsuario.setForeground(Color.gray);
         }
     }//GEN-LAST:event_jtPasswordMousePressed
+
+    private void jbIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarActionPerformed
+        MeseroData md = new MeseroData();
+        int dni;
+        String ps;
+        try{
+            dni=Integer.parseInt(jtUsuario.getText());
+            ps=String.valueOf(jtPassword.getPassword());
+                if(md.loginMesero(dni, ps)){
+                    JOptionPane.showMessageDialog(null,"Deberia ingresar al Otro Frame");
+                }else{
+                    JOptionPane.showMessageDialog(null,"No ingresa");
+                    jtUsuario.setText("Ingrese Dni");
+                    jtUsuario.setForeground(Color.gray);
+                    jtPassword.setText("********");
+                    jtPassword.setForeground(Color.gray);
+                }
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Ingrese numero de dni"+e);
+        }
+        catch(NullPointerException e){
+            JOptionPane.showMessageDialog(null, "Complete todos los campos "+e);
+        }
+    }//GEN-LAST:event_jbIngresarActionPerformed
 
     /**
      * @param args the command line arguments

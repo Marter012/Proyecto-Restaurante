@@ -145,19 +145,22 @@ public class MeseroData {
     public boolean loginMesero(int DNI, String Password) {
         m = buscarMeseroPorDNI(DNI);
         boolean valid = false;
+        if (m!=null){
         
-        if(m.getDni() != DNI ){
-            JOptionPane.showMessageDialog(null,"MeseroData : El DNI no coincide con algun mesero registrado.");
-            return valid;
+        
+            if(m.getDni() != DNI ){
+                JOptionPane.showMessageDialog(null,"MeseroData : El DNI no coincide con algun mesero registrado.");
+                return valid;
+            }
+            if(!m.getPassword().equals(Password) ){
+                JOptionPane.showMessageDialog(null,"MeseroData : La contraseña es Incorrecta.");
+                return valid;
+            }
+            if(m.getPassword().equals(Password) ){
+                JOptionPane.showMessageDialog(null,"MeseroData : La contraseña es Correcta.");
+                return valid = true;
+            } 
         }
-        if(!m.getPassword().equals(Password) ){
-            JOptionPane.showMessageDialog(null,"MeseroData : La contraseña es Incorrecta.");
-            return valid;
-        }
-        if(m.getPassword().equals(Password) ){
-            JOptionPane.showMessageDialog(null,"MeseroData : La contraseña es Correcta.");
-            return valid = true;
-        } 
         return valid;
     }
 }
