@@ -16,6 +16,7 @@ public class LoginMesero extends javax.swing.JFrame {
      */
     public LoginMesero() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -27,28 +28,82 @@ public class LoginMesero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        login = new javax.swing.JDesktopPane();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        LogoMesero = new javax.swing.JLabel();
+        loginMesero = new javax.swing.JLabel();
+        Password = new javax.swing.JLabel();
+        Usuario = new javax.swing.JLabel();
+        jtUsuario = new javax.swing.JTextField();
+        jbRegistrarse = new javax.swing.JButton();
+        jbIngresar = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        Fondo = new javax.swing.JLabel();
+
+        jLabel7.setText("jLabel7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
         setResizable(false);
 
-        login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        LogoMesero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LogoMesero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/mesero.png"))); // NOI18N
+        jPanel1.add(LogoMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 200, 200));
+
+        loginMesero.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
+        loginMesero.setForeground(new java.awt.Color(255, 255, 255));
+        loginMesero.setText("Login Meseros");
+        jPanel1.add(loginMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, -1, -1));
+
+        Password.setFont(new java.awt.Font("Comic Sans MS", 1, 17)); // NOI18N
+        Password.setForeground(new java.awt.Color(255, 255, 255));
+        Password.setText("Password:");
+        jPanel1.add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, -1, -1));
+
+        Usuario.setFont(new java.awt.Font("Comic Sans MS", 1, 17)); // NOI18N
+        Usuario.setForeground(new java.awt.Color(255, 255, 255));
+        Usuario.setText("Usuario:");
+        jPanel1.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, -1, -1));
+
+        jtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, 220, -1));
+
+        jbRegistrarse.setText("Registrarse");
+        jPanel1.add(jbRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 490, 140, -1));
+
+        jbIngresar.setText("Ingresar");
+        jPanel1.add(jbIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 490, 150, -1));
+        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 220, -1));
+
+        Fondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/fondoLogin.jpeg"))); // NOI18N
+        Fondo.setMaximumSize(new java.awt.Dimension(400, 500));
+        Fondo.setMinimumSize(new java.awt.Dimension(400, 500));
+        jPanel1.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,6 +141,16 @@ public class LoginMesero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane login;
+    private javax.swing.JLabel Fondo;
+    private javax.swing.JLabel LogoMesero;
+    private javax.swing.JLabel Password;
+    private javax.swing.JLabel Usuario;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JButton jbIngresar;
+    private javax.swing.JButton jbRegistrarse;
+    private javax.swing.JTextField jtUsuario;
+    private javax.swing.JLabel loginMesero;
     // End of variables declaration//GEN-END:variables
 }
