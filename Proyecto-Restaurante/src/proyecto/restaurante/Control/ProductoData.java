@@ -56,7 +56,7 @@ public class ProductoData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"ProductoData: Error al guardar Producto "+ex.getMessage());
         }
-    };
+    }
     
     //Método que realiza la busqueda en la base de datos, a traves de ID.
     public Producto buscarProducto(int id){
