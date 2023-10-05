@@ -33,7 +33,8 @@ public class MeseroData {
             ps.setString(2,m.getApellido());
             ps.setInt(3,m.getDni());
             ps.setBoolean(4,m.isEstado());
-            ps.setString(5,m.getPassword());            
+            ps.setString(5,m.getPassword()); 
+            ps.executeUpdate();
             rs = ps.getGeneratedKeys();            
             if(rs.next()){
                 m.setIdMesero(rs.getInt(1));
@@ -48,9 +49,8 @@ public class MeseroData {
     }
     
     
-    public Mesero buscarMesero(int id){
+    public Mesero buscarMeseroPorId(int id){
         sql = "SELECT `idMesero`, `Nombre`, `Apellido`, `DNI`, `Estado`, `Contraseña` FROM `meseros` WHERE idMesero=?";
-        
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id );
@@ -58,6 +58,7 @@ public class MeseroData {
             
             if(rs.next()){
                 m = new Mesero();
+                m.setIdMesero(rs.getInt("idMesero"));
                 m.setNombre(rs.getString("Nombre"));
                 m.setApellido(rs.getString("Apellido"));
                 m.setDni(rs.getInt("DNI"));
@@ -74,8 +75,7 @@ public class MeseroData {
     }
     
     public Mesero buscarMeseroPorDNI(int DNI){
-        sql = "SELECT `idMesero`, `Nombre`, `Apellido`, `DNI`, `Estado`, `Contraseña` FROM `meseros` WHERE idMesero=?";
-        
+        sql = "SELECT `idMesero`, `Nombre`, `Apellido`, `DNI`, `Estado`, `Contraseña` FROM `meseros` WHERE DNI=?";
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, DNI );
@@ -83,6 +83,7 @@ public class MeseroData {
             
             if(rs.next()){
                 m = new Mesero();
+                m.setIdMesero(rs.getInt("idMesero"));
                 m.setNombre(rs.getString("Nombre"));
                 m.setApellido(rs.getString("Apellido"));
                 m.setDni(rs.getInt("DNI"));
@@ -97,20 +98,66 @@ public class MeseroData {
         return m;
     }
     
+    public void modificarMesero(Mesero m){
+        sql = "UPDATE `meseros` SET `Nombre`=?,`Apellido`=?,`DNI`=?,`Estado`=?,`Contraseña`=? WHERE idMesero=?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, m.getNombre());
+            ps.setString(2, m.getApellido());
+            ps.setInt(3, m.getDni());
+            ps.setBoolean(4, m.isEstado());
+            ps.setString(5,m.getPassword());
+            ps.setInt(6,m.getIdMesero());
+            
+            int resultSet = ps.executeUpdate();            
+            if(resultSet == 1){
+                JOptionPane.showMessageDialog(null,"MeseroData : Mesero modificado con exito.");
+            }else{
+                JOptionPane.showMessageDialog(null, "MeseroData : No se encontro mesero a modificar.");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "MeseroData : Error al modificar mesero.");
+        }
+    }
     
-    public boolean loginMesero(int DNI, String Password) throws Exception{
+    public void eliminarMesero(Mesero m){
+        sql = "UPDATE `meseros` SET `Estado`=? WHERE idMesero=?";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setBoolean(1,false);
+            ps.setInt(2,m.getIdMesero());
+            
+            int resultSet = ps.executeUpdate();
+            
+            if(resultSet == 1){
+                JOptionPane.showMessageDialog(null,"MeseroData : Mesero eliminado con exito");
+            }else{
+                JOptionPane.showMessageDialog(null,"MeseroData : No se encontro mesero a eliminar.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"MeseroData : Error al modificar mesero.");
+        }
+    }
+    
+    
+    public boolean loginMesero(int DNI, String Password) {
         m = buscarMeseroPorDNI(DNI);
-        boolean valid;
+        boolean valid = false;
         
         if(m.getDni() != DNI ){
             JOptionPane.showMessageDialog(null,"MeseroData : El DNI no coincide con algun mesero registrado.");
-            return valid = false;
+            return valid;
         }
-        if(m.getPassword()!= Password ){
+        if(!m.getPassword().equals(Password) ){
             JOptionPane.showMessageDialog(null,"MeseroData : La contraseña es Incorrecta.");
-            return valid = false;
-        }        
-        valid = true;  
+            return valid;
+        }
+        if(m.getPassword().equals(Password) ){
+            JOptionPane.showMessageDialog(null,"MeseroData : La contraseña es Correcta.");
+            return valid = true;
+        } 
         return valid;
     }
 }

@@ -16,6 +16,14 @@ public class Mesero {
 
     public Mesero() {
     }
+    
+    public Mesero(String nombre, String apellido, int dni, boolean estado, String password) {        
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.estado = estado;
+        this.password = password;
+    }
 
     public Mesero(int idMesero, String nombre, String apellido, int dni, boolean estado, String password) {
         this.idMesero = idMesero;
