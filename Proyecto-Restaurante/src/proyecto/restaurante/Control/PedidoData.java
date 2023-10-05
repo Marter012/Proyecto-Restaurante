@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyectorestaurante.Control;
+package proyecto.restaurante.Control;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,9 +15,9 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import proyectorestaurante.Entidades.Categoria;
-import proyectorestaurante.Entidades.Pedido;
-import proyectorestaurante.Entidades.Producto;
+import proyecto.restaurante.Entidades.Categoria;
+import proyecto.restaurante.Entidades.Pedido;
+import proyecto.restaurante.Entidades.Producto;
 
 /**
  *

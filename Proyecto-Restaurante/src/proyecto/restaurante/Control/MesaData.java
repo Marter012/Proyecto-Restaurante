@@ -1,7 +1,7 @@
-package proyectorestaurante.Control;
+package proyecto.restaurante.Control;
 
-import proyectorestaurante.Entidades.Mesa;
-import proyectorestaurante.Entidades.Estado;
+import proyecto.restaurante.Entidades.Mesa;
+import proyecto.restaurante.Entidades.Estado;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
