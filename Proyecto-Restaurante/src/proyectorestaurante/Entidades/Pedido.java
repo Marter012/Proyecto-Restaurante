@@ -1,4 +1,4 @@
-package proyecto.restaurante.Entidades;
+package proyectorestaurante.Entidades;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

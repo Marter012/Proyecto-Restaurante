@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.restaurante.Control;
+package proyectorestaurante.Control;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,9 +15,9 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import proyecto.restaurante.Entidades.Categoria;
-import proyecto.restaurante.Entidades.Pedido;
-import proyecto.restaurante.Entidades.Producto;
+import proyectorestaurante.Entidades.Categoria;
+import proyectorestaurante.Entidades.Pedido;
+import proyectorestaurante.Entidades.Producto;
 
 /**
  *
@@ -73,8 +73,8 @@ public class PedidoData {
             if(rs.next()){
                 p = new Pedido();
                 p.setIdPedido(rs.getInt("idPedido"));
-                p.setMesa(mad.buscarMesa(rs.getInt("idMesa")));
-                p.setMesero(mod.buscarMesero(rs.getInt("idMesero")));
+                p.setMesa(mad.obtenerMesa(rs.getInt("idMesa")));
+                p.setMesero(mod.buscarMeseroPorId(rs.getInt("idMesero")));
                 p.setFechaPedido(rs.getDate("FechaPedido").toLocalDate());
                 p.setHoraPedido(rs.getTime("HoraPedido").toLocalTime());
                 p.setImporte(rs.getDouble("importe"));
@@ -143,8 +143,8 @@ public class PedidoData {
             while(rs.next()){
                 p = new Pedido();
                 p.setIdPedido(rs.getInt("idPedido"));
-                p.setMesa(mad.buscarMesa(rs.getInt("idMesa")));
-                p.setMesero(mod.buscarMesero(rs.getInt("idMesero")));
+                p.setMesa(mad.obtenerMesa(rs.getInt("idMesa")));
+                p.setMesero(mod.buscarMeseroPorId(rs.getInt("idMesero")));
                 p.setFechaPedido(rs.getDate("FechaPedido").toLocalDate());
                 p.setHoraPedido(rs.getTime("HoraPedido").toLocalTime());
                 p.setImporte(rs.getDouble("importe"));

@@ -1,9 +1,10 @@
-package proyecto.restaurante.Control;
+package proyectorestaurante.Control;
 
+import proyectorestaurante.Entidades.Mesa;
+import proyectorestaurante.Entidades.Estado;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import proyecto.restaurante.Entidades.*;
 
 public class MesaData {
     private Connection con;

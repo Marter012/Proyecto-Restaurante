@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.restaurante.Vistas;
+package proyectorestaurante.Vistas;
 
 import java.awt.Color;
 

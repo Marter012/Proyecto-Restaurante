@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.restaurante.Control;
+package proyectorestaurante.Control;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
-import proyecto.restaurante.Entidades.Mesero;
+import proyectorestaurante.Entidades.Mesero;
 
 /**
  *

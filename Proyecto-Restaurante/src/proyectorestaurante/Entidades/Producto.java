@@ -1,4 +1,4 @@
-package proyecto.restaurante.Entidades;
+package proyectorestaurante.Entidades;
 
 public class Producto {
 

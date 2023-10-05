@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.restaurante.Entidades;
+package proyectorestaurante.Entidades;
 
-import proyecto.restaurante.Control.*;
+import proyectorestaurante.Control.MesaData;
 
 /**
  *
