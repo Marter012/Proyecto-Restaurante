@@ -57,7 +57,7 @@ public class LoginMesero extends javax.swing.JFrame {
 
         LogoMesero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LogoMesero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/mesero.png"))); // NOI18N
-        background.add(LogoMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 200, 200));
+        background.add(LogoMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 500, 200));
 
         loginMesero.setFont(new java.awt.Font("Comic Sans MS", 3, 20)); // NOI18N
         loginMesero.setForeground(new java.awt.Color(255, 255, 255));
@@ -67,15 +67,15 @@ public class LoginMesero extends javax.swing.JFrame {
         Password.setFont(new java.awt.Font("Comic Sans MS", 1, 17)); // NOI18N
         Password.setForeground(new java.awt.Color(255, 255, 255));
         Password.setText("Password:");
-        background.add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, -1, -1));
+        background.add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, -1, -1));
 
         Usuario.setFont(new java.awt.Font("Comic Sans MS", 1, 17)); // NOI18N
         Usuario.setForeground(new java.awt.Color(255, 255, 255));
         Usuario.setText("Usuario:");
-        background.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, -1, -1));
+        background.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
 
         jtUsuario.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
-        jtUsuario.setForeground(new java.awt.Color(204, 204, 204));
+        jtUsuario.setForeground(new java.awt.Color(153, 153, 153));
         jtUsuario.setText("Ingrese Dni");
         jtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -87,7 +87,7 @@ public class LoginMesero extends javax.swing.JFrame {
                 jtUsuarioActionPerformed(evt);
             }
         });
-        background.add(jtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, 220, -1));
+        background.add(jtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 230, -1));
 
         jbRegistrarse.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jbRegistrarse.setText("Registrarse");
@@ -103,14 +103,14 @@ public class LoginMesero extends javax.swing.JFrame {
         background.add(jbIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 490, 150, -1));
 
         jtPassword.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
-        jtPassword.setForeground(new java.awt.Color(204, 204, 204));
+        jtPassword.setForeground(new java.awt.Color(153, 153, 153));
         jtPassword.setText("********");
         jtPassword.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jtPasswordMousePressed(evt);
             }
         });
-        background.add(jtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 220, -1));
+        background.add(jtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 230, -1));
 
         Fondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/fondoLogin.jpeg"))); // NOI18N
