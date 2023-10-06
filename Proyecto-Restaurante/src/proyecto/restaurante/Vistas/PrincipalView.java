@@ -54,12 +54,15 @@ public class PrincipalView extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         FondoTransparente = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         Contenedor = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         escritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -68,8 +71,8 @@ public class PrincipalView extends javax.swing.JFrame {
         MenuLateral.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(189, 193, 96));
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Admin");
         MenuLateral.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 50));
@@ -78,9 +81,9 @@ public class PrincipalView extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(189, 193, 96));
         MenuLateral.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 48, 240, 10));
 
-        jButton1.setBackground(new java.awt.Color(189, 193, 96));
-        jButton1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 102, 102));
+        jButton1.setBackground(new java.awt.Color(153, 153, 0));
+        jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(51, 51, 51));
         jButton1.setText("Meseros");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,9 +92,9 @@ public class PrincipalView extends javax.swing.JFrame {
         });
         MenuLateral.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 170, 50));
 
-        jButton2.setBackground(new java.awt.Color(189, 193, 96));
-        jButton2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 102, 153));
+        jButton2.setBackground(new java.awt.Color(153, 153, 0));
+        jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(51, 51, 51));
         jButton2.setText("Mesas");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +103,9 @@ public class PrincipalView extends javax.swing.JFrame {
         });
         MenuLateral.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 171, 50));
 
-        jButton3.setBackground(new java.awt.Color(189, 193, 96));
+        jButton3.setBackground(new java.awt.Color(153, 153, 0));
+        jButton3.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(51, 51, 51));
         jButton3.setText("Ingresos");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,7 +114,9 @@ public class PrincipalView extends javax.swing.JFrame {
         });
         MenuLateral.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 171, 50));
 
-        jButton4.setBackground(new java.awt.Color(189, 193, 96));
+        jButton4.setBackground(new java.awt.Color(153, 153, 0));
+        jButton4.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(51, 51, 51));
         jButton4.setText("Productos");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,8 +130,8 @@ public class PrincipalView extends javax.swing.JFrame {
         MenuLateral.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 240, 10));
 
         jLabel3.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel3.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(189, 193, 96));
+        jLabel3.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Meseros");
         MenuLateral.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 240, 50));
@@ -133,7 +140,9 @@ public class PrincipalView extends javax.swing.JFrame {
         jSeparator3.setForeground(new java.awt.Color(189, 193, 96));
         MenuLateral.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 240, -1));
 
-        jButton5.setBackground(new java.awt.Color(189, 193, 96));
+        jButton5.setBackground(new java.awt.Color(153, 153, 0));
+        jButton5.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(51, 51, 51));
         jButton5.setText("Pedidos");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,10 +179,22 @@ public class PrincipalView extends javax.swing.JFrame {
         MenuLateral.add(FondoTransparente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
 
         escritorio.add(MenuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
+        escritorio.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 350, 220, -1));
+        escritorio.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 220, -1));
+
+        jLabel8.setFont(new java.awt.Font("Kaushan Script", 0, 90)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Restó");
+        escritorio.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 560, -1));
+
+        jLabel9.setFont(new java.awt.Font("Roboto", 1, 25)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Food & Drink");
+        escritorio.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, 560, -1));
 
         Contenedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInicio.jpg"))); // NOI18N
-        Contenedor.setMaximumSize(new java.awt.Dimension(800, 600));
-        Contenedor.setMinimumSize(new java.awt.Dimension(800, 600));
         escritorio.add(Contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -263,9 +284,13 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
     // End of variables declaration//GEN-END:variables
 }

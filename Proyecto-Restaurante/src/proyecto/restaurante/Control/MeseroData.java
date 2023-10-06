@@ -157,7 +157,7 @@ public class MeseroData {
                 return valid;
             }
             if(m.getPassword().equals(Password) ){
-                JOptionPane.showMessageDialog(null,"MeseroData : La contraseña es Correcta.");
+                //JOptionPane.showMessageDialog(null,"MeseroData : La contraseña es Correcta.");
                 return valid = true;
             } 
         }

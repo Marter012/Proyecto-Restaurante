@@ -22,6 +22,10 @@ public class LoginMesero extends javax.swing.JFrame {
     public LoginMesero() {
         initComponents();
         this.setLocationRelativeTo(null);
+        estilos();
+    }
+    public void estilos (){
+        FondoTransparente.setBackground(new Color(35,34,36,210));
     }
 
     /**
@@ -40,9 +44,9 @@ public class LoginMesero extends javax.swing.JFrame {
         Password = new javax.swing.JLabel();
         Usuario = new javax.swing.JLabel();
         jtUsuario = new javax.swing.JTextField();
-        jbRegistrarse = new javax.swing.JButton();
         jbIngresar = new javax.swing.JButton();
         jtPassword = new javax.swing.JPasswordField();
+        FondoTransparente = new javax.swing.JLabel();
         Fondo = new javax.swing.JLabel();
 
         jLabel7.setText("jLabel7");
@@ -56,25 +60,26 @@ public class LoginMesero extends javax.swing.JFrame {
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LogoMesero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LogoMesero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/mesero.png"))); // NOI18N
+        LogoMesero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/usuario.png"))); // NOI18N
         background.add(LogoMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 500, 200));
 
-        loginMesero.setFont(new java.awt.Font("Comic Sans MS", 3, 20)); // NOI18N
+        loginMesero.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         loginMesero.setForeground(new java.awt.Color(255, 255, 255));
-        loginMesero.setText("Login Meseros");
-        background.add(loginMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, -1, -1));
+        loginMesero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        loginMesero.setText("Login");
+        background.add(loginMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 100, 500, -1));
 
-        Password.setFont(new java.awt.Font("Comic Sans MS", 1, 17)); // NOI18N
+        Password.setFont(new java.awt.Font("Roboto", 1, 17)); // NOI18N
         Password.setForeground(new java.awt.Color(255, 255, 255));
         Password.setText("Password:");
         background.add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, -1, -1));
 
-        Usuario.setFont(new java.awt.Font("Comic Sans MS", 1, 17)); // NOI18N
+        Usuario.setFont(new java.awt.Font("Roboto", 1, 17)); // NOI18N
         Usuario.setForeground(new java.awt.Color(255, 255, 255));
         Usuario.setText("Usuario:");
         background.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
 
-        jtUsuario.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        jtUsuario.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jtUsuario.setForeground(new java.awt.Color(153, 153, 153));
         jtUsuario.setText("Ingrese Dni");
         jtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -87,22 +92,20 @@ public class LoginMesero extends javax.swing.JFrame {
                 jtUsuarioActionPerformed(evt);
             }
         });
-        background.add(jtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 230, -1));
+        background.add(jtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, 240, -1));
 
-        jbRegistrarse.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        jbRegistrarse.setText("Registrarse");
-        background.add(jbRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 490, 140, -1));
-
-        jbIngresar.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        jbIngresar.setBackground(new java.awt.Color(153, 153, 0));
+        jbIngresar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jbIngresar.setForeground(new java.awt.Color(0, 0, 0));
         jbIngresar.setText("Ingresar");
         jbIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbIngresarActionPerformed(evt);
             }
         });
-        background.add(jbIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 490, 150, -1));
+        background.add(jbIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 480, 150, -1));
 
-        jtPassword.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        jtPassword.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jtPassword.setForeground(new java.awt.Color(153, 153, 153));
         jtPassword.setText("********");
         jtPassword.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -110,10 +113,13 @@ public class LoginMesero extends javax.swing.JFrame {
                 jtPasswordMousePressed(evt);
             }
         });
-        background.add(jtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 230, -1));
+        background.add(jtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, 240, -1));
+
+        FondoTransparente.setOpaque(true);
+        background.add(FondoTransparente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 350, 460));
 
         Fondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/fondoLogin.jpeg"))); // NOI18N
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/fondoLogin2.jpg"))); // NOI18N
         Fondo.setMaximumSize(new java.awt.Dimension(400, 500));
         Fondo.setMinimumSize(new java.awt.Dimension(400, 500));
         background.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 600));
@@ -166,7 +172,9 @@ public class LoginMesero extends javax.swing.JFrame {
             dni=Integer.parseInt(jtUsuario.getText());
             ps=String.valueOf(jtPassword.getPassword());
                 if(md.loginMesero(dni, ps)){
-                    JOptionPane.showMessageDialog(null,"Deberia ingresar al Otro Frame");
+                    this.setVisible(false);
+                    PrincipalView pv = new PrincipalView();
+                    pv.setVisible(true);
                 }else{
                     JOptionPane.showMessageDialog(null,"No ingresa");
                     jtUsuario.setText("Ingrese Dni");
@@ -219,13 +227,13 @@ public class LoginMesero extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
+    private javax.swing.JLabel FondoTransparente;
     private javax.swing.JLabel LogoMesero;
     private javax.swing.JLabel Password;
     private javax.swing.JLabel Usuario;
     private javax.swing.JPanel background;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jbIngresar;
-    private javax.swing.JButton jbRegistrarse;
     private javax.swing.JPasswordField jtPassword;
     private javax.swing.JTextField jtUsuario;
     private javax.swing.JLabel loginMesero;
