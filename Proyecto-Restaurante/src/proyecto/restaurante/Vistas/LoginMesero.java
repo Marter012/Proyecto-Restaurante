@@ -54,6 +54,7 @@ public class LoginMesero extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
         setLocationByPlatform(true);
+        setUndecorated(true);
         setResizable(false);
 
         background.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);

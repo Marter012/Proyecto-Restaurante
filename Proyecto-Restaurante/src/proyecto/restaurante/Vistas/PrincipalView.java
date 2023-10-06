@@ -24,6 +24,8 @@ public class PrincipalView extends javax.swing.JFrame {
     }
     public void estilos (){
         FondoTransparente.setBackground(new Color(35,34,36,210));
+        EscritorioFrames.setBackground(new Color(0,0,0,0));
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,15 +56,13 @@ public class PrincipalView extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         FondoTransparente = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
-        jSeparator6 = new javax.swing.JSeparator();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        EscritorioFrames = new javax.swing.JDesktopPane();
         Contenedor = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         escritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -179,22 +179,12 @@ public class PrincipalView extends javax.swing.JFrame {
         MenuLateral.add(FondoTransparente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
 
         escritorio.add(MenuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
-        escritorio.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 350, 220, -1));
-        escritorio.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 220, -1));
 
-        jLabel8.setFont(new java.awt.Font("Kaushan Script", 0, 90)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Restó");
-        escritorio.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 560, -1));
+        EscritorioFrames.setOpaque(false);
+        EscritorioFrames.setLayout(new java.awt.GridLayout());
+        escritorio.add(EscritorioFrames, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 5, 540, 590));
 
-        jLabel9.setFont(new java.awt.Font("Roboto", 1, 25)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Food & Drink");
-        escritorio.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, 560, -1));
-
-        Contenedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInicio.jpg"))); // NOI18N
+        Contenedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInicioConLogo.jpg"))); // NOI18N
         escritorio.add(Contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,7 +202,14 @@ public class PrincipalView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        EscritorioFrames.removeAll();
+        EscritorioFrames.repaint();
+        CargaMeserosView cmv = new CargaMeserosView();
+        cmv.setVisible(true);
+        EscritorioFrames.add(cmv);
+        EscritorioFrames.moveToFront(cmv);
+        
+    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -268,6 +265,7 @@ public class PrincipalView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Contenedor;
+    private javax.swing.JDesktopPane EscritorioFrames;
     private javax.swing.JLabel FondoTransparente;
     private javax.swing.JLabel LabelMeseros;
     private javax.swing.JPanel MenuLateral;
@@ -284,13 +282,9 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
     // End of variables declaration//GEN-END:variables
 }
