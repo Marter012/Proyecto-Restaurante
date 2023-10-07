@@ -27,6 +27,7 @@ public class LoginMesero extends javax.swing.JFrame {
     public void estilos (){
         FondoTransparente.setBackground(new Color(35,34,36,210));
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,6 +40,7 @@ public class LoginMesero extends javax.swing.JFrame {
 
         jLabel7 = new javax.swing.JLabel();
         background = new javax.swing.JPanel();
+        Cerrar = new javax.swing.JLabel();
         LogoMesero = new javax.swing.JLabel();
         loginMesero = new javax.swing.JLabel();
         Password = new javax.swing.JLabel();
@@ -60,6 +62,24 @@ public class LoginMesero extends javax.swing.JFrame {
         background.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        Cerrar.setBackground(new java.awt.Color(255, 255, 255));
+        Cerrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        Cerrar.setForeground(new java.awt.Color(255, 255, 255));
+        Cerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Cerrar.setText("Exit");
+        Cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CerrarMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                CerrarMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                CerrarMouseEntered(evt);
+            }
+        });
+        background.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 40, 30));
+
         LogoMesero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LogoMesero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/usuario.png"))); // NOI18N
         background.add(LogoMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 500, 200));
@@ -78,7 +98,7 @@ public class LoginMesero extends javax.swing.JFrame {
         Usuario.setFont(new java.awt.Font("Roboto", 1, 17)); // NOI18N
         Usuario.setForeground(new java.awt.Color(255, 255, 255));
         Usuario.setText("Usuario:");
-        background.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
+        background.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 90, -1));
 
         jtUsuario.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jtUsuario.setForeground(new java.awt.Color(153, 153, 153));
@@ -173,6 +193,7 @@ public class LoginMesero extends javax.swing.JFrame {
             dni=Integer.parseInt(jtUsuario.getText());
             ps=String.valueOf(jtPassword.getPassword());
                 if(md.loginMesero(dni, ps)){
+                    
                     this.setVisible(false);
                     PrincipalView pv = new PrincipalView();
                     pv.setVisible(true);
@@ -190,6 +211,20 @@ public class LoginMesero extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Complete todos los campos "+e);
         }
     }//GEN-LAST:event_jbIngresarActionPerformed
+
+    private void CerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseEntered
+        // TODO add your handling code here:
+        Cerrar.setForeground(Color.gray);
+    }//GEN-LAST:event_CerrarMouseEntered
+
+    private void CerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseExited
+        // TODO add your handling code here:
+        Cerrar.setForeground(Color.white);
+    }//GEN-LAST:event_CerrarMouseExited
+
+    private void CerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_CerrarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -227,6 +262,7 @@ public class LoginMesero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Cerrar;
     private javax.swing.JLabel Fondo;
     private javax.swing.JLabel FondoTransparente;
     private javax.swing.JLabel LogoMesero;
@@ -236,7 +272,7 @@ public class LoginMesero extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jbIngresar;
     private javax.swing.JPasswordField jtPassword;
-    private javax.swing.JTextField jtUsuario;
+    public javax.swing.JTextField jtUsuario;
     private javax.swing.JLabel loginMesero;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,21 +6,17 @@
 package proyecto.restaurante.Vistas;
 
 import java.awt.Color;
+import proyecto.restaurante.Control.MeseroData;
 
 /**
  *
  * @author Emito
  */
 public class PrincipalView extends javax.swing.JFrame {
-
-    /**
-     * Creates new form PrincipalView
-     */
     public PrincipalView() {
         initComponents();
         this.setLocationRelativeTo(null);
         estilos();
-        
     }
     public void estilos (){
         FondoTransparente.setBackground(new Color(35,34,36,210));
@@ -74,7 +70,7 @@ public class PrincipalView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Admin");
+        jLabel1.setText("Encargado");
         MenuLateral.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 50));
 
         jSeparator1.setBackground(new java.awt.Color(189, 193, 96));
@@ -181,7 +177,7 @@ public class PrincipalView extends javax.swing.JFrame {
         escritorio.add(MenuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
 
         EscritorioFrames.setOpaque(false);
-        EscritorioFrames.setLayout(new java.awt.GridLayout());
+        EscritorioFrames.setLayout(new java.awt.GridLayout(1, 0));
         escritorio.add(EscritorioFrames, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 5, 540, 590));
 
         Contenedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInicioConLogo.jpg"))); // NOI18N
