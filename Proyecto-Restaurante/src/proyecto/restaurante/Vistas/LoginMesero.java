@@ -140,7 +140,7 @@ public class LoginMesero extends javax.swing.JFrame {
         background.add(FondoTransparente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 350, 460));
 
         Fondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/fondoLogin2.jpg"))); // NOI18N
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/fondoLogin.jpg"))); // NOI18N
         Fondo.setMaximumSize(new java.awt.Dimension(400, 500));
         Fondo.setMinimumSize(new java.awt.Dimension(400, 500));
         background.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 600));
