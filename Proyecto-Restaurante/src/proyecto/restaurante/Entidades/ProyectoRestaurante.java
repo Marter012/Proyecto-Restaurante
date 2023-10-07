@@ -5,7 +5,7 @@
  */
 package proyecto.restaurante.Entidades;
 
-import proyecto.restaurante.Control.ProductoData;
+import proyecto.restaurante.Control.MesaData;
 
 /**
  *
@@ -18,12 +18,16 @@ public class ProyectoRestaurante {
      */
     public static void main(String[] args) {
         //Producto p = new Producto("Pizza", 10, Categoria.ALIMENTO, 900.50,true);
-        ProductoData pd = new ProductoData();
-        Producto p = new Producto("Coca Cola", 20, Categoria.BEBIDA, 700,true);
-        pd.guardarProducto(p);
-        System.out.println(pd.listarProductos());
-        
-        
+//        ProductoData pd = new ProductoData();
+//        Producto p = new Producto("Coca Cola", 20, Categoria.BEBIDA, 700,true);
+//        pd.guardarProducto(p);
+//        System.out.println(pd.listarProductos());
+        MesaData md=new MesaData();
+        Mesa m=new Mesa();
+//        md.crearMesa(m);
+        m=md.obtenerMesa(2);
+        m.setEstado(Estado.RESERVADA);
+        md.modificarMesa(m);
     }
     
 }
