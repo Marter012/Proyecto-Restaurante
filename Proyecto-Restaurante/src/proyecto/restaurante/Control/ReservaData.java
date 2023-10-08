@@ -6,6 +6,7 @@
 package proyecto.restaurante.Control;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 import javax.swing.JOptionPane;
 import proyecto.restaurante.Entidades.Mesa;
@@ -28,14 +29,37 @@ public class ReservaData {
     
 public ReservaData(){
     con=Conexion.getConexion();
+    md= new MesaData();
 }
     
-
-
-    public List<Reserva> listarReservas(){
-        md= new MesaData();
-        List<Reserva> listarReservas= new Arraylist();
+    public void guardarReserva(Reserva res){
+        sql="INSERT INTO reservas (NombreCliente,DNI,Fecha,Hora,Estado,idMesa) VALUES (?,?,?,?,?,?)";
+        try {
+            ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1,res.getNombreCliente());
+            ps.setInt(2,res.getDni());
+            ps.setDate(3,Date.valueOf(res.getFecha()));
+            ps.setTime(4,Time.valueOf(res.getHora()));
+            ps.setBoolean(5,res.isEstado());
+            ps.setInt(6,res.getMesa().getIdMesa());
+            rs= ps.getGeneratedKeys();
+                    
+               if(rs.next()){
+                   res.setIdReserva(rs.getInt(1));
+                   JOptionPane.showMessageDialog(null,"ReservaData : Reserva cargada con exito.");
+               }else {
+                   JOptionPane.showMessageDialog(null,"ReservaData : Error al cargar la reserva");
+               }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"ReservaData: Error al guardar la reserva"+ex.getMessage());
+        }
         
+ }
+
+ 
+    public List<Reserva> listarReservas(){
+        List<Reserva> listaReservas= new Arraylist();
+       
         sql="SELECT * FROM reserva";
         
         try {
@@ -49,18 +73,18 @@ public ReservaData(){
                res.setFecha(rs.getDate(3).toLocalDate());
                res.setHora(rs.getTime(4).toLocalTime());
                res.setEstado(rs.getBoolean(5));
-               res.setMesa(md.obtenerMesasReservadas(rs.getInt(6)));
-               listarReservas.add(res);
+               res.setMesa(md.obtenerMesa(rs.getInt(6)));
+               listaReservas.add(res);
             }
             ps.close();
              
         } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null,"ReservaData: Error al obtener lista de reservas"+ex.getMessage());
         }
-        return listarReservas;
+        return listaReservas;
     }
 
-  
+
     
 
    
