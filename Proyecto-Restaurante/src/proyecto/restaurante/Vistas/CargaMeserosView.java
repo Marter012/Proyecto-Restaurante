@@ -253,7 +253,9 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbActualizarMeseroActionPerformed
 
     private void jcbMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMeseroActionPerformed
-
+        if (jcbMesero.getItemCount()==0){
+            
+        }else{
         Mesero m = new Mesero();
         m = (Mesero)jcbMesero.getSelectedItem();
         if (m!=null){
@@ -278,6 +280,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
             
         }else{
             JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
+        }
         }
     }//GEN-LAST:event_jcbMeseroActionPerformed
 
@@ -328,8 +331,11 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbCrearMeseroActionPerformed
 
     private void jcbMeseroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMeseroMouseClicked
+        
+        if (!jcbMesero.isEnabled()){
         jcbMesero.setEnabled(true);
         jcbEncargado.setEnabled(false);
+        jcbEncargado.removeAllItems();
          jtNombre.setText("");
         jtApellido.setText("");
         jtDni.setText("");
@@ -341,6 +347,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jbCrearMesero.setEnabled(false);
         jcbMesero.removeAllItems();
         CargarComboMeseros();
+        }
     }//GEN-LAST:event_jcbMeseroMouseClicked
 
     private void jrbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbActivoActionPerformed
@@ -372,8 +379,10 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
 
     private void jcbEncargadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbEncargadoMouseClicked
         // TODO add your handling code here:
+        if (!jcbEncargado.isEnabled()){
         jcbEncargado.setEnabled(true);
         jcbMesero.setEnabled(false);
+        jcbMesero.removeAllItems();
          jtNombre.setText("");
         jtApellido.setText("");
         jtDni.setText("");
@@ -385,10 +394,13 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jbCrearMesero.setEnabled(false);
         jcbEncargado.removeAllItems();
         CargarComboEncargados();
+        }
     }//GEN-LAST:event_jcbEncargadoMouseClicked
 
     private void jcbEncargadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEncargadoActionPerformed
         // TODO add your handling code here:
+        if (jcbEncargado.getItemCount()==0){
+        }else{
         Mesero m = new Mesero();
         m = (Mesero)jcbEncargado.getSelectedItem();
         if (m!=null){
@@ -413,6 +425,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
             
         }else{
             JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
+        }
         }
     }//GEN-LAST:event_jcbEncargadoActionPerformed
     private void CargarComboMeseros(){
