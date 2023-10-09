@@ -367,15 +367,9 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jcbMesero.setEnabled(true);
         jcbEncargado.setEnabled(false);
         jcbEncargado.removeAllItems();
-         jtNombre.setText("");
-        jtApellido.setText("");
-        jtDni.setText("");
-        jrbActivo.setSelected(false);
-        jrbInactivo.setSelected(false);
-        jrbEncargado.setSelected(false);
-        jrbMesero.setSelected(false);
-        jtPassword.setText("");
+        LimpiarCampos();
         jbCrearMesero.setEnabled(false);
+        jbActualizarMesero.setEnabled(true);
         jcbMesero.removeAllItems();
         CargarComboMeseros();
         }
@@ -414,15 +408,9 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jcbEncargado.setEnabled(true);
         jcbMesero.setEnabled(false);
         jcbMesero.removeAllItems();
-         jtNombre.setText("");
-        jtApellido.setText("");
-        jtDni.setText("");
-        jrbActivo.setSelected(false);
-        jrbInactivo.setSelected(false);
-        jrbEncargado.setSelected(false);
-        jrbMesero.setSelected(false);
-        jtPassword.setText("");
+        LimpiarPantalla();
         jbCrearMesero.setEnabled(false);
+        jbActualizarMesero.setEnabled(true);
         jcbEncargado.removeAllItems();
         CargarComboEncargados();
         }
@@ -461,7 +449,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbEncargadoActionPerformed
 
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
-        // TODO add your handling code here:
+        LimpiarPantalla();
     }//GEN-LAST:event_LimpiarActionPerformed
     private void CargarComboMeseros(){
         MeseroData mesd = new MeseroData();
@@ -479,6 +467,27 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jcbEncargado.addItem(me);
         }
         
+    }
+    
+    private void LimpiarCampos(){
+        jtNombre.setText("");
+        jtApellido.setText("");
+        jtDni.setText("");
+        jrbActivo.setSelected(false);
+        jrbInactivo.setSelected(false);
+        jrbEncargado.setSelected(false);
+        jrbMesero.setSelected(false);
+        jtPassword.setText("");
+    }
+    
+    private void LimpiarPantalla(){
+        jcbMesero.setEnabled(false);
+        jcbMesero.removeAllItems();
+        jcbEncargado.setEnabled(false);
+        jcbEncargado.removeAllItems();
+        LimpiarCampos();
+        jbCrearMesero.setEnabled(true);
+        jbActualizarMesero.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
