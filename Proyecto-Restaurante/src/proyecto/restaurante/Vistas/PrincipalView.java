@@ -494,6 +494,10 @@ public class PrincipalView extends javax.swing.JFrame {
         MenuLateral.setVisible(false);
         Login.setVisible(true);
         EscritorioFrames.add(Login);
+        jtUsuario.setForeground(Color.gray);
+        jtUsuario.setText("Ingrese Dni");
+        jtPassword.setForeground(Color.gray);
+        jtPassword.setText("********");
         
     }//GEN-LAST:event_LogOutMouseClicked
 
