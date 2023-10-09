@@ -6,6 +6,7 @@
 package proyecto.restaurante.Vistas;
 
 import java.awt.Color;
+import javax.swing.*;
 import proyecto.restaurante.Control.MeseroData;
 
 /**
@@ -13,16 +14,41 @@ import proyecto.restaurante.Control.MeseroData;
  * @author Emito
  */
 public class PrincipalView extends javax.swing.JFrame {
+    
     public PrincipalView() {
         initComponents();
         this.setLocationRelativeTo(null);
         estilos();
+        inhabilitarAdmin();
+        inhabilitarMesero();
     }
     public void estilos (){
         FondoTransparente.setBackground(new Color(35,34,36,210));
-        EscritorioFrames.setBackground(new Color(0,0,0,0));
         
     }
+    
+    public void inhabilitarAdmin(){
+        jbMeseros.setEnabled(false);        
+        jbMesas.setEnabled(false);
+        jbProductos.setEnabled(false);
+        jbIngresos.setEnabled(false);  
+    }
+    
+    public void inhabilitarMesero(){
+    jbPedidos.setEnabled(false);
+    }
+    
+    public void activarAdmin(){
+        jbMeseros.setEnabled(true);        
+        jbMesas.setEnabled(true);
+        jbProductos.setEnabled(true);
+        jbIngresos.setEnabled(true);  
+    }
+    
+    public void activarMesero(){
+    jbPedidos.setEnabled(true);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,14 +63,14 @@ public class PrincipalView extends javax.swing.JFrame {
         MenuLateral = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jbMeseros = new javax.swing.JButton();
+        jbMesas = new javax.swing.JButton();
+        jbIngresos = new javax.swing.JButton();
+        jbProductos = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        jButton5 = new javax.swing.JButton();
+        jbPedidos = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JSeparator();
         LabelMeseros = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -52,7 +78,17 @@ public class PrincipalView extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         FondoTransparente = new javax.swing.JLabel();
-        EscritorioFrames = new javax.swing.JDesktopPane();
+        Login = new javax.swing.JPanel();
+        Cerrar = new javax.swing.JLabel();
+        LogoMesero = new javax.swing.JLabel();
+        loginMesero = new javax.swing.JLabel();
+        Password = new javax.swing.JLabel();
+        Usuario = new javax.swing.JLabel();
+        jtUsuario = new javax.swing.JTextField();
+        jbIngresar = new javax.swing.JButton();
+        jtPassword = new javax.swing.JPasswordField();
+        FondoTransparente1 = new javax.swing.JLabel();
+        Fondo = new javax.swing.JLabel();
         Contenedor = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -77,49 +113,49 @@ public class PrincipalView extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(189, 193, 96));
         MenuLateral.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 48, 240, 10));
 
-        jButton1.setBackground(new java.awt.Color(153, 153, 0));
-        jButton1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 51));
-        jButton1.setText("Meseros");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbMeseros.setBackground(new java.awt.Color(153, 153, 0));
+        jbMeseros.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jbMeseros.setForeground(new java.awt.Color(51, 51, 51));
+        jbMeseros.setText("Meseros");
+        jbMeseros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbMeserosActionPerformed(evt);
             }
         });
-        MenuLateral.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 170, 50));
+        MenuLateral.add(jbMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 170, 50));
 
-        jButton2.setBackground(new java.awt.Color(153, 153, 0));
-        jButton2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(51, 51, 51));
-        jButton2.setText("Mesas");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jbMesas.setBackground(new java.awt.Color(153, 153, 0));
+        jbMesas.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jbMesas.setForeground(new java.awt.Color(51, 51, 51));
+        jbMesas.setText("Mesas");
+        jbMesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jbMesasActionPerformed(evt);
             }
         });
-        MenuLateral.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 171, 50));
+        MenuLateral.add(jbMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 171, 50));
 
-        jButton3.setBackground(new java.awt.Color(153, 153, 0));
-        jButton3.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(51, 51, 51));
-        jButton3.setText("Ingresos");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jbIngresos.setBackground(new java.awt.Color(153, 153, 0));
+        jbIngresos.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        jbIngresos.setForeground(new java.awt.Color(51, 51, 51));
+        jbIngresos.setText("Ingresos");
+        jbIngresos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jbIngresosActionPerformed(evt);
             }
         });
-        MenuLateral.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 171, 50));
+        MenuLateral.add(jbIngresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 171, 50));
 
-        jButton4.setBackground(new java.awt.Color(153, 153, 0));
-        jButton4.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(51, 51, 51));
-        jButton4.setText("Productos");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jbProductos.setBackground(new java.awt.Color(153, 153, 0));
+        jbProductos.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        jbProductos.setForeground(new java.awt.Color(51, 51, 51));
+        jbProductos.setText("Productos");
+        jbProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jbProductosActionPerformed(evt);
             }
         });
-        MenuLateral.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 171, 50));
+        MenuLateral.add(jbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 171, 50));
 
         jSeparator2.setBackground(new java.awt.Color(189, 193, 96));
         jSeparator2.setForeground(new java.awt.Color(189, 193, 96));
@@ -136,16 +172,16 @@ public class PrincipalView extends javax.swing.JFrame {
         jSeparator3.setForeground(new java.awt.Color(189, 193, 96));
         MenuLateral.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 240, -1));
 
-        jButton5.setBackground(new java.awt.Color(153, 153, 0));
-        jButton5.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(51, 51, 51));
-        jButton5.setText("Pedidos");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jbPedidos.setBackground(new java.awt.Color(153, 153, 0));
+        jbPedidos.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        jbPedidos.setForeground(new java.awt.Color(51, 51, 51));
+        jbPedidos.setText("Pedidos");
+        jbPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jbPedidosActionPerformed(evt);
             }
         });
-        MenuLateral.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 169, 50));
+        MenuLateral.add(jbPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 169, 50));
 
         jSeparator5.setBackground(new java.awt.Color(189, 193, 96));
         jSeparator5.setForeground(new java.awt.Color(189, 193, 96));
@@ -176,9 +212,92 @@ public class PrincipalView extends javax.swing.JFrame {
 
         escritorio.add(MenuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
 
-        EscritorioFrames.setOpaque(false);
-        EscritorioFrames.setLayout(new java.awt.GridLayout(1, 0));
-        escritorio.add(EscritorioFrames, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 5, 540, 590));
+        Login.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        Login.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Cerrar.setBackground(new java.awt.Color(255, 255, 255));
+        Cerrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        Cerrar.setForeground(new java.awt.Color(255, 255, 255));
+        Cerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Cerrar.setText("Exit");
+        Cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CerrarMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                CerrarMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                CerrarMouseEntered(evt);
+            }
+        });
+        Login.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 40, 30));
+
+        LogoMesero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LogoMesero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/usuario.png"))); // NOI18N
+        Login.add(LogoMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 500, 200));
+
+        loginMesero.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        loginMesero.setForeground(new java.awt.Color(255, 255, 255));
+        loginMesero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        loginMesero.setText("Login");
+        Login.add(loginMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 500, -1));
+
+        Password.setFont(new java.awt.Font("Roboto", 1, 17)); // NOI18N
+        Password.setForeground(new java.awt.Color(255, 255, 255));
+        Password.setText("Password:");
+        Login.add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 400, -1, -1));
+
+        Usuario.setFont(new java.awt.Font("Roboto", 1, 17)); // NOI18N
+        Usuario.setForeground(new java.awt.Color(255, 255, 255));
+        Usuario.setText("Usuario:");
+        Login.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, 90, -1));
+
+        jtUsuario.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jtUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        jtUsuario.setText("Ingrese Dni");
+        jtUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jtUsuarioMousePressed(evt);
+            }
+        });
+        jtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtUsuarioActionPerformed(evt);
+            }
+        });
+        Login.add(jtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 240, -1));
+
+        jbIngresar.setBackground(new java.awt.Color(153, 153, 0));
+        jbIngresar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jbIngresar.setText("Ingresar");
+        jbIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbIngresarActionPerformed(evt);
+            }
+        });
+        Login.add(jbIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 460, 150, -1));
+
+        jtPassword.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jtPassword.setForeground(new java.awt.Color(153, 153, 153));
+        jtPassword.setText("********");
+        jtPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jtPasswordMousePressed(evt);
+            }
+        });
+        Login.add(jtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 400, 240, -1));
+
+        FondoTransparente1.setOpaque(true);
+        Login.add(FondoTransparente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 350, 460));
+
+        Fondo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/fondoLogin2.jpg"))); // NOI18N
+        Fondo.setMaximumSize(new java.awt.Dimension(400, 500));
+        Fondo.setMinimumSize(new java.awt.Dimension(400, 500));
+        Login.add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 600));
+
+        escritorio.add(Login, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 560, 600));
 
         Contenedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInicioConLogo.jpg"))); // NOI18N
         escritorio.add(Contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
@@ -197,32 +316,97 @@ public class PrincipalView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        EscritorioFrames.removeAll();
-        EscritorioFrames.repaint();
-        CargaMeserosView cmv = new CargaMeserosView();
-        cmv.setVisible(true);
-        EscritorioFrames.add(cmv);
-        EscritorioFrames.moveToFront(cmv);
+    private void jbMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMeserosActionPerformed
         
-    
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jbMeserosActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMesasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jbMesasActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jbIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jbIngresosActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jbProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbProductosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jbProductosActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jbPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPedidosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jbPedidosActionPerformed
+
+    private void CerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_CerrarMouseClicked
+
+    private void CerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseExited
+        // TODO add your handling code here:
+        Cerrar.setForeground(Color.white);
+    }//GEN-LAST:event_CerrarMouseExited
+
+    private void CerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseEntered
+        // TODO add your handling code here:
+        Cerrar.setForeground(Color.gray);
+    }//GEN-LAST:event_CerrarMouseEntered
+
+    private void jtUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtUsuarioMousePressed
+        if (jtUsuario.getText().equalsIgnoreCase("Ingrese Dni")){
+            jtUsuario.setText("");
+            jtUsuario.setForeground(Color.black);
+        }
+        if(String.valueOf(jtPassword.getPassword()).isEmpty()){
+            jtPassword.setText("********");
+            jtPassword.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jtUsuarioMousePressed
+
+    private void jtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtUsuarioActionPerformed
+
+    private void jbIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarActionPerformed
+        MeseroData md = new MeseroData();
+        int dni;
+        String ps;
+        try{
+            dni=Integer.parseInt(jtUsuario.getText());
+            ps=String.valueOf(jtPassword.getPassword());
+            if(md.verificarAdmin(dni,ps)){
+                Login.setVisible(false);    
+                activarAdmin();
+                inhabilitarMesero();
+                JOptionPane.showMessageDialog(null, "admin");
+            }else if(md.loginMesero(dni, ps)){
+                Login.setVisible(false);
+                activarMesero();
+                inhabilitarAdmin();
+                JOptionPane.showMessageDialog(null, "mesero");
+            }else{
+                JOptionPane.showMessageDialog(null,"No ingresa");
+                jtUsuario.setText("Ingrese Dni");
+                jtUsuario.setForeground(Color.gray);
+                jtPassword.setText("********");
+                jtPassword.setForeground(Color.gray);
+            }
+        }catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Ingrese numero de dni."+e);
+        }
+        catch(NullPointerException e){
+            JOptionPane.showMessageDialog(null, "Complete todos los campos."+e);
+        }
+    }//GEN-LAST:event_jbIngresarActionPerformed
+
+    private void jtPasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPasswordMousePressed
+        if (String.valueOf(jtPassword.getPassword()).equals("********")){
+            jtPassword.setText("");
+            jtPassword.setForeground(Color.black);
+        }
+        if (jtUsuario.getText().isEmpty()){
+            jtUsuario.setText("Ingrese Dni");
+            jtUsuario.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_jtPasswordMousePressed
 
     /**
      * @param args the command line arguments
@@ -260,17 +444,18 @@ public class PrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Cerrar;
     private javax.swing.JLabel Contenedor;
-    private javax.swing.JDesktopPane EscritorioFrames;
+    private javax.swing.JLabel Fondo;
     private javax.swing.JLabel FondoTransparente;
+    private javax.swing.JLabel FondoTransparente1;
     private javax.swing.JLabel LabelMeseros;
+    private javax.swing.JPanel Login;
+    private javax.swing.JLabel LogoMesero;
     private javax.swing.JPanel MenuLateral;
+    private javax.swing.JLabel Password;
+    private javax.swing.JLabel Usuario;
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -282,5 +467,14 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JButton jbIngresar;
+    private javax.swing.JButton jbIngresos;
+    private javax.swing.JButton jbMesas;
+    private javax.swing.JButton jbMeseros;
+    private javax.swing.JButton jbPedidos;
+    private javax.swing.JButton jbProductos;
+    private javax.swing.JPasswordField jtPassword;
+    public javax.swing.JTextField jtUsuario;
+    private javax.swing.JLabel loginMesero;
     // End of variables declaration//GEN-END:variables
 }
