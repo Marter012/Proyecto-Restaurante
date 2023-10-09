@@ -6,6 +6,8 @@
 package proyecto.restaurante.Control;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import proyecto.restaurante.Entidades.Mesero;
 
@@ -34,7 +36,7 @@ public class MeseroData {
             ps.setInt(3,m.getDni());
             ps.setBoolean(4,m.isEstado());
             ps.setInt(5,m.getAcceso());
-            ps.setString(5,m.getPassword()); 
+            ps.setString(6,m.getPassword()); 
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();            
             if(rs.next()){
@@ -166,5 +168,61 @@ public class MeseroData {
             } 
         }
         return valid;
+    }
+    
+    public List<Mesero> ListarMeseros(){
+        List<Mesero> listaMeseros = new ArrayList();
+        Mesero m;
+        sql = "SELECT * From meseros WHERE Estado=1 AND Acceso=2";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                m = new Mesero();
+                m.setIdMesero(rs.getInt("idMesero"));
+                m.setNombre(rs.getString("Nombre"));
+                m.setApellido(rs.getString("Apellido"));
+                m.setDni(rs.getInt("DNI"));
+                m.setEstado(rs.getBoolean("Estado"));
+                m.setAcceso(rs.getInt("Acceso"));
+                m.setPassword(rs.getString("Contraseña"));
+                listaMeseros.add(m);
+                        
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"MeseroData: Error al listar meseros");
+        }
+        return listaMeseros;
+    }
+    
+    public List<Mesero> ListarEncargados(){
+        List<Mesero> listaEncargados = new ArrayList();
+        Mesero m;
+        sql = "SELECT * From meseros WHERE Estado=1 AND Acceso=1";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                m = new Mesero();
+                m.setIdMesero(rs.getInt("idMesero"));
+                m.setNombre(rs.getString("Nombre"));
+                m.setApellido(rs.getString("Apellido"));
+                m.setDni(rs.getInt("DNI"));
+                m.setEstado(rs.getBoolean("Estado"));
+                m.setAcceso(rs.getInt("Acceso"));
+                m.setPassword(rs.getString("Contraseña"));
+                listaEncargados.add(m);
+                        
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"MeseroData: Error al listar meseros");
+        }
+        return listaEncargados;
     }
 }

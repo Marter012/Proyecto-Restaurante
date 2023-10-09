@@ -27,6 +27,7 @@ public class PrincipalView extends javax.swing.JFrame {
         FondoTransparente.setBackground(new Color(35,34,36,210));
         FondoTransparente1.setBackground(new Color(35,34,36,210));
         EscritorioFrames.setBackground(new Color(0,0,0,0));
+        LogOut.setVisible(false);
         
     }
     /**
@@ -39,8 +40,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        escritorio = new javax.swing.JDesktopPane();
-        Cerrar = new javax.swing.JLabel();
+        Escritorio = new javax.swing.JDesktopPane();
         MenuLateral = new javax.swing.JPanel();
         jlEncargado = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -62,6 +62,7 @@ public class PrincipalView extends javax.swing.JFrame {
         EscritorioFrames = new javax.swing.JDesktopPane();
         Login = new javax.swing.JPanel();
         LogoMesero = new javax.swing.JLabel();
+        CerrarIFrame = new javax.swing.JLabel();
         loginMesero = new javax.swing.JLabel();
         Password = new javax.swing.JLabel();
         Usuario = new javax.swing.JLabel();
@@ -70,6 +71,9 @@ public class PrincipalView extends javax.swing.JFrame {
         jtPassword = new javax.swing.JPasswordField();
         FondoTransparente1 = new javax.swing.JLabel();
         Fondo = new javax.swing.JLabel();
+        Cerrar = new javax.swing.JLabel();
+        LogOut = new javax.swing.JLabel();
+        LogIn = new javax.swing.JLabel();
         Contenedor = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -77,25 +81,7 @@ public class PrincipalView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        escritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        Cerrar.setBackground(new java.awt.Color(255, 255, 255));
-        Cerrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        Cerrar.setForeground(new java.awt.Color(255, 255, 255));
-        Cerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Cerrar.setText("Exit");
-        Cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                CerrarMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                CerrarMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                CerrarMouseEntered(evt);
-            }
-        });
-        escritorio.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 40, 30));
+        Escritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MenuLateral.setBackground(new java.awt.Color(9, 9, 9));
         MenuLateral.setOpaque(false);
@@ -209,7 +195,7 @@ public class PrincipalView extends javax.swing.JFrame {
         FondoTransparente.setOpaque(true);
         MenuLateral.add(FondoTransparente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
 
-        escritorio.add(MenuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
+        Escritorio.add(MenuLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
 
         EscritorioFrames.setOpaque(false);
         EscritorioFrames.setLayout(new java.awt.GridLayout(1, 0));
@@ -220,6 +206,23 @@ public class PrincipalView extends javax.swing.JFrame {
         LogoMesero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LogoMesero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/usuario.png"))); // NOI18N
         Login.add(LogoMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 500, 200));
+
+        CerrarIFrame.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        CerrarIFrame.setForeground(new java.awt.Color(255, 255, 255));
+        CerrarIFrame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        CerrarIFrame.setText("Exit");
+        CerrarIFrame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CerrarIFrameMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                CerrarIFrameMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                CerrarIFrameMouseEntered(evt);
+            }
+        });
+        Login.add(CerrarIFrame, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, 80, -1));
 
         loginMesero.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         loginMesero.setForeground(new java.awt.Color(255, 255, 255));
@@ -282,20 +285,74 @@ public class PrincipalView extends javax.swing.JFrame {
 
         EscritorioFrames.add(Login);
 
-        escritorio.add(EscritorioFrames, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 5, 540, 590));
+        Escritorio.add(EscritorioFrames, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 5, 540, 590));
+
+        Cerrar.setBackground(new java.awt.Color(255, 255, 255));
+        Cerrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        Cerrar.setForeground(new java.awt.Color(255, 255, 255));
+        Cerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Cerrar.setText("Exit");
+        Cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CerrarMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                CerrarMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                CerrarMouseEntered(evt);
+            }
+        });
+        Escritorio.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 0, 40, 30));
+
+        LogOut.setBackground(new java.awt.Color(255, 255, 255));
+        LogOut.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        LogOut.setForeground(new java.awt.Color(255, 255, 255));
+        LogOut.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LogOut.setText("Log-Out");
+        LogOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogOutMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LogOutMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LogOutMouseEntered(evt);
+            }
+        });
+        Escritorio.add(LogOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 0, 60, 30));
+
+        LogIn.setBackground(new java.awt.Color(255, 255, 255));
+        LogIn.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        LogIn.setForeground(new java.awt.Color(255, 255, 255));
+        LogIn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LogIn.setText("Login");
+        LogIn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogInMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LogInMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LogInMouseEntered(evt);
+            }
+        });
+        Escritorio.add(LogIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 0, 60, 30));
 
         Contenedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInicioConLogo.jpg"))); // NOI18N
-        escritorio.add(Contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
+        Escritorio.add(Contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
+            .addComponent(Escritorio)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
+            .addComponent(Escritorio)
         );
 
         pack();
@@ -371,12 +428,14 @@ public class PrincipalView extends javax.swing.JFrame {
                 EscritorioFrames.removeAll();
                 EscritorioFrames.repaint();
                 MenuLateral.setVisible(true);
+                LogIn.setVisible(false);
+                LogOut.setVisible(true);
                 if (m.getAcceso() == 1){
                 
                 DesactivarMesero();
                 ActivarAdmin(dni);
                 } else if (m.getAcceso() == 2){
-                JOptionPane.showMessageDialog(null, "Mesero");
+                //JOptionPane.showMessageDialog(null, "Mesero");
                 DesactivarAdmin();
                 ActivarMesero(dni);
                 }
@@ -393,6 +452,8 @@ public class PrincipalView extends javax.swing.JFrame {
         catch(NullPointerException e){
             JOptionPane.showMessageDialog(null, "Complete todos los campos "+e);
         }
+        jtUsuario.setText("");
+        jtPassword.setText("");
     }//GEN-LAST:event_jbIngresarActionPerformed
 
     private void jtPasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPasswordMousePressed
@@ -405,6 +466,62 @@ public class PrincipalView extends javax.swing.JFrame {
             jtUsuario.setForeground(Color.gray);
         }
     }//GEN-LAST:event_jtPasswordMousePressed
+
+    private void CerrarIFrameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarIFrameMouseClicked
+        // TODO add your handling code here:
+        jtUsuario.setForeground(Color.gray);
+        jtUsuario.setText("Ingrese Dni");
+        jtPassword.setForeground(Color.gray);
+        jtPassword.setText("********");
+        Login.setVisible(false);
+    }//GEN-LAST:event_CerrarIFrameMouseClicked
+
+    private void CerrarIFrameMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarIFrameMouseEntered
+        // TODO add your handling code here:
+        CerrarIFrame.setForeground(Color.gray);
+    }//GEN-LAST:event_CerrarIFrameMouseEntered
+
+    private void CerrarIFrameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarIFrameMouseExited
+        // TODO add your handling code here:
+        CerrarIFrame.setForeground(Color.white);
+    }//GEN-LAST:event_CerrarIFrameMouseExited
+
+    private void LogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogOutMouseClicked
+        
+        LogOut.setVisible(false);
+        LogIn.setVisible(true);
+        //Escritorio.moveToFront(Login);
+        MenuLateral.setVisible(false);
+        Login.setVisible(true);
+        EscritorioFrames.add(Login);
+        
+    }//GEN-LAST:event_LogOutMouseClicked
+
+    private void LogOutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogOutMouseExited
+        // TODO add your handling code here:
+        LogOut.setForeground(Color.white);
+    }//GEN-LAST:event_LogOutMouseExited
+
+    private void LogOutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogOutMouseEntered
+        // TODO add your handling code here:
+        LogOut.setForeground(Color.gray);
+    }//GEN-LAST:event_LogOutMouseEntered
+
+    private void LogInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogInMouseClicked
+        // TODO add your handling code here:
+        Login.setVisible(true);
+        //EscritorioFrames.add(Login);
+    }//GEN-LAST:event_LogInMouseClicked
+
+    private void LogInMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogInMouseExited
+        // TODO add your handling code here:
+        LogIn.setForeground(Color.white);
+    }//GEN-LAST:event_LogInMouseExited
+
+    private void LogInMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogInMouseEntered
+        // TODO add your handling code here:
+        LogIn.setForeground(Color.gray);
+    }//GEN-LAST:event_LogInMouseEntered
 
     private void ActivarMesero(int dni){
         MeseroData mesd = new MeseroData();
@@ -433,10 +550,10 @@ public class PrincipalView extends javax.swing.JFrame {
     
     private void DesactivarAdmin(){
         jlEncargado.setText("Encargado");
-        btMeseros.setEnabled(true);
-        btMesas.setEnabled(true);
-        btProductos.setEnabled(true);
-        btIngresos.setEnabled(true);
+        btMeseros.setEnabled(false);
+        btMesas.setEnabled(false);
+        btProductos.setEnabled(false);
+        btIngresos.setEnabled(false);
     }
     /**
      * @param args the command line arguments
@@ -475,12 +592,16 @@ public class PrincipalView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cerrar;
+    private javax.swing.JLabel CerrarIFrame;
     private javax.swing.JLabel Contenedor;
+    private javax.swing.JDesktopPane Escritorio;
     private javax.swing.JDesktopPane EscritorioFrames;
     private javax.swing.JLabel Fondo;
     private javax.swing.JLabel FondoTransparente;
     private javax.swing.JLabel FondoTransparente1;
     private javax.swing.JLabel IconMeseros;
+    private javax.swing.JLabel LogIn;
+    private javax.swing.JLabel LogOut;
     private javax.swing.JPanel Login;
     private javax.swing.JLabel LogoMesero;
     private javax.swing.JPanel MenuLateral;
@@ -491,7 +612,6 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JButton btMeseros;
     private javax.swing.JButton btPedidos;
     private javax.swing.JButton btProductos;
-    private javax.swing.JDesktopPane escritorio;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -98,7 +98,7 @@ public class Mesero {
 
     @Override
     public String toString() {
-        return "Mesero{" + "idMesero=" + idMesero + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", estado=" + estado + ", password=" + password + '}';
+        return "Id: " + idMesero + ", " + nombre + " " + apellido;
     }
 
     public void setVisible(boolean b) {
