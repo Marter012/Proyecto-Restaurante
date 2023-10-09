@@ -58,7 +58,7 @@ public ReservaData(){
         
  }
 
-    public void buscarReserva(int DNI){
+    public Reserva buscarReserva(int DNI){
        
         sql="SELECT * FROM reservas WHERE DNI=?";
       
