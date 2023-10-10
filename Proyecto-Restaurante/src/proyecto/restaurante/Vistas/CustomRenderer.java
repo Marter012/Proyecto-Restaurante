@@ -22,6 +22,9 @@ public class CustomRenderer extends DefaultListCellRenderer {
                 setSize(20,100);
                 //setForeground(Color.black);
             Mesero mesero = (Mesero) value;
+            if (isSelected==true){
+                setBackground(Color.gray);
+            }
             if (mesero.isEstado()){
                 setForeground(Color.black);
             }else{
@@ -30,9 +33,11 @@ public class CustomRenderer extends DefaultListCellRenderer {
             if (this.isEnabled()){
             setText(mesero.toString());
             }else{
-                System.out.println("Hola");
+                
             }
         }
         return this;
     }
+    
+    
 }

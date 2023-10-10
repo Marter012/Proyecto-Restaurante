@@ -305,7 +305,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         }
         m.setPassword(jtPassword.getText());
         Mesero meseroActual = mesd.buscarMeseroPorId(m.getIdMesero());
-        if (meseroActual.getAcceso()==m.getAcceso()){
+        if (meseroActual.getAcceso()!=m.getAcceso()){
             cambiarTabla=true;
         }
         mesd.modificarMesero(m);
@@ -317,6 +317,9 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                         posicion = listaMeseros.indexOf(me);
                     }
                 }
+                jcbEncargado.removeAllItems();
+                jcbEncargado.setEnabled(false);
+                jcbMesero.setEnabled(true);
                 CargarComboMeseros();
                 jcbMesero.setSelectedIndex(posicion);
             }else{
@@ -327,6 +330,9 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                             posicion = listaEncargados.indexOf(me);
                         }
                     }
+                    jcbMesero.removeAllItems();
+                    jcbMesero.setEnabled(false);
+                    jcbEncargado.setEnabled(true);
                     CargarComboEncargados();
                     jcbEncargado.setSelectedIndex(posicion);
                 }
@@ -524,7 +530,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         MeseroData mesd = new MeseroData();
         
         for (Mesero me: mesd.ListarMeseros()){
-                jcbMesero.setRenderer(new CustomRenderer());
+                //jcbMesero.setRenderer(new CustomRenderer());
                 jcbMesero.addItem(me);
         
         }
@@ -535,7 +541,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         MeseroData mesd = new MeseroData();
         
         for (Mesero me: mesd.ListarEncargados()){
-            jcbEncargado.setRenderer(new CustomRenderer());
+            //jcbEncargado.setRenderer(new CustomRenderer());
             jcbEncargado.addItem(me);
         }
         
