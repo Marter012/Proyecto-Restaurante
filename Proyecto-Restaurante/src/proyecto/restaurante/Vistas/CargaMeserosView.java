@@ -16,7 +16,6 @@ import proyecto.restaurante.Entidades.Mesero;
  * @author Emito
  */
 public class CargaMeserosView extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form CargaMeserosView
      */
@@ -89,7 +88,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jbActualizarMeseroActionPerformed(evt);
             }
         });
-        Fondo.add(jbActualizarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 460, -1, -1));
+        Fondo.add(jbActualizarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 460, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -235,7 +234,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jbCrearMeseroActionPerformed(evt);
             }
         });
-        Fondo.add(jbCrearMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 460, 140, -1));
+        Fondo.add(jbCrearMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, 140, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -280,7 +279,19 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbActualizarMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarMeseroActionPerformed
-        this.dispose();
+        MeseroData mesd = new MeseroData();
+        Mesero m = new Mesero();
+        m.setNombre(jtNombre.getText());
+        m.setApellido(jtApellido.getText());
+        m.setDni(Integer.parseInt(jtDni.getText()));
+        m.setEstado(jrbActivo.isSelected());
+        if (jrbEncargado.isSelected()){
+            m.setAcceso(1);
+        }else{
+            m.setAcceso(2);
+        }
+        m.setPassword(jtPassword.getText());
+        mesd.modificarMesero(m);
     }//GEN-LAST:event_jbActualizarMeseroActionPerformed
 
     private void jcbMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMeseroActionPerformed
@@ -403,12 +414,11 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jrbMeseroActionPerformed
 
     private void jcbEncargadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbEncargadoMouseClicked
-        // TODO add your handling code here:
         if (!jcbEncargado.isEnabled()){
         jcbEncargado.setEnabled(true);
         jcbMesero.setEnabled(false);
         jcbMesero.removeAllItems();
-        LimpiarPantalla();
+        LimpiarCampos();
         jbCrearMesero.setEnabled(false);
         jbActualizarMesero.setEnabled(true);
         jcbEncargado.removeAllItems();
