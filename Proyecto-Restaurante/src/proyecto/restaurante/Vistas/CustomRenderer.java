@@ -20,12 +20,17 @@ public class CustomRenderer extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus){
         if (value != null){
                 setSize(20,100);
-                setForeground(Color.black);
+                //setForeground(Color.black);
             Mesero mesero = (Mesero) value;
             if (mesero.isEstado()){
-                setBackground(Color.green);
+                setForeground(Color.black);
             }else{
-                setBackground(Color.red);
+                setForeground(Color.red);
+            }
+            if (this.isEnabled()){
+            setText(mesero.toString());
+            }else{
+                System.out.println("Hola");
             }
         }
         return this;
