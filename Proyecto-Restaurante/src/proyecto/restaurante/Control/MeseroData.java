@@ -173,7 +173,7 @@ public class MeseroData {
     public List<Mesero> ListarMeseros(){
         List<Mesero> listaMeseros = new ArrayList();
         Mesero m;
-        sql = "SELECT * From meseros WHERE Acceso=2";
+        sql = "SELECT * From meseros WHERE Acceso=2 AND Estado=1";
         
         try {
             ps = con.prepareStatement(sql);
@@ -201,7 +201,7 @@ public class MeseroData {
     public List<Mesero> ListarEncargados(){
         List<Mesero> listaEncargados = new ArrayList();
         Mesero m;
-        sql = "SELECT * From meseros WHERE Estado=1 AND Acceso=1";
+        sql = "SELECT * From meseros WHERE Acceso=1 AND Estado=1";
         
         try {
             ps = con.prepareStatement(sql);
@@ -225,4 +225,34 @@ public class MeseroData {
         }
         return listaEncargados;
     }
+    
+    public List<Mesero> ListarInactivos(){
+        List<Mesero> listaInactivos = new ArrayList();
+        Mesero m;
+        sql = "SELECT * From meseros WHERE Estado=0";
+        
+        try {
+            ps = con.prepareStatement(sql);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                m = new Mesero();
+                m.setIdMesero(rs.getInt("idMesero"));
+                m.setNombre(rs.getString("Nombre"));
+                m.setApellido(rs.getString("Apellido"));
+                m.setDni(rs.getInt("DNI"));
+                m.setEstado(rs.getBoolean("Estado"));
+                m.setAcceso(rs.getInt("Acceso"));
+                m.setPassword(rs.getString("Contraseña"));
+                listaInactivos.add(m);
+                        
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"MeseroData: Error al listar meseros");
+        }
+        return listaInactivos;
+    }
+    
+    
 }

@@ -26,6 +26,8 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         estilos();
         //CargarComboMeseros();
         jcbMesero.setEnabled(false);
+        jcbEncargado.setEnabled(false);
+        jcbInactivo.setEnabled(false);
         //CargarComboEncargados();
         jcbEncargado.setEnabled(false);
         jrbInactivo.setSelected(false);
@@ -74,6 +76,8 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         Limpiar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jcbInactivo = new javax.swing.JComboBox<>();
         TransparenciaCargar = new javax.swing.JLabel();
         TransparenciaModificar = new javax.swing.JLabel();
         jlIdMesero = new javax.swing.JLabel();
@@ -92,13 +96,13 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jbActualizarMeseroActionPerformed(evt);
             }
         });
-        Fondo.add(jbActualizarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 460, -1, -1));
+        Fondo.add(jbActualizarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 500, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Contraseña:");
-        Fondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 130, 30));
+        Fondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 130, 30));
 
         jcbEncargado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -110,7 +114,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jcbEncargadoActionPerformed(evt);
             }
         });
-        Fondo.add(jcbEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, 270, -1));
+        Fondo.add(jcbEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 270, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -127,7 +131,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jcbMeseroActionPerformed(evt);
             }
         });
-        Fondo.add(jcbMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 270, -1));
+        Fondo.add(jcbMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 270, -1));
 
         Cerrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         Cerrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -149,42 +153,42 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Seleccione Encargado");
-        Fondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 190, 30));
+        jLabel5.setText("Seleccione Inactivos");
+        Fondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 190, 30));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Nombre:");
-        Fondo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 130, 30));
+        Fondo.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 130, 30));
 
         jLabel7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Apellido:");
-        Fondo.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 130, 30));
+        Fondo.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 130, 30));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Dni:");
-        Fondo.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 130, 30));
+        Fondo.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, 130, 30));
 
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Estado:");
-        Fondo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, 130, 30));
+        Fondo.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 130, 30));
 
         jLabel10.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Acceso:");
-        Fondo.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 130, 30));
-        Fondo.add(jtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 400, 320, -1));
-        Fondo.add(jtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 320, -1));
-        Fondo.add(jtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 320, -1));
-        Fondo.add(jtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 320, -1));
+        Fondo.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 130, 30));
+        Fondo.add(jtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, 320, -1));
+        Fondo.add(jtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 320, -1));
+        Fondo.add(jtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 320, -1));
+        Fondo.add(jtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 320, -1));
 
         jrbMesero.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jrbMesero.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,7 +198,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jrbMeseroActionPerformed(evt);
             }
         });
-        Fondo.add(jrbMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 120, -1));
+        Fondo.add(jrbMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 400, 120, -1));
 
         jrbEncargado.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jrbEncargado.setForeground(new java.awt.Color(255, 255, 255));
@@ -204,7 +208,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jrbEncargadoActionPerformed(evt);
             }
         });
-        Fondo.add(jrbEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 360, 120, -1));
+        Fondo.add(jrbEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 400, 120, -1));
 
         jrbActivo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jrbActivo.setForeground(new java.awt.Color(255, 255, 255));
@@ -214,7 +218,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jrbActivoActionPerformed(evt);
             }
         });
-        Fondo.add(jrbActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 120, -1));
+        Fondo.add(jrbActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 360, 120, -1));
 
         jrbInactivo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jrbInactivo.setForeground(new java.awt.Color(255, 255, 255));
@@ -224,13 +228,13 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jrbInactivoActionPerformed(evt);
             }
         });
-        Fondo.add(jrbInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 320, 120, -1));
+        Fondo.add(jrbInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 120, -1));
 
         jLabel11.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Seleccione Mesero");
-        Fondo.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 190, 30));
+        Fondo.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 190, 30));
 
         jbCrearMesero.setText("Cargar Mesero");
         jbCrearMesero.addActionListener(new java.awt.event.ActionListener() {
@@ -238,7 +242,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jbCrearMeseroActionPerformed(evt);
             }
         });
-        Fondo.add(jbCrearMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, 140, -1));
+        Fondo.add(jbCrearMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 140, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -248,7 +252,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jLabel12.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Complete los Datos para un nuevo Mesero");
-        Fondo.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
+        Fondo.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
 
         Limpiar.setText("Limpiar Pantalla");
         Limpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -256,13 +260,31 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 LimpiarActionPerformed(evt);
             }
         });
-        Fondo.add(Limpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 460, 130, -1));
+        Fondo.add(Limpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 500, 130, -1));
+
+        jLabel13.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Seleccione Encargado");
+        Fondo.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 190, 30));
+
+        jcbInactivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbInactivoMouseClicked(evt);
+            }
+        });
+        jcbInactivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbInactivoActionPerformed(evt);
+            }
+        });
+        Fondo.add(jcbInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 270, -1));
 
         TransparenciaCargar.setOpaque(true);
-        Fondo.add(TransparenciaCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 46, 500, 110));
+        Fondo.add(TransparenciaCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 46, 500, 140));
 
         TransparenciaModificar.setOpaque(true);
-        Fondo.add(TransparenciaModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 166, 500, 360));
+        Fondo.add(TransparenciaModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 500, 390));
         Fondo.add(jlIdMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 20, 20));
 
         FondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
@@ -318,6 +340,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                     }
                 }
                 jcbEncargado.removeAllItems();
+                
                 jcbEncargado.setEnabled(false);
                 jcbMesero.setEnabled(true);
                 CargarComboMeseros();
@@ -351,6 +374,8 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbActualizarMeseroActionPerformed
 
     private void jcbMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMeseroActionPerformed
+        //jcbEncargado.removeAllItems();
+        //jcbEncargado.setEnabled(false);
         if (jcbMesero.getItemCount()==0){
             
         }else{
@@ -434,7 +459,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         if (!jcbMesero.isEnabled()){
         jcbEncargado.removeAllItems();
         jcbEncargado.addItem(null);
-        jcbEncargado.setRenderer(jcbEncargado.getRenderer());
+        //jcbEncargado.setRenderer(jcbEncargado.getRenderer());
         jcbMesero.setEnabled(true);
         jcbEncargado.removeAllItems();
         jcbEncargado.setEnabled(false);
@@ -477,7 +502,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     private void jcbEncargadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbEncargadoMouseClicked
         if (!jcbEncargado.isEnabled()){
         jcbMesero.removeAllItems();
-        jcbMesero.setRenderer(jcbMesero.getRenderer());
+        //jcbMesero.setRenderer(jcbMesero.getRenderer());
         jcbEncargado.setEnabled(true);
         //jcbMesero.removeAllItems();
         jcbMesero.setEnabled(false);
@@ -491,7 +516,8 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbEncargadoMouseClicked
 
     private void jcbEncargadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEncargadoActionPerformed
-        // TODO add your handling code here:
+//        jcbMesero.removeAllItems();
+//        jcbMesero.setEnabled(false);
         if (jcbEncargado.getItemCount()==0){
         }else{
         Mesero m = new Mesero();
@@ -526,6 +552,14 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     private void LimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarActionPerformed
         LimpiarPantalla();
     }//GEN-LAST:event_LimpiarActionPerformed
+
+    private void jcbInactivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbInactivoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbInactivoMouseClicked
+
+    private void jcbInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbInactivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbInactivoActionPerformed
     private void CargarComboMeseros(){
         MeseroData mesd = new MeseroData();
         
@@ -579,6 +613,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -590,6 +625,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbActualizarMesero;
     private javax.swing.JButton jbCrearMesero;
     private javax.swing.JComboBox<Mesero> jcbEncargado;
+    private javax.swing.JComboBox<Mesero> jcbInactivo;
     private javax.swing.JComboBox<Mesero> jcbMesero;
     private javax.swing.JLabel jlIdMesero;
     private javax.swing.JRadioButton jrbActivo;
