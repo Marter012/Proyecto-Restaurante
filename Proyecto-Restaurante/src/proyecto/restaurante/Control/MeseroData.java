@@ -112,8 +112,8 @@ public class MeseroData {
             ps.setInt(3, m.getDni());
             ps.setBoolean(4, m.isEstado());
             ps.setInt(5,m.getAcceso());
-            ps.setString(5,m.getPassword());
-            ps.setInt(6,m.getIdMesero());
+            ps.setString(6,m.getPassword());
+            ps.setInt(7,m.getIdMesero());
             
             int resultSet = ps.executeUpdate();            
             if(resultSet == 1){
