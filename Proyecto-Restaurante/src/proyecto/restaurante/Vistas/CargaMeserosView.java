@@ -29,6 +29,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jcbEncargado.setEnabled(false);
         jrbInactivo.setSelected(false);
         jrbMesero.setSelected(false);
+        jlIdMesero.setVisible(false);
         
     }
     private void estilos(){
@@ -73,6 +74,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         Limpiar = new javax.swing.JButton();
         TransparenciaCargar = new javax.swing.JLabel();
         TransparenciaModificar = new javax.swing.JLabel();
+        jlIdMesero = new javax.swing.JLabel();
         FondoImagen = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
@@ -259,6 +261,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
 
         TransparenciaModificar.setOpaque(true);
         Fondo.add(TransparenciaModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 166, 500, 360));
+        Fondo.add(jlIdMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 20, 20));
 
         FondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
         FondoImagen.setLabelFor(Fondo);
@@ -281,6 +284,13 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     private void jbActualizarMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarMeseroActionPerformed
         MeseroData mesd = new MeseroData();
         Mesero m = new Mesero();
+        int posicion;
+        if (jcbEncargado.isEnabled()){
+            posicion=jcbEncargado.getSelectedIndex();
+        }else{
+            posicion=jcbMesero.getSelectedIndex();
+        }
+        m.setIdMesero(Integer.parseInt(jlIdMesero.getText()));
         m.setNombre(jtNombre.getText());
         m.setApellido(jtApellido.getText());
         m.setDni(Integer.parseInt(jtDni.getText()));
@@ -292,6 +302,15 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         }
         m.setPassword(jtPassword.getText());
         mesd.modificarMesero(m);
+        if (jcbEncargado.isEnabled()){
+            jcbEncargado.removeAllItems();
+            CargarComboEncargados();
+            jcbEncargado.setSelectedIndex(posicion);
+        }else{
+            jcbMesero.removeAllItems();
+            CargarComboMeseros();
+            jcbMesero.setSelectedIndex(posicion);
+        }
     }//GEN-LAST:event_jbActualizarMeseroActionPerformed
 
     private void jcbMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMeseroActionPerformed
@@ -301,6 +320,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         Mesero m = new Mesero();
         m = (Mesero)jcbMesero.getSelectedItem();
         if (m!=null){
+            jlIdMesero.setText(String.valueOf(m.getIdMesero()));
             jtNombre.setText(m.getNombre());
             jtApellido.setText(m.getApellido());
             jtDni.setText(String.valueOf(m.getDni()));
@@ -433,6 +453,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         Mesero m = new Mesero();
         m = (Mesero)jcbEncargado.getSelectedItem();
         if (m!=null){
+            jlIdMesero.setText(String.valueOf(m.getIdMesero()));
             jtNombre.setText(m.getNombre());
             jtApellido.setText(m.getApellido());
             jtDni.setText(String.valueOf(m.getDni()));
@@ -465,7 +486,9 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         MeseroData mesd = new MeseroData();
         
         for (Mesero me: mesd.ListarMeseros()){
-        jcbMesero.addItem(me);
+                //jcbMesero.setRenderer(new CustomRenderer());
+                jcbMesero.addItem(me);
+        
         }
         
     }
@@ -474,12 +497,14 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         MeseroData mesd = new MeseroData();
         
         for (Mesero me: mesd.ListarEncargados()){
-        jcbEncargado.addItem(me);
+            //jcbEncargado.setRenderer(new CustomRenderer());
+            jcbEncargado.addItem(me);
         }
         
     }
     
     private void LimpiarCampos(){
+        jlIdMesero.setText("");
         jtNombre.setText("");
         jtApellido.setText("");
         jtDni.setText("");
@@ -522,6 +547,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbCrearMesero;
     private javax.swing.JComboBox<Mesero> jcbEncargado;
     private javax.swing.JComboBox<Mesero> jcbMesero;
+    private javax.swing.JLabel jlIdMesero;
     private javax.swing.JRadioButton jrbActivo;
     private javax.swing.JRadioButton jrbEncargado;
     private javax.swing.JRadioButton jrbInactivo;
