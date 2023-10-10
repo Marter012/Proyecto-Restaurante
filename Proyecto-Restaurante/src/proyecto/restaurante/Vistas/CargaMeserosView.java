@@ -486,7 +486,9 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         MeseroData mesd = new MeseroData();
         
         for (Mesero me: mesd.ListarMeseros()){
-        jcbMesero.addItem(me);
+                //jcbMesero.setRenderer(new CustomRenderer());
+                jcbMesero.addItem(me);
+        
         }
         
     }
@@ -495,7 +497,8 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         MeseroData mesd = new MeseroData();
         
         for (Mesero me: mesd.ListarEncargados()){
-        jcbEncargado.addItem(me);
+            //jcbEncargado.setRenderer(new CustomRenderer());
+            jcbEncargado.addItem(me);
         }
         
     }

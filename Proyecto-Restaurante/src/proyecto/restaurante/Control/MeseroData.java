@@ -173,7 +173,7 @@ public class MeseroData {
     public List<Mesero> ListarMeseros(){
         List<Mesero> listaMeseros = new ArrayList();
         Mesero m;
-        sql = "SELECT * From meseros WHERE Estado=1 AND Acceso=2";
+        sql = "SELECT * From meseros WHERE Acceso=2";
         
         try {
             ps = con.prepareStatement(sql);
