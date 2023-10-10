@@ -5,7 +5,10 @@
  */
 package proyecto.restaurante.Entidades;
 
+import java.util.ArrayList;
+import java.util.List;
 import proyecto.restaurante.Control.MesaData;
+import proyecto.restaurante.Control.MeseroData;
 
 /**
  *
@@ -22,12 +25,25 @@ public class ProyectoRestaurante {
 //        Producto p = new Producto("Coca Cola", 20, Categoria.BEBIDA, 700,true);
 //        pd.guardarProducto(p);
 //        System.out.println(pd.listarProductos());
-        MesaData md=new MesaData();
-        Mesa m=new Mesa();
-//        md.crearMesa(m);
-        m=md.obtenerMesa(2);
-        m.setEstado(Estado.RESERVADA);
-        md.modificarMesa(m);
+//        MesaData md=new MesaData();
+//        Mesa m=new Mesa();
+////        md.crearMesa(m);
+//        m=md.obtenerMesa(2);
+//        m.setEstado(Estado.RESERVADA);
+//        md.modificarMesa(m);
+
+    MeseroData md = new MeseroData();
+        List<Mesero> listaMeseros = md.ListarMeseros();
+        List<Mesero> listaEncargados = md.ListarEncargados();
+        System.out.println("Meseros");
+    for (Mesero m: listaMeseros){
+        System.out.println(m);
+    }
+    
+        System.out.println("Encargados");
+        for (Mesero m: listaEncargados){
+        System.out.println(m);
+    }
     }
     
 }
