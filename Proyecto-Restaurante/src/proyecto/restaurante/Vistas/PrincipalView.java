@@ -364,9 +364,7 @@ public class PrincipalView extends javax.swing.JFrame {
         CargaMeserosView cmv = new CargaMeserosView();
         cmv.setVisible(true);
         EscritorioFrames.add(cmv);
-        EscritorioFrames.moveToFront(cmv);
-        
-    
+        EscritorioFrames.moveToFront(cmv);   
     }//GEN-LAST:event_btMeserosActionPerformed
 
     private void btMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMesasActionPerformed
@@ -382,7 +380,12 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_btProductosActionPerformed
 
     private void btPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPedidosActionPerformed
-        // TODO add your handling code here:
+        EscritorioFrames.removeAll();
+        EscritorioFrames.repaint();
+        MeserosView mv = new MeserosView();
+        mv.setVisible(true);
+        EscritorioFrames.add(mv);
+        EscritorioFrames.moveToFront(mv); 
     }//GEN-LAST:event_btPedidosActionPerformed
 
     private void CerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseClicked

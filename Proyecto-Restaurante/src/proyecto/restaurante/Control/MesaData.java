@@ -84,6 +84,33 @@ public class MesaData {
         }
     }
     
+    public ArrayList<Mesa> ListarMesasPorEstado(String estados){
+        /*
+            Este metodo obtiene de la BD las Mesas Totales.
+        */
+        ArrayList<Mesa> listaMesasLibres=new ArrayList();
+        String sql="SELECT `idMesa`, `Capacidad`, `Estado` FROM `mesas` WHERE mesas.Estado=?";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1,String.valueOf(estados));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                Mesa ms=new Mesa();
+                ms.setIdMesa(rs.getInt("idMesa"));
+                ms.setCapacidad(rs.getInt("Capacidad"));
+                ms.setEstado(Estado.valueOf(rs.getString("Estado")));
+                listaMesasLibres.add(ms);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"MesaData: Error en la extraccion de la base de datos");
+        }
+        if(listaMesasLibres.isEmpty()){
+            JOptionPane.showMessageDialog(null,"MesaData: La lista esta vacia");
+        }
+        return listaMesasLibres;
+    }
+    
     public ArrayList<Mesa> obtenerMesasLibres(){
         /*
             Este metodo obtiene de la BD las Mesas disponibles(Libres)
