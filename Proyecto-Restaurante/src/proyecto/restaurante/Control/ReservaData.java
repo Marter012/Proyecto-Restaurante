@@ -185,5 +185,16 @@ public ArrayList<Reserva> listarReservasPorFecha(Date Fecha){
         
     }
 
+ /* public ArrayList<String> horasDisponibles(){
+      List<String> horas=new ArrayList<>();
+      horas.add("12:00");
+      horas.add("13:00");
+      horas.add("21:00");
+      horas.add("22:00");
+      return (ArrayList<String>) horas;
+      
+  }
+            
+    */
    
 }
