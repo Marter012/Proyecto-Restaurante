@@ -378,7 +378,12 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_btIngresosActionPerformed
 
     private void btProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProductosActionPerformed
-        // TODO add your handling code here:
+        EscritorioFrames.removeAll();
+        EscritorioFrames.repaint();
+        CargaProductosView cpv = new CargaProductosView();
+        cpv.setVisible(true);
+        EscritorioFrames.add(cpv);
+        EscritorioFrames.moveToFront(cpv);
     }//GEN-LAST:event_btProductosActionPerformed
 
     private void btPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPedidosActionPerformed
