@@ -15,13 +15,14 @@ import proyecto.restaurante.Entidades.Mesero;
  * @author Emito
  */
 public class PrincipalView extends javax.swing.JFrame {
+    private static MeseroData md;
+    private static Mesero m;
     public PrincipalView() {
         initComponents();
         this.setLocationRelativeTo(null);
         estilos();
         MenuLateral.setVisible(false);
-        MeseroData md;
-        Mesero m;
+        
     }
     public void estilos (){
         FondoTransparente.setBackground(new Color(35,34,36,210));
@@ -370,7 +371,12 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_btMeserosActionPerformed
 
     private void btMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMesasActionPerformed
-        // TODO add your handling code here:
+        EscritorioFrames.removeAll();
+        EscritorioFrames.repaint();
+        MesasView mv= new MesasView();
+        mv.setVisible(true);
+        EscritorioFrames.add(mv);
+        EscritorioFrames.moveToFront(mv);
     }//GEN-LAST:event_btMesasActionPerformed
 
     private void btIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIngresosActionPerformed
@@ -415,8 +421,8 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_jtUsuarioActionPerformed
 
     private void jbIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarActionPerformed
-        MeseroData md = new MeseroData();
-        Mesero m = new Mesero();
+        md = new MeseroData();
+        m = new Mesero();
         int dni;
         String ps;
         try{
@@ -528,9 +534,9 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_LogInMouseEntered
 
     private void ActivarMesero(int dni){
-        MeseroData mesd = new MeseroData();
-        Mesero m =  new Mesero();
-        m=mesd.buscarMeseroPorDNI(dni);
+        md = new MeseroData();
+        m =  new Mesero();
+        m=md.buscarMeseroPorDNI(dni);
         jlMeseros.setText(m.getNombre());
         btPedidos.setEnabled(true);
     }
@@ -541,9 +547,9 @@ public class PrincipalView extends javax.swing.JFrame {
     }
     
     private void ActivarAdmin(int dni){
-        MeseroData mesd  = new MeseroData();
-        Mesero m = new Mesero();
-        m=mesd.buscarMeseroPorDNI(dni);
+        md  = new MeseroData();
+        m = new Mesero();
+        m=md.buscarMeseroPorDNI(dni);
         jlEncargado.setText(m.getNombre());
         btMeseros.setEnabled(true);
         btMesas.setEnabled(true);

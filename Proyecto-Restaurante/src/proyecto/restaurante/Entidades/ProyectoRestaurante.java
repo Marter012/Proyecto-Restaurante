@@ -25,12 +25,6 @@ public class ProyectoRestaurante {
 //        Producto p = new Producto("Coca Cola", 20, Categoria.BEBIDA, 700,true);
 //        pd.guardarProducto(p);
 //        System.out.println(pd.listarProductos());
-//        MesaData md=new MesaData();
-//        Mesa m=new Mesa();
-////        md.crearMesa(m);
-//        m=md.obtenerMesa(2);
-//        m.setEstado(Estado.RESERVADA);
-//        md.modificarMesa(m);
 
     MeseroData md = new MeseroData();
         List<Mesero> listaMeseros = md.ListarMeseros();

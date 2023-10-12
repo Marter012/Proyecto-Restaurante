@@ -6,14 +6,27 @@
 package proyecto.restaurante.Vistas;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import proyecto.restaurante.Control.MesaData;
+import proyecto.restaurante.Entidades.*;
 
 /**
  *
  * @author Alumno
  */
 public class MesasView extends javax.swing.JInternalFrame {
-
+    private static MesaData md;
+    private static Mesa m;
+    private static ArrayList<Mesa> listaMesa;
+    DefaultTableModel dtm=new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return jtTablaListaMesa.getSelectedColumn()==1;
+        }
+    };
     /**
      * Creates new form MesasView
      */
@@ -21,9 +34,13 @@ public class MesasView extends javax.swing.JInternalFrame {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         estilos();
+        armarCabecera();
+        jrbMesasActivas.setSelected(true);
+        verificacionDeActividad();
+        jrbMesasActivas.setEnabled(false);
     }
     private void estilos(){
-        jPanel1.setBackground(new Color(35,34,36,210));
+        jpFondo.setBackground(new Color(35,34,36,210));
         jlTransparenciaCarga.setBackground(new Color(35,34,36,160));
         jlTransparenciaModificar.setBackground(new Color(35,34,36,160));
     }
@@ -37,9 +54,21 @@ public class MesasView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jpFondo = new javax.swing.JPanel();
         jlTituloIntereno = new javax.swing.JLabel();
         jlCerrar = new javax.swing.JLabel();
+        jlTituloTransparenciaCarga = new javax.swing.JLabel();
+        jlCapacidad = new javax.swing.JLabel();
+        jtCapacidad = new javax.swing.JTextField();
+        jbAgregar = new javax.swing.JButton();
+        jlTituloTransparenciaModificar = new javax.swing.JLabel();
+        jrbMesasActivas = new javax.swing.JRadioButton();
+        jrbMesasInactivas = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtTablaListaMesa = new javax.swing.JTable();
+        jbModificar = new javax.swing.JButton();
+        jbActivar = new javax.swing.JButton();
+        jbDesactivar = new javax.swing.JButton();
         jlTransparenciaCarga = new javax.swing.JLabel();
         jlTransparenciaModificar = new javax.swing.JLabel();
         jlFondoImagen = new javax.swing.JLabel();
@@ -47,13 +76,15 @@ public class MesasView extends javax.swing.JInternalFrame {
         setMinimumSize(new java.awt.Dimension(540, 580));
         setPreferredSize(new java.awt.Dimension(540, 590));
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jpFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jlTituloIntereno.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jlTituloIntereno.setText("Carga y Modificacion de Mesas");
-        jPanel1.add(jlTituloIntereno, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, 40));
+        jlTituloIntereno.setForeground(new java.awt.Color(204, 204, 204));
+        jlTituloIntereno.setText("Carga y Modificación de Mesas");
+        jpFondo.add(jlTituloIntereno, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 290, 40));
 
         jlCerrar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jlCerrar.setForeground(new java.awt.Color(204, 204, 204));
         jlCerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlCerrar.setText("Exit");
         jlCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -67,29 +98,143 @@ public class MesasView extends javax.swing.JInternalFrame {
                 jlCerrarMouseExited(evt);
             }
         });
-        jPanel1.add(jlCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, 50, 30));
+        jpFondo.add(jlCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, 50, 30));
+
+        jlTituloTransparenciaCarga.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jlTituloTransparenciaCarga.setForeground(new java.awt.Color(204, 204, 204));
+        jlTituloTransparenciaCarga.setText("Agregar Mesas:");
+        jpFondo.add(jlTituloTransparenciaCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 130, 20));
+
+        jlCapacidad.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jlCapacidad.setForeground(new java.awt.Color(204, 204, 204));
+        jlCapacidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlCapacidad.setText("Capacidad:");
+        jpFondo.add(jlCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 120, 30));
+
+        jtCapacidad.setForeground(new java.awt.Color(102, 102, 102));
+        jtCapacidad.setText("cantidad de clientes");
+        jtCapacidad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtCapacidadMouseClicked(evt);
+            }
+        });
+        jtCapacidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtCapacidadActionPerformed(evt);
+            }
+        });
+        jpFondo.add(jtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 150, 30));
+
+        jbAgregar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jbAgregar.setForeground(new java.awt.Color(0, 0, 0));
+        jbAgregar.setText("Agregar");
+        jbAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAgregarActionPerformed(evt);
+            }
+        });
+        jpFondo.add(jbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, -1, 30));
+
+        jlTituloTransparenciaModificar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jlTituloTransparenciaModificar.setForeground(new java.awt.Color(204, 204, 204));
+        jlTituloTransparenciaModificar.setText("Listado de Mesas:");
+        jpFondo.add(jlTituloTransparenciaModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+
+        jrbMesasActivas.setForeground(new java.awt.Color(204, 204, 204));
+        jrbMesasActivas.setText("Mesas Activas");
+        jrbMesasActivas.setBorder(null);
+        jrbMesasActivas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jrbMesasActivas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbMesasActivasActionPerformed(evt);
+            }
+        });
+        jpFondo.add(jrbMesasActivas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
+
+        jrbMesasInactivas.setForeground(new java.awt.Color(204, 204, 204));
+        jrbMesasInactivas.setText("Mesas Inactivas");
+        jrbMesasInactivas.setBorder(null);
+        jrbMesasInactivas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jrbMesasInactivas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jrbMesasInactivasMouseClicked(evt);
+            }
+        });
+        jpFondo.add(jrbMesasInactivas, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, -1, -1));
+
+        jtTablaListaMesa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Numero Mesa", "Capacidad", "Estado"
+            }
+        ));
+        jtTablaListaMesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jScrollPane1.setViewportView(jtTablaListaMesa);
+
+        jpFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, 140));
+
+        jbModificar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jbModificar.setForeground(new java.awt.Color(0, 0, 0));
+        jbModificar.setText("Modificar");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
+            }
+        });
+        jpFondo.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
+
+        jbActivar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jbActivar.setForeground(new java.awt.Color(0, 0, 0));
+        jbActivar.setText("Activar");
+        jbActivar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbActivarActionPerformed(evt);
+            }
+        });
+        jpFondo.add(jbActivar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, -1, -1));
+
+        jbDesactivar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jbDesactivar.setForeground(new java.awt.Color(0, 0, 0));
+        jbDesactivar.setText("Desactivar");
+        jbDesactivar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDesactivarActionPerformed(evt);
+            }
+        });
+        jpFondo.add(jbDesactivar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 410, -1, -1));
 
         jlTransparenciaCarga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlTransparenciaCarga.setOpaque(true);
-        jPanel1.add(jlTransparenciaCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 46, 500, 110));
+        jpFondo.add(jlTransparenciaCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 46, 500, 110));
 
         jlTransparenciaModificar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlTransparenciaModificar.setOpaque(true);
-        jPanel1.add(jlTransparenciaModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 166, 500, 360));
+        jpFondo.add(jlTransparenciaModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 166, 500, 360));
 
         jlFondoImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlFondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
-        jPanel1.add(jlFondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 590));
+        jpFondo.add(jlFondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -110,14 +255,199 @@ public class MesasView extends javax.swing.JInternalFrame {
         jlCerrar.setForeground(Color.white);
     }//GEN-LAST:event_jlCerrarMouseExited
 
+    private void jtCapacidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCapacidadMouseClicked
+        // TODO add your handling code here:
+        jtCapacidad.setText("");
+    }//GEN-LAST:event_jtCapacidadMouseClicked
+
+    private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
+        if(jtCapacidad.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"El campo 'Capacidad' esta vacio");
+            jtCapacidad.setForeground(Color.gray);
+            jtCapacidad.setText("cantidad de clientes");
+        }else{
+            md = new MesaData();
+            m = new Mesa();
+            try{
+                m.setCapacidad(Integer.parseInt(jtCapacidad.getText()));
+                m.setEstado(Estado.LIBRE);
+                md.crearMesa(m);
+            }catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,"No se puede ingresar letra");
+            }
+        }
+    }//GEN-LAST:event_jbAgregarActionPerformed
+
+    private void jtCapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtCapacidadActionPerformed
+        if(jtCapacidad.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"El campo 'Capacidad' esta vacio");
+            jtCapacidad.setText("cantidad de clientes");
+            jtCapacidad.setForeground(Color.gray);
+        }else{
+            md = new MesaData();
+            m = new Mesa();
+            try{
+                m.setCapacidad(Integer.parseInt(jtCapacidad.getText()));
+                m.setEstado(Estado.LIBRE);
+                md.crearMesa(m);
+            } catch (NumberFormatException e) {
+                jtCapacidad.setText("");
+                JOptionPane.showMessageDialog(this,"No se puede ingresar letra");
+            }
+        }
+    }//GEN-LAST:event_jtCapacidadActionPerformed
+
+    private void jrbMesasActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMesasActivasActionPerformed
+        md=new MesaData();
+        borrarFila();
+        jrbMesasInactivas.setEnabled(true);
+        jbActivar.setEnabled(false);
+        jbDesactivar.setEnabled(true);
+        if(jtCapacidad.getText().isEmpty()){
+            jtCapacidad.setForeground(Color.gray);
+            jtCapacidad.setText("cantidad de clientes");
+        }
+        if(jrbMesasInactivas.isSelected()){
+            jrbMesasInactivas.setSelected(false);
+            for(Mesa ms:md.obtenerMesasActivas()){
+                dtm.addRow(new Object[]{
+                    ms.getIdMesa(),
+                    ms.getCapacidad(),
+                    ms.getEstado()
+                });
+            }
+        }
+        jrbMesasActivas.setEnabled(false);
+    }//GEN-LAST:event_jrbMesasActivasActionPerformed
+
+    private void jrbMesasInactivasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jrbMesasInactivasMouseClicked
+        md=new MesaData();
+        borrarFila();
+        jrbMesasActivas.setEnabled(true);
+        jbActivar.setEnabled(true);
+        jbDesactivar.setEnabled(false);
+        if(jtCapacidad.getText().isEmpty()){
+            jtCapacidad.setForeground(Color.gray);
+            jtCapacidad.setText("cantidad de clientes");
+        }
+        if(jrbMesasActivas.isSelected()){
+            jrbMesasActivas.setSelected(false);
+            for(Mesa ms:md.obtenerMesasInactivas()){
+                dtm.addRow(new Object[]{
+                    ms.getIdMesa(),
+                    ms.getCapacidad(),
+                    ms.getEstado()
+                });
+            }
+        }
+        jrbMesasInactivas.setEnabled(false);
+    }//GEN-LAST:event_jrbMesasInactivasMouseClicked
+
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        md=new MesaData();
+        int fila=jtTablaListaMesa.getSelectedRow();
+        if(fila!=-1){
+            m=new Mesa();
+            int idMesa=Integer.parseInt(String.valueOf(jtTablaListaMesa.getValueAt(fila,0)));
+            int capacidad=Integer.parseInt(String.valueOf(jtTablaListaMesa.getValueAt(fila,1)));
+            m=md.obtenerMesa(idMesa);
+            m.setCapacidad(capacidad);
+            md.modificarMesa(m);
+        }else{
+            JOptionPane.showMessageDialog(this,"Debe seleccionar una mesa");
+        }
+    }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void jbActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActivarActionPerformed
+        md=new MesaData();
+        int fila=jtTablaListaMesa.getSelectedRow();
+        if(fila!=-1){
+            m=new Mesa();
+            int idMesa=Integer.parseInt(String.valueOf(jtTablaListaMesa.getValueAt(fila,0)));
+            m=md.obtenerMesa(idMesa);
+            m.setActividad(true);
+            md.modificarMesa(m);
+            borrarFila();
+            for(Mesa ms:md.obtenerMesasInactivas()){
+                dtm.addRow(new Object[]{
+                    ms.getIdMesa(),
+                    ms.getCapacidad(),
+                    ms.getEstado()
+                });
+            }
+        }else{
+            JOptionPane.showMessageDialog(this,"Debe seleccionar una mesa");
+        }
+    }//GEN-LAST:event_jbActivarActionPerformed
+
+    private void jbDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDesactivarActionPerformed
+        md=new MesaData();
+        int fila=jtTablaListaMesa.getSelectedRow();
+        if(fila!=-1){
+            m=new Mesa();
+            int idMesa=Integer.parseInt(String.valueOf(jtTablaListaMesa.getValueAt(fila,0)));
+            m=md.obtenerMesa(idMesa);
+            m.setActividad(false);
+            md.modificarMesa(m);
+            borrarFila();
+            for(Mesa ms:md.obtenerMesasActivas()){
+                dtm.addRow(new Object[]{
+                    ms.getIdMesa(),
+                    ms.getCapacidad(),
+                    ms.getEstado()
+                });
+            }
+        }else{
+            JOptionPane.showMessageDialog(this,"Debe seleccionar una mesa");
+        }
+    }//GEN-LAST:event_jbDesactivarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbActivar;
+    private javax.swing.JButton jbAgregar;
+    private javax.swing.JButton jbDesactivar;
+    private javax.swing.JButton jbModificar;
+    private javax.swing.JLabel jlCapacidad;
     private javax.swing.JLabel jlCerrar;
     private javax.swing.JLabel jlFondoImagen;
     private javax.swing.JLabel jlTituloIntereno;
+    private javax.swing.JLabel jlTituloTransparenciaCarga;
+    private javax.swing.JLabel jlTituloTransparenciaModificar;
     private javax.swing.JLabel jlTransparenciaCarga;
     private javax.swing.JLabel jlTransparenciaModificar;
+    private javax.swing.JPanel jpFondo;
+    private javax.swing.JRadioButton jrbMesasActivas;
+    private javax.swing.JRadioButton jrbMesasInactivas;
+    private javax.swing.JTextField jtCapacidad;
+    private javax.swing.JTable jtTablaListaMesa;
     // End of variables declaration//GEN-END:variables
-    
+
+    private void borrarFila(){
+        int fila=jtTablaListaMesa.getRowCount()-1;
+        for(;fila>=0;fila--){
+            dtm.removeRow(fila);
+        }
+    }
+    private void armarCabecera(){
+        dtm.addColumn("Numero Mesa");
+        dtm.addColumn("Capacidad");
+        dtm.addColumn("Estado");
+        jtTablaListaMesa.setModel(dtm);
+    }
+    private void verificacionDeActividad(){
+        jbActivar.setEnabled(false);
+        if(jrbMesasActivas.isSelected()){
+            md=new MesaData();
+            borrarFila();
+            for(Mesa ms:md.obtenerMesasActivas()){
+                dtm.addRow(new Object[]{
+                    ms.getIdMesa(),
+                    ms.getCapacidad(),
+                    ms.getEstado()
+                });
+            }
+        }
+    }
 }
