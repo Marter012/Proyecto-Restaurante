@@ -368,7 +368,9 @@ public class MesasView extends javax.swing.JInternalFrame {
             m.setActividad(true);
             md.modificarMesa(m);
             borrarFila();
-            for(Mesa ms:md.obtenerMesasInactivas()){
+            jrbMesasActivas.setSelected(true);
+            jrbMesasInactivas.setSelected(false);
+            for(Mesa ms:md.obtenerMesasActivas()){
                 dtm.addRow(new Object[]{
                     ms.getIdMesa(),
                     ms.getCapacidad(),
