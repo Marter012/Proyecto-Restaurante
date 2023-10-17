@@ -53,7 +53,7 @@ public class MesaData {
                 mesa.setIdMesa(rs.getInt("idMesa"));
                 mesa.setCapacidad(rs.getInt("Capacidad"));
                 mesa.setEstado(Estado.valueOf(rs.getString("Estado")));
-                System.out.println(mesa);
+                //System.out.println(mesa);
             }
             ps.close();
         } catch (SQLException e) {

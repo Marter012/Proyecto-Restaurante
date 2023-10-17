@@ -12,6 +12,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import proyecto.restaurante.Control.MesaData;
 import proyecto.restaurante.Control.MeseroData;
+import proyecto.restaurante.Control.ReservaData;
 import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Mesero;
 
@@ -46,6 +47,9 @@ public class MeserosView extends javax.swing.JInternalFrame {
         Fondo.setBackground(new Color(35,34,36,210));
         TransparenciaAsignar.setBackground(new Color(35,34,36,190));
         TransparenciaListado.setBackground(new Color(35,34,36,190));
+        jbLiberar.setEnabled(false);
+        jbDarBaja.setEnabled(false);
+                
     }
     public void cargarComboBox(){
         mesaData = new MesaData();
@@ -100,8 +104,8 @@ public class MeserosView extends javax.swing.JInternalFrame {
         jrbMesasReservadas = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtListas = new javax.swing.JTable();
-        jbDarBaja = new javax.swing.JButton();
         jbLiberar = new javax.swing.JButton();
+        jbDarBaja = new javax.swing.JButton();
         FondoImagen = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -247,16 +251,16 @@ public class MeserosView extends javax.swing.JInternalFrame {
 
         TransparenciaListado.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 54, 440, 210));
 
+        jbLiberar.setText("Liberar Mesa");
+        TransparenciaListado.add(jbLiberar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, -1, -1));
+
         jbDarBaja.setText("Dar de baja Reserva");
         jbDarBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbDarBajaActionPerformed(evt);
             }
         });
-        TransparenciaListado.add(jbDarBaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, -1, -1));
-
-        jbLiberar.setText("Liberar Mesa");
-        TransparenciaListado.add(jbLiberar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, -1, -1));
+        TransparenciaListado.add(jbDarBaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, -1, -1));
 
         Fondo.add(TransparenciaListado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 460, 310));
 
@@ -297,10 +301,6 @@ public class MeserosView extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jbAsignarActionPerformed
 
-    private void jbDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDarBajaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbDarBajaActionPerformed
-
     private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcbMesasActionPerformed
@@ -313,6 +313,8 @@ public class MeserosView extends javax.swing.JInternalFrame {
 
         }
         cargarTabla("LIBRE");
+        jbDarBaja.setEnabled(false);
+        jbLiberar.setEnabled(false);
     }//GEN-LAST:event_jrbMesasLibresActionPerformed
 
     private void jrbMesasOcupadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMesasOcupadasActionPerformed
@@ -322,6 +324,8 @@ public class MeserosView extends javax.swing.JInternalFrame {
             jrbMesasReservadas.setSelected(false);
         }
         cargarTabla("OCUPADA");
+        jbDarBaja.setEnabled(false);
+        jbLiberar.setEnabled(true);
     }//GEN-LAST:event_jrbMesasOcupadasActionPerformed
 
     private void jrbMesasReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMesasReservadasActionPerformed
@@ -332,7 +336,14 @@ public class MeserosView extends javax.swing.JInternalFrame {
             
         }
         cargarTabla("RESERVADA");
+        jbDarBaja.setEnabled(true);
+        jbLiberar.setEnabled(false);
     }//GEN-LAST:event_jrbMesasReservadasActionPerformed
+
+    private void jbDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDarBajaActionPerformed
+        ReservaData reservaData = new ReservaData();
+        reservaData.
+    }//GEN-LAST:event_jbDarBajaActionPerformed
    
     private void cargarTabla(String estado){
         List<Mesa> listaMesas = new ArrayList();

@@ -51,13 +51,15 @@ public class PrincipalView extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jlMeseros = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        btPedidos = new javax.swing.JButton();
+        btMesasMeseros = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JSeparator();
         IconMeseros = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        btPedidosMeseros = new javax.swing.JButton();
         FondoTransparente = new javax.swing.JLabel();
         EscritorioFrames = new javax.swing.JDesktopPane();
         Login = new javax.swing.JPanel();
@@ -157,16 +159,16 @@ public class PrincipalView extends javax.swing.JFrame {
         jSeparator3.setForeground(new java.awt.Color(189, 193, 96));
         MenuLateral.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 240, -1));
 
-        btPedidos.setBackground(new java.awt.Color(153, 153, 0));
-        btPedidos.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
-        btPedidos.setForeground(new java.awt.Color(51, 51, 51));
-        btPedidos.setText("Pedidos");
-        btPedidos.addActionListener(new java.awt.event.ActionListener() {
+        btMesasMeseros.setBackground(new java.awt.Color(153, 153, 0));
+        btMesasMeseros.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        btMesasMeseros.setForeground(new java.awt.Color(51, 51, 51));
+        btMesasMeseros.setText("Mesas");
+        btMesasMeseros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPedidosActionPerformed(evt);
+                btMesasMeserosActionPerformed(evt);
             }
         });
-        MenuLateral.add(btPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 169, 50));
+        MenuLateral.add(btMesasMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 169, 50));
 
         jSeparator5.setBackground(new java.awt.Color(189, 193, 96));
         jSeparator5.setForeground(new java.awt.Color(189, 193, 96));
@@ -191,6 +193,21 @@ public class PrincipalView extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/pedidoIcon.png"))); // NOI18N
         MenuLateral.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 430, 60, -1));
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/pedidoIcon.png"))); // NOI18N
+        MenuLateral.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 60, -1));
+
+        btPedidosMeseros.setBackground(new java.awt.Color(153, 153, 0));
+        btPedidosMeseros.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        btPedidosMeseros.setForeground(new java.awt.Color(51, 51, 51));
+        btPedidosMeseros.setText("Pedidos");
+        btPedidosMeseros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPedidosMeserosActionPerformed(evt);
+            }
+        });
+        MenuLateral.add(btPedidosMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, 169, 50));
 
         FondoTransparente.setOpaque(true);
         MenuLateral.add(FondoTransparente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
@@ -257,7 +274,6 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jbIngresar.setBackground(new java.awt.Color(153, 153, 0));
         jbIngresar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jbIngresar.setForeground(new java.awt.Color(0, 0, 0));
         jbIngresar.setText("Ingresar");
         jbIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -379,14 +395,14 @@ public class PrincipalView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btProductosActionPerformed
 
-    private void btPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPedidosActionPerformed
+    private void btMesasMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMesasMeserosActionPerformed
         EscritorioFrames.removeAll();
         EscritorioFrames.repaint();
         MeserosView mv = new MeserosView();
         mv.setVisible(true);
         EscritorioFrames.add(mv);
         EscritorioFrames.moveToFront(mv); 
-    }//GEN-LAST:event_btPedidosActionPerformed
+    }//GEN-LAST:event_btMesasMeserosActionPerformed
 
     private void CerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseClicked
         System.exit(0);
@@ -530,17 +546,26 @@ public class PrincipalView extends javax.swing.JFrame {
         LogIn.setForeground(Color.gray);
     }//GEN-LAST:event_LogInMouseEntered
 
+    private void btPedidosMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPedidosMeserosActionPerformed
+        EscritorioFrames.removeAll();
+        EscritorioFrames.repaint();
+        PedidosView pv = new PedidosView();
+        pv.setVisible(true);
+        EscritorioFrames.add(pv);
+        EscritorioFrames.moveToFront(pv);         
+    }//GEN-LAST:event_btPedidosMeserosActionPerformed
+
     private void ActivarMesero(int dni){
         MeseroData mesd = new MeseroData();
         Mesero m =  new Mesero();
         m=mesd.buscarMeseroPorDNI(dni);
         jlMeseros.setText(m.getNombre());
-        btPedidos.setEnabled(true);
+        btMesasMeseros.setEnabled(true);
     }
     
     private void DesactivarMesero(){
         jlMeseros.setText("Meseros");
-        btPedidos.setEnabled(false);
+        btMesasMeseros.setEnabled(false);
     }
     
     private void ActivarAdmin(int dni){
@@ -616,14 +641,16 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel Usuario;
     private javax.swing.JButton btIngresos;
     private javax.swing.JButton btMesas;
+    private javax.swing.JButton btMesasMeseros;
     private javax.swing.JButton btMeseros;
-    private javax.swing.JButton btPedidos;
+    private javax.swing.JButton btPedidosMeseros;
     private javax.swing.JButton btProductos;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
