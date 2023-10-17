@@ -342,7 +342,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
 
     private void jbDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDarBajaActionPerformed
         ReservaData reservaData = new ReservaData();
-        reservaData.
+        //reservaData.
     }//GEN-LAST:event_jbDarBajaActionPerformed
    
     private void cargarTabla(String estado){

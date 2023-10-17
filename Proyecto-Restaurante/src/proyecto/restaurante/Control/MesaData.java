@@ -10,6 +10,8 @@ public class MesaData {
     private Connection con;
     private PreparedStatement ps;
     private ResultSet rs;
+    private ArrayList<Mesa> listaMesa;
+    private Mesa m;
 
     public MesaData() {
         con=Conexion.getConexion();
@@ -82,6 +84,56 @@ public class MesaData {
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null,"MesaData: Error al Actualizar la Base de Datos");
         }
+    }
+    
+    public ArrayList<Mesa> obtenerMesasActivas(){
+        /*
+            Este metodo retorna una Lista de Mesas Activas
+        */
+        listaMesa=new ArrayList();
+        String sql="select * from mesas where Actividad=?";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setBoolean(1,true);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                m=new Mesa();
+                m.setIdMesa(rs.getInt("idMesa"));
+                m.setCapacidad(rs.getInt("Capacidad"));
+                m.setEstado(Estado.valueOf(rs.getString("Estado")));
+                m.setActividad(rs.getBoolean("Actividad"));
+                listaMesa.add(m);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"MesaData: Hubo un Error en la consulta");
+        }
+        return listaMesa;
+    }
+    
+    public ArrayList<Mesa> obtenerMesasInactivas(){
+        /*
+            Este metodo retorna una Lista de Mesas Inactivas
+        */
+        listaMesa=new ArrayList();
+        String sql="select * from mesas where Actividad=?";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setBoolean(1,false);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                m=new Mesa();
+                m.setIdMesa(rs.getInt("idMesa"));
+                m.setCapacidad(rs.getInt("Capacidad"));
+                m.setEstado(Estado.valueOf(rs.getString("Estado")));
+                m.setActividad(rs.getBoolean("Actividad"));
+                listaMesa.add(m);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"MesaData: Hubo un Error en la consulta");
+        }
+        return listaMesa;
     }
     
     public ArrayList<Mesa> ListarMesasPorEstado(String estados){
