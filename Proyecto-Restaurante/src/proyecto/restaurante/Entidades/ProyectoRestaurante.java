@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import proyecto.restaurante.Control.MesaData;
 import proyecto.restaurante.Control.MeseroData;
+import proyecto.restaurante.Control.PedidoData;
 
 /**
  *
@@ -26,18 +27,12 @@ public class ProyectoRestaurante {
 //        pd.guardarProducto(p);
 //        System.out.println(pd.listarProductos());
 
-    MeseroData md = new MeseroData();
-        List<Mesero> listaMeseros = md.ListarMeseros();
-        List<Mesero> listaEncargados = md.ListarEncargados();
-        System.out.println("Meseros");
-    for (Mesero m: listaMeseros){
-        System.out.println(m);
+    
+    PedidoData pd = new PedidoData();
+    for (Pedido pedido : pd.listarPedidos()){
+        System.out.println(pedido);
     }
     
-        System.out.println("Encargados");
-        for (Mesero m: listaEncargados){
-        System.out.println(m);
-    }
-    }
     
+    }
 }
