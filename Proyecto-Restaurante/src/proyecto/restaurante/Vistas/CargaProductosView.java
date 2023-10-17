@@ -31,8 +31,8 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         jcbEncargado.setEnabled(false);
         jcbInactivo.setEnabled(false);
         jcbEncargado.setEnabled(false);
-        jrbInactivo.setSelected(false);
-        jrbInactivo.setSelected(false);
+        jrbActivo.setSelected(true);
+        jrbInactivo.setSelected(true);
         jlIdProducto.setVisible(false);
         jbActualizarProducto.setEnabled(false);
         
@@ -96,16 +96,6 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         });
         Fondo.add(jbActualizarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 460, -1, -1));
 
-        jcbEncargado.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jcbEncargadoMouseClicked(evt);
-            }
-        });
-        jcbEncargado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbEncargadoActionPerformed(evt);
-            }
-        });
         Fondo.add(jcbEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 270, -1));
 
         TituloModificacion.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
@@ -366,6 +356,8 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
                     jcbCategoria.setEnabled(true);
                     jcbCategoria.setSelectedItem((Categoria)p.getCategoria());
                     jtPrecio.setText(String.valueOf(p.getPrecio()));
+                    jrbActivo.setEnabled(true);
+                    jrbInactivo.setEnabled(true);
                         if (p.isEstado()){
                             jrbActivo.setSelected(true);
                         }else{
@@ -463,66 +455,53 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jrbInactivoActionPerformed
 
-    private void jcbEncargadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbEncargadoMouseClicked
-        if (!jcbEncargado.isEnabled()){
-        jcbProductos.removeAllItems();
-        //jcbMesero.setRenderer(jcbMesero.getRenderer());
-        jcbEncargado.setEnabled(true);
-        //jcbMesero.removeAllItems();
-        jcbProductos.setEnabled(false);
-        //jcbMesero.removeAllItems();
-        LimpiarCampos();
-        jbCrearProducto.setEnabled(false);
-        jbActualizarProducto.setEnabled(true);
-        jcbEncargado.removeAllItems();
-        CargarComboEncargados();
-        }
-    }//GEN-LAST:event_jcbEncargadoMouseClicked
-
-    private void jcbEncargadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbEncargadoActionPerformed
-//        jcbMesero.removeAllItems();
-//        jcbMesero.setEnabled(false);
-        if (jcbEncargado.getItemCount()==0){
-        }else{
-        Mesero m = new Mesero();
-        m = (Mesero)jcbEncargado.getSelectedItem();
-        if (m!=null){
-            jlIdProducto.setText(String.valueOf(m.getIdMesero()));
-            jtNombre.setText(m.getNombre());
-            jtPrecio.setText(m.getApellido());
-            //jtDni.setText(String.valueOf(m.getDni()));
-            if (m.isEstado()){
-                jrbActivo.setSelected(true);
-                jrbInactivo.setSelected(false);
-            }else{
-                jrbActivo.setSelected(false);
-                jrbInactivo.setSelected(true);
-            }
-            if (m.getAcceso()==1){
-                jrbActivo.setSelected(true);
-                jrbInactivo.setSelected(false);
-            }else{
-                jrbActivo.setSelected(false);
-                jrbInactivo.setSelected(true);
-            }
-            //jtPassword.setText(m.getPassword());
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
-        }
-        }
-    }//GEN-LAST:event_jcbEncargadoActionPerformed
-
     private void JbLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbLimpiarActionPerformed
         LimpiarPantalla();
     }//GEN-LAST:event_JbLimpiarActionPerformed
 
     private void jcbInactivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbInactivoMouseClicked
-        // TODO add your handling code here:
+        if (!jcbInactivo.isEnabled()){
+        //jcbEncargado.removeAllItems();
+        //jcbEncargado.addItem(null);
+        //jcbProductos.setRenderer(jcbProductos.getRenderer());
+        jcbInactivo.setEnabled(true);
+        //jcbEncargado.removeAllItems();
+        //jcbEncargado.setEnabled(false);
+        //jcbEncargado.removeAllItems();
+        LimpiarCampos();
+        jbCrearProducto.setEnabled(false);
+        jbActualizarProducto.setEnabled(true);
+        jcbInactivo.removeAllItems();
+        CargarComboInactivos();
+        if (jcbInactivo.getItemCount()==0){
+            JOptionPane.showMessageDialog(this, "No hay Productos Inactivos");
+            jcbInactivo.setEnabled(false);
+        }
+        }
     }//GEN-LAST:event_jcbInactivoMouseClicked
 
     private void jcbInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbInactivoActionPerformed
-        // TODO add your handling code here:
+        if (jcbInactivo.getItemCount()!=0){
+            Producto p = new Producto();
+            p = (Producto) jcbInactivo.getSelectedItem();
+                if (p!=null){
+                    jlIdProducto.setText(String.valueOf(p.getIdProducto()));
+                    jtNombre.setText(p.getNombre());
+                    jtCantidad.setText(String.valueOf(p.getCantidad()));
+                    CargarComboCategoria();
+                    jcbCategoria.setEnabled(true);
+                    jcbCategoria.setSelectedItem((Categoria)p.getCategoria());
+                    jtPrecio.setText(String.valueOf(p.getPrecio()));
+                    jrbActivo.setEnabled(true);
+                    jrbInactivo.setEnabled(true);
+                        if (p.isEstado()){
+                            jrbActivo.setSelected(true);
+                        }else{
+                            jrbInactivo.setSelected(true);
+                        }
+                    
+                }
+        }
     }//GEN-LAST:event_jcbInactivoActionPerformed
 
     private void jrbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbActivoActionPerformed
@@ -536,6 +515,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
 
     private void jcbCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbCategoriaMouseClicked
         jcbCategoria.setEnabled(true);
+        jcbCategoria.removeAllItems();
         CargarComboCategoria();
     }//GEN-LAST:event_jcbCategoriaMouseClicked
     private void CargarComboProductos(){
@@ -549,19 +529,20 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         
     }
     
+    private void CargarComboInactivos(){
+        ProductoData pd = new ProductoData();
+        
+        for (Producto p: pd.listarProductosInactivos()){
+                //jcbMesero.setRenderer(new CustomRenderer());
+                jcbProductos.addItem(p);
+        
+        }
+        
+    }
+    
     private void CargarComboCategoria(){
         jcbCategoria.addItem(Categoria.ALIMENTO);
         jcbCategoria.addItem(Categoria.BEBIDA);
-    }
-    
-    private void CargarComboEncargados(){
-        MeseroData mesd = new MeseroData();
-        
-        for (Mesero me: mesd.ListarEncargados()){
-            //jcbEncargado.setRenderer(new CustomRenderer());
-            jcbEncargado.addItem(me);
-        }
-        
     }
     
     private void LimpiarCampos(){
@@ -572,15 +553,16 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         jcbCategoria.setEnabled(false);
         jtPrecio.setText("");
         jrbActivo.setSelected(false);
-        jrbActivo.setEnabled(false);
+        jrbActivo.setEnabled(true);
         jrbInactivo.setSelected(false);
-        jrbInactivo.setEnabled(false);
-        
+        jrbInactivo.setEnabled(true);    
     }
     
     private void LimpiarPantalla(){
         jcbProductos.setEnabled(false);
         jcbProductos.removeAllItems();
+        jcbInactivo.setEnabled(false);
+        jcbInactivo.removeAllItems();
         LimpiarCampos();
         jbCrearProducto.setEnabled(true);
         jbActualizarProducto.setEnabled(false);

@@ -152,4 +152,28 @@ public class ProductoData {
         }        
         return listaProductos;
     }
+    
+    public List<Producto> listarProductosInactivos(){
+        List<Producto> listaProductos= new ArrayList();
+        sql = "SELECT * FROM productos WHERE estado = ? ORDER BY nombre";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setBoolean(1, false);
+            rs = ps.executeQuery();            
+            while(rs.next()){
+                p = new Producto();
+                p.setIdProducto(rs.getInt("idProducto"));
+                p.setNombre(rs.getString("nombre"));
+                p.setCantidad(rs.getInt("cantidad"));
+                p.setCategoria(Categoria.valueOf(rs.getString("categoria")));
+                p.setPrecio(rs.getDouble("precio"));
+                p.setEstado(rs.getBoolean("estado"));               
+                listaProductos.add(p);
+            }    
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ProductoData : Error al listar los productos"+ex.getMessage());
+        }        
+        return listaProductos;
+    }
 }

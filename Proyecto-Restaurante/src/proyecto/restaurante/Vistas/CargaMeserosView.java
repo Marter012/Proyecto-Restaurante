@@ -313,12 +313,14 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         int posicion=0;
             if (jcbEncargado.isEnabled()){
                 posicion=jcbEncargado.getSelectedIndex();
-            }
-            if(jcbMesero.isEnabled()){
+            } else {
+                if(jcbMesero.isEnabled()){
                 posicion=jcbMesero.getSelectedIndex();
-            }
-            if(jcbInactivos.isEnabled()){
-                posicion=jcbInactivos.getSelectedIndex();
+                }else{
+                    if(jcbInactivos.isEnabled()){
+                    posicion=jcbInactivos.getSelectedIndex();
+                    }
+                }
             }
         m.setIdMesero(Integer.parseInt(jlIdMesero.getText()));
         m.setNombre(jtNombre.getText());
@@ -380,12 +382,14 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                     }
                 }
                 jcbEncargado.removeAllItems();
-                
                 jcbEncargado.setEnabled(false);
                 jcbInactivos.setEnabled(true);
                 CargarComboInactivos();
                 jcbInactivos.setSelectedIndex(posicion);
-            }
+                jrbMesero.setEnabled(false);
+                jrbEncargado.setEnabled(false);
+                
+            } else {
                 if (jcbMesero.isEnabled()){
                     List<Mesero> listaInactivos = mesd.ListarInactivos();
                     for (Mesero me:listaInactivos){
@@ -398,73 +402,69 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                     jcbInactivos.setEnabled(true);
                     CargarComboInactivos();
                     jcbInactivos.setSelectedIndex(posicion);
-                }
-            
-                if (jcbInactivos.isEnabled()){
-                    if (m.getAcceso()==1){
-                    List<Mesero> listaEncargado = mesd.ListarEncargados();
-                    for (Mesero me:listaEncargado){
-                        if(me.getIdMesero()==m.getIdMesero()){
-                            posicion = listaEncargado.indexOf(me);
+                    jrbMesero.setEnabled(false);
+                    jrbEncargado.setEnabled(false);
+                }else{
+                    if (jcbInactivos.isEnabled()){
+                        if (m.getAcceso()==1){
+                        List<Mesero> listaEncargado = mesd.ListarEncargados();
+                            for (Mesero me:listaEncargado){
+                                if(me.getIdMesero()==m.getIdMesero()){
+                                    posicion = listaEncargado.indexOf(me);
+                                }
+                            }
+                            jcbInactivos.removeAllItems();
+                            jcbInactivos.setEnabled(false);
+                            jcbEncargado.setEnabled(true);
+                            CargarComboEncargados();
+                            jcbEncargado.setSelectedIndex(posicion);
+                            jrbMesero.setEnabled(true);
+                            jrbEncargado.setEnabled(true);
+                        }else{
+                            if (m.getAcceso()==2){
+                            List<Mesero> listaMeseros = mesd.ListarMeseros();
+                                for (Mesero me:listaMeseros){
+                                    if(me.getIdMesero()==m.getIdMesero()){
+                                        posicion = listaMeseros.indexOf(me);
+                                    }
+                                }
+                                jcbInactivos.removeAllItems();
+                                jcbInactivos.setEnabled(false);
+                                jcbMesero.setEnabled(true);
+                                CargarComboMeseros();
+                                jcbMesero.setSelectedIndex(posicion);
+                                jrbMesero.setEnabled(true);
+                                jrbEncargado.setEnabled(true);
+                            }
                         }
                     }
-                    jcbInactivos.removeAllItems();
-                    jcbInactivos.setEnabled(false);
-                    jcbEncargado.setEnabled(true);
-                    
-                    CargarComboEncargados();
-                    jcbEncargado.setSelectedIndex(posicion);
-                    }
-                    if (m.getAcceso()==2){
-                    List<Mesero> listaMeseros = mesd.ListarMeseros();
-                    for (Mesero me:listaMeseros){
-                        if(me.getIdMesero()==m.getIdMesero()){
-                            posicion = listaMeseros.indexOf(me);
-                        }
-                    }
-                    jcbInactivos.removeAllItems();
-                    jcbInactivos.setEnabled(false);
-                    jcbMesero.setEnabled(true);
-                    CargarComboMeseros();
-                    jcbMesero.setSelectedIndex(posicion);
-                    }
                 }
+            }
+        }else{
                 
-                if (cambiarTablaEstado==false & cambiarTablaActiva==false){
-            if (jcbEncargado.isEnabled()){
-                jcbEncargado.removeAllItems();
-                CargarComboEncargados();
-                jcbEncargado.setSelectedIndex(posicion);
-            }
-            if (jcbMesero.isEnabled()){
-                jcbMesero.removeAllItems();
-                CargarComboMeseros();
-                jcbMesero.setSelectedIndex(posicion);
-            }
-            if (jcbInactivos.isEnabled()){
-                jcbInactivos.removeAllItems();
-                CargarComboInactivos();
-                jcbInactivos.setSelectedIndex(posicion);
-            }
+                    if (cambiarTablaEstado==false & cambiarTablaActiva==false){
+                        if (jcbEncargado.isEnabled()){
+                        jcbEncargado.removeAllItems();
+                        CargarComboEncargados();
+                        jcbEncargado.setSelectedIndex(posicion);
+                        }else{
+                            if (jcbMesero.isEnabled()){
+                            jcbMesero.removeAllItems();
+                            CargarComboMeseros();
+                            jcbMesero.setSelectedIndex(posicion);
+                            }else{
+                                if (jcbInactivos.isEnabled()){
+                                jcbInactivos.removeAllItems();
+                                CargarComboInactivos();
+                                jcbInactivos.setSelectedIndex(posicion);
+                                }
+                            }
+                        }
+                    }
         }
-        }
-//        else{
-//            if (jcbEncargado.isEnabled()){
-//                jcbEncargado.removeAllItems();
-//                CargarComboEncargados();
-//                jcbEncargado.setSelectedIndex(posicion);
-//            }
-//            if (jcbMesero.isEnabled()){
-//                jcbMesero.removeAllItems();
-//                CargarComboMeseros();
-//                jcbMesero.setSelectedIndex(posicion);
-//            }
-//            if (jcbInactivos.isEnabled()){
-//                jcbInactivos.removeAllItems();
-//                CargarComboEncargados();
-//                jcbEncargado.setSelectedIndex(posicion);
-//            }
-//        }
+           
+        
+        
     }//GEN-LAST:event_jbActualizarMeseroActionPerformed
 
     private void jcbMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMeseroActionPerformed
@@ -562,6 +562,8 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jbActualizarMesero.setEnabled(true);
         jcbMesero.removeAllItems();
         jcbInactivos.removeAllItems();
+        jrbMesero.setEnabled(true);
+        jrbEncargado.setEnabled(true);
         CargarComboMeseros();
         }
     }//GEN-LAST:event_jcbMeseroMouseClicked
@@ -607,6 +609,8 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
             jbActualizarMesero.setEnabled(true);
             jcbEncargado.removeAllItems();
             jcbInactivos.removeAllItems();
+            jrbMesero.setEnabled(true);
+            jrbEncargado.setEnabled(true);
             CargarComboEncargados();
         }
     }//GEN-LAST:event_jcbEncargadoMouseClicked
@@ -664,6 +668,8 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
             jcbEncargado.removeAllItems();
             jcbMesero.removeAllItems();
             CargarComboInactivos();
+            jrbMesero.setEnabled(false);
+            jrbEncargado.setEnabled(false);
         }
     }//GEN-LAST:event_jcbInactivosMouseClicked
 
@@ -745,6 +751,8 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jcbMesero.removeAllItems();
         jcbEncargado.setEnabled(false);
         jcbEncargado.removeAllItems();
+        jcbInactivos.setEnabled(false);
+        jcbInactivos.removeAllItems();
         LimpiarCampos();
         jbCrearMesero.setEnabled(true);
         jbActualizarMesero.setEnabled(false);
