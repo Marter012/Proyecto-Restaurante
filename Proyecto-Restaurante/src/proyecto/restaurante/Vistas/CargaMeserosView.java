@@ -27,7 +27,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         //CargarComboMeseros();
         jcbMesero.setEnabled(false);
         jcbEncargado.setEnabled(false);
-        jcbInactivo.setEnabled(false);
+        jcbInactivos.setEnabled(false);
         //CargarComboEncargados();
         jcbEncargado.setEnabled(false);
         jrbInactivo.setSelected(false);
@@ -77,7 +77,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         Limpiar = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        jcbInactivo = new javax.swing.JComboBox<>();
+        jcbInactivos = new javax.swing.JComboBox<>();
         TransparenciaCargar = new javax.swing.JLabel();
         TransparenciaModificar = new javax.swing.JLabel();
         jlIdMesero = new javax.swing.JLabel();
@@ -268,28 +268,28 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jLabel13.setText("Seleccione Encargado");
         Fondo.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 190, 30));
 
-        jcbInactivo.addMouseListener(new java.awt.event.MouseAdapter() {
+        jcbInactivos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jcbInactivoMouseClicked(evt);
+                jcbInactivosMouseClicked(evt);
             }
         });
-        jcbInactivo.addActionListener(new java.awt.event.ActionListener() {
+        jcbInactivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbInactivoActionPerformed(evt);
+                jcbInactivosActionPerformed(evt);
             }
         });
-        Fondo.add(jcbInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 270, -1));
+        Fondo.add(jcbInactivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 270, -1));
 
         TransparenciaCargar.setOpaque(true);
         Fondo.add(TransparenciaCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 46, 500, 140));
 
         TransparenciaModificar.setOpaque(true);
-        Fondo.add(TransparenciaModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 500, 390));
+        Fondo.add(TransparenciaModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 500, 360));
         Fondo.add(jlIdMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 20, 20));
 
         FondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
         FondoImagen.setLabelFor(Fondo);
-        Fondo.add(FondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 540, 590));
+        Fondo.add(FondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -308,13 +308,18 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     private void jbActualizarMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarMeseroActionPerformed
         MeseroData mesd = new MeseroData();
         Mesero m = new Mesero();
-        boolean cambiarTabla=false;
-        int posicion;
-        if (jcbEncargado.isEnabled()){
-            posicion=jcbEncargado.getSelectedIndex();
-        }else{
-            posicion=jcbMesero.getSelectedIndex();
-        }
+        boolean cambiarTablaEstado=false;
+        boolean cambiarTablaActiva=false;
+        int posicion=0;
+            if (jcbEncargado.isEnabled()){
+                posicion=jcbEncargado.getSelectedIndex();
+            }
+            if(jcbMesero.isEnabled()){
+                posicion=jcbMesero.getSelectedIndex();
+            }
+            if(jcbInactivos.isEnabled()){
+                posicion=jcbInactivos.getSelectedIndex();
+            }
         m.setIdMesero(Integer.parseInt(jlIdMesero.getText()));
         m.setNombre(jtNombre.getText());
         m.setApellido(jtApellido.getText());
@@ -328,10 +333,14 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         m.setPassword(jtPassword.getText());
         Mesero meseroActual = mesd.buscarMeseroPorId(m.getIdMesero());
         if (meseroActual.getAcceso()!=m.getAcceso()){
-            cambiarTabla=true;
+            cambiarTablaEstado=true;
+        }
+        if (meseroActual.isEstado()!=m.isEstado()){
+            cambiarTablaActiva=true;
         }
         mesd.modificarMesero(m);
-        if (cambiarTabla){
+        
+        if (cambiarTablaEstado){
             if (jcbEncargado.isEnabled()){
             List<Mesero> listaMeseros = mesd.ListarMeseros();
                 for (Mesero me:listaMeseros){
@@ -360,51 +369,134 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                     jcbEncargado.setSelectedIndex(posicion);
                 }
             }
-        }else{
+        }
+        
+        if (cambiarTablaActiva){
+            if (jcbEncargado.isEnabled()){
+                List<Mesero> listaInactivos = mesd.ListarInactivos();
+                for (Mesero me:listaInactivos){
+                    if(me.getIdMesero()==m.getIdMesero()){
+                        posicion = listaInactivos.indexOf(me);
+                    }
+                }
+                jcbEncargado.removeAllItems();
+                
+                jcbEncargado.setEnabled(false);
+                jcbInactivos.setEnabled(true);
+                CargarComboInactivos();
+                jcbInactivos.setSelectedIndex(posicion);
+            }
+                if (jcbMesero.isEnabled()){
+                    List<Mesero> listaInactivos = mesd.ListarInactivos();
+                    for (Mesero me:listaInactivos){
+                        if(me.getIdMesero()==m.getIdMesero()){
+                            posicion = listaInactivos.indexOf(me);
+                        }
+                    }
+                    jcbMesero.removeAllItems();
+                    jcbMesero.setEnabled(false);
+                    jcbInactivos.setEnabled(true);
+                    CargarComboInactivos();
+                    jcbInactivos.setSelectedIndex(posicion);
+                }
+            
+                if (jcbInactivos.isEnabled()){
+                    if (m.getAcceso()==1){
+                    List<Mesero> listaEncargado = mesd.ListarEncargados();
+                    for (Mesero me:listaEncargado){
+                        if(me.getIdMesero()==m.getIdMesero()){
+                            posicion = listaEncargado.indexOf(me);
+                        }
+                    }
+                    jcbInactivos.removeAllItems();
+                    jcbInactivos.setEnabled(false);
+                    jcbEncargado.setEnabled(true);
+                    
+                    CargarComboEncargados();
+                    jcbEncargado.setSelectedIndex(posicion);
+                    }
+                    if (m.getAcceso()==2){
+                    List<Mesero> listaMeseros = mesd.ListarMeseros();
+                    for (Mesero me:listaMeseros){
+                        if(me.getIdMesero()==m.getIdMesero()){
+                            posicion = listaMeseros.indexOf(me);
+                        }
+                    }
+                    jcbInactivos.removeAllItems();
+                    jcbInactivos.setEnabled(false);
+                    jcbMesero.setEnabled(true);
+                    CargarComboMeseros();
+                    jcbMesero.setSelectedIndex(posicion);
+                    }
+                }
+                
+                if (cambiarTablaEstado==false & cambiarTablaActiva==false){
             if (jcbEncargado.isEnabled()){
                 jcbEncargado.removeAllItems();
                 CargarComboEncargados();
                 jcbEncargado.setSelectedIndex(posicion);
-            }else{
+            }
+            if (jcbMesero.isEnabled()){
                 jcbMesero.removeAllItems();
                 CargarComboMeseros();
                 jcbMesero.setSelectedIndex(posicion);
             }
+            if (jcbInactivos.isEnabled()){
+                jcbInactivos.removeAllItems();
+                CargarComboInactivos();
+                jcbInactivos.setSelectedIndex(posicion);
+            }
         }
+        }
+//        else{
+//            if (jcbEncargado.isEnabled()){
+//                jcbEncargado.removeAllItems();
+//                CargarComboEncargados();
+//                jcbEncargado.setSelectedIndex(posicion);
+//            }
+//            if (jcbMesero.isEnabled()){
+//                jcbMesero.removeAllItems();
+//                CargarComboMeseros();
+//                jcbMesero.setSelectedIndex(posicion);
+//            }
+//            if (jcbInactivos.isEnabled()){
+//                jcbInactivos.removeAllItems();
+//                CargarComboEncargados();
+//                jcbEncargado.setSelectedIndex(posicion);
+//            }
+//        }
     }//GEN-LAST:event_jbActualizarMeseroActionPerformed
 
     private void jcbMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMeseroActionPerformed
         //jcbEncargado.removeAllItems();
         //jcbEncargado.setEnabled(false);
-        if (jcbMesero.getItemCount()==0){
-            
-        }else{
+        if (jcbMesero.getItemCount()!=0){
         Mesero m = new Mesero();
         m = (Mesero)jcbMesero.getSelectedItem();
-        if (m!=null){
-            jlIdMesero.setText(String.valueOf(m.getIdMesero()));
-            jtNombre.setText(m.getNombre());
-            jtApellido.setText(m.getApellido());
-            jtDni.setText(String.valueOf(m.getDni()));
-            if (m.isEstado()){
-                jrbActivo.setSelected(true);
-                jrbInactivo.setSelected(false);
+            if (m!=null){
+                jlIdMesero.setText(String.valueOf(m.getIdMesero()));
+                jtNombre.setText(m.getNombre());
+                jtApellido.setText(m.getApellido());
+                jtDni.setText(String.valueOf(m.getDni()));
+                if (m.isEstado()){
+                    jrbActivo.setSelected(true);
+                    jrbInactivo.setSelected(false);
+                }else{
+                    jrbActivo.setSelected(false);
+                    jrbInactivo.setSelected(true);
+                }
+                if (m.getAcceso()==1){
+                    jrbEncargado.setSelected(true);
+                    jrbMesero.setSelected(false);
+                }else{
+                    jrbEncargado.setSelected(false);
+                    jrbMesero.setSelected(true);
+                }
+                jtPassword.setText(m.getPassword());
+
             }else{
-                jrbActivo.setSelected(false);
-                jrbInactivo.setSelected(true);
+                JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
             }
-            if (m.getAcceso()==1){
-                jrbEncargado.setSelected(true);
-                jrbMesero.setSelected(false);
-            }else{
-                jrbEncargado.setSelected(false);
-                jrbMesero.setSelected(true);
-            }
-            jtPassword.setText(m.getPassword());
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
-        }
         }
     }//GEN-LAST:event_jcbMeseroActionPerformed
 
@@ -413,7 +505,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         if (jrbInactivo.isSelected()){
             jrbActivo.setSelected(false);
         }else{
-            jrbActivo.setSelected(false);
+            jrbActivo.setSelected(true);
         }
     }//GEN-LAST:event_jrbInactivoActionPerformed
 
@@ -464,10 +556,12 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jcbEncargado.removeAllItems();
         jcbEncargado.setEnabled(false);
         //jcbEncargado.removeAllItems();
+        jcbInactivos.setEnabled(false);
         LimpiarCampos();
         jbCrearMesero.setEnabled(false);
         jbActualizarMesero.setEnabled(true);
         jcbMesero.removeAllItems();
+        jcbInactivos.removeAllItems();
         CargarComboMeseros();
         }
     }//GEN-LAST:event_jcbMeseroMouseClicked
@@ -501,17 +595,19 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
 
     private void jcbEncargadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbEncargadoMouseClicked
         if (!jcbEncargado.isEnabled()){
-        jcbMesero.removeAllItems();
-        //jcbMesero.setRenderer(jcbMesero.getRenderer());
-        jcbEncargado.setEnabled(true);
-        //jcbMesero.removeAllItems();
-        jcbMesero.setEnabled(false);
-        //jcbMesero.removeAllItems();
-        LimpiarCampos();
-        jbCrearMesero.setEnabled(false);
-        jbActualizarMesero.setEnabled(true);
-        jcbEncargado.removeAllItems();
-        CargarComboEncargados();
+            jcbMesero.removeAllItems();
+            //jcbMesero.setRenderer(jcbMesero.getRenderer());
+            jcbEncargado.setEnabled(true);
+            //jcbMesero.removeAllItems();
+            jcbMesero.setEnabled(false);
+            //jcbMesero.removeAllItems();
+            jcbInactivos.setEnabled(false);
+            LimpiarCampos();
+            jbCrearMesero.setEnabled(false);
+            jbActualizarMesero.setEnabled(true);
+            jcbEncargado.removeAllItems();
+            jcbInactivos.removeAllItems();
+            CargarComboEncargados();
         }
     }//GEN-LAST:event_jcbEncargadoMouseClicked
 
@@ -553,13 +649,54 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         LimpiarPantalla();
     }//GEN-LAST:event_LimpiarActionPerformed
 
-    private void jcbInactivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbInactivoMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcbInactivoMouseClicked
+    private void jcbInactivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbInactivosMouseClicked
+        if (!jcbInactivos.isEnabled()){
+            jcbMesero.removeAllItems();
+            //jcbMesero.setRenderer(jcbMesero.getRenderer());
+            jcbEncargado.setEnabled(false);
+            //jcbMesero.removeAllItems();
+            jcbMesero.setEnabled(false);
+            //jcbMesero.removeAllItems();
+            jcbInactivos.setEnabled(true);
+            LimpiarCampos();
+            jbCrearMesero.setEnabled(false);
+            jbActualizarMesero.setEnabled(true);
+            jcbEncargado.removeAllItems();
+            jcbMesero.removeAllItems();
+            CargarComboInactivos();
+        }
+    }//GEN-LAST:event_jcbInactivosMouseClicked
 
-    private void jcbInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbInactivoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcbInactivoActionPerformed
+    private void jcbInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbInactivosActionPerformed
+        if (jcbInactivos.getItemCount()!=0){
+        Mesero m = new Mesero();
+        m = (Mesero)jcbInactivos.getSelectedItem();
+        if (m!=null){
+            jlIdMesero.setText(String.valueOf(m.getIdMesero()));
+            jtNombre.setText(m.getNombre());
+            jtApellido.setText(m.getApellido());
+            jtDni.setText(String.valueOf(m.getDni()));
+            if (m.isEstado()){
+                jrbActivo.setSelected(true);
+                jrbInactivo.setSelected(false);
+            }else{
+                jrbActivo.setSelected(false);
+                jrbInactivo.setSelected(true);
+            }
+            if (m.getAcceso()==1){
+                jrbEncargado.setSelected(true);
+                jrbMesero.setSelected(false);
+            }else{
+                jrbEncargado.setSelected(false);
+                jrbMesero.setSelected(true);
+            }
+            jtPassword.setText(m.getPassword());
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
+        }
+        }
+    }//GEN-LAST:event_jcbInactivosActionPerformed
     private void CargarComboMeseros(){
         MeseroData mesd = new MeseroData();
         
@@ -577,6 +714,16 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         for (Mesero me: mesd.ListarEncargados()){
             //jcbEncargado.setRenderer(new CustomRenderer());
             jcbEncargado.addItem(me);
+        }
+        
+    }
+    
+    private void CargarComboInactivos(){
+        MeseroData mesd = new MeseroData();
+        
+        for (Mesero me: mesd.ListarInactivos()){
+            //jcbEncargado.setRenderer(new CustomRenderer());
+            jcbInactivos.addItem(me);
         }
         
     }
@@ -625,7 +772,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbActualizarMesero;
     private javax.swing.JButton jbCrearMesero;
     private javax.swing.JComboBox<Mesero> jcbEncargado;
-    private javax.swing.JComboBox<Mesero> jcbInactivo;
+    private javax.swing.JComboBox<Mesero> jcbInactivos;
     private javax.swing.JComboBox<Mesero> jcbMesero;
     private javax.swing.JLabel jlIdMesero;
     private javax.swing.JRadioButton jrbActivo;
