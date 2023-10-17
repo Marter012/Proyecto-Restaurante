@@ -267,7 +267,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
 
         FondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
         FondoImagen.setLabelFor(Fondo);
-        Fondo.add(FondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 540, 590));
+        Fondo.add(FondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
