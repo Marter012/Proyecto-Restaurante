@@ -85,9 +85,9 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
         setPreferredSize(new java.awt.Dimension(540, 590));
-        setSize(new java.awt.Dimension(540, 590));
 
         Fondo.setBackground(new java.awt.Color(0, 0, 0));
+        Fondo.setPreferredSize(new java.awt.Dimension(540, 590));
         Fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jbActualizarMesero.setText("Actualizar Mesero");

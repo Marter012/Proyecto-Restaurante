@@ -5,20 +5,31 @@ public class Mesa {
     private int idMesa;
     private int capacidad;
     private Estado estado;
+    private boolean actividad;
 
     public Mesa() {
         
     }
     
-    public Mesa(int capacidad, Estado estado){
+    public Mesa(int capacidad, Estado estado,boolean actividad){
         this.capacidad=capacidad;
         this.estado=estado;
+        this.actividad=actividad;
     }
 
-    public Mesa(int idMesa, int capacidad, Estado estado) {
+    public Mesa(int idMesa, int capacidad, Estado estado,boolean actividad) {
         this.idMesa = idMesa;
         this.capacidad = capacidad;
         this.estado = estado;
+        this.actividad=actividad;
+    }
+
+    public boolean isActividad() {
+        return actividad;
+    }
+
+    public void setActividad(boolean actividad) {
+        this.actividad = actividad;
     }
 
     public int getIdMesa() {
@@ -47,7 +58,7 @@ public class Mesa {
 
     @Override
     public String toString() {
-        return "Mesa{" + "idMesa=" + idMesa + ", capacidad=" + capacidad + ", estado=" + estado + '}';
+        return "Mesa{" + "idMesa=" + idMesa + ", capacidad=" + capacidad + ", estado=" + estado + ", actividad=" + actividad + '}';
     }
-
+    
 }
