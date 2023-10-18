@@ -265,10 +265,11 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         ProductoData pd = new ProductoData();
         Producto p = new Producto();
         boolean cambiarTabla=false;
-        int posicion;
+        int posicion=0;
         if (jcbProductos.isEnabled()){
             posicion=jcbProductos.getSelectedIndex();
-        }else{
+        }
+        if (jcbInactivo.isEnabled()){
             posicion=jcbInactivo.getSelectedIndex();
         }
         
@@ -289,10 +290,10 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         pd.modificarProducto(p);
         if (cambiarTabla){
             if (jcbProductos.isEnabled()){
-                List<Producto> listaProductos = pd.listarProductos();
-                    for (Producto prod:listaProductos){
+                List<Producto> listaInactivo = pd.listarProductosInactivos();
+                    for (Producto prod:listaInactivo){
                         if (prod.getIdProducto()==p.getIdProducto()){
-                            posicion = listaProductos.indexOf(prod);
+                            posicion = listaInactivo.indexOf(prod);
                         }
                     }
                     jcbProductos.removeAllItems();
@@ -302,10 +303,10 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
                     jcbInactivo.setSelectedIndex(posicion);
             }else{
                 if (jcbInactivo.isEnabled()){
-                    List<Producto> listaInactivos = pd.listarProductosInactivos();
-                    for (Producto prod:listaInactivos){
+                    List<Producto> listaProductos = pd.listarProductos();
+                    for (Producto prod:listaProductos){
                         if (prod.getIdProducto()==p.getIdProducto()){
-                            posicion= listaInactivos.indexOf(prod);
+                            posicion= listaProductos.indexOf(prod);
                         }
                     }
                     jcbInactivo.removeAllItems();

@@ -572,11 +572,13 @@ public class PrincipalView extends javax.swing.JFrame {
         m=md.buscarMeseroPorDNI(dni);
         jlMeseros.setText(m.getNombre());
         btMesasMeseros.setEnabled(true);
+        btPedidosMeseros.setEnabled(true);
     }
     
     private void DesactivarMesero(){
         jlMeseros.setText("Meseros");
         btMesasMeseros.setEnabled(false);
+        btPedidosMeseros.setEnabled(false);
     }
     
     private void ActivarAdmin(int dni){
