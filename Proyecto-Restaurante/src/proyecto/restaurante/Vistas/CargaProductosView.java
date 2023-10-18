@@ -28,9 +28,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         estilos();
         jcbProductos.setEnabled(false);
-        jcbEncargado.setEnabled(false);
         jcbInactivo.setEnabled(false);
-        jcbEncargado.setEnabled(false);
         jrbActivo.setSelected(true);
         jrbInactivo.setSelected(true);
         jlIdProducto.setVisible(false);
@@ -53,7 +51,6 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
 
         Fondo = new javax.swing.JPanel();
         jbActualizarProducto = new javax.swing.JButton();
-        jcbEncargado = new javax.swing.JComboBox<>();
         TituloModificacion = new javax.swing.JLabel();
         jcbProductos = new javax.swing.JComboBox<>();
         Cerrar = new javax.swing.JLabel();
@@ -72,7 +69,6 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         Titulo = new javax.swing.JLabel();
         TituloCarga = new javax.swing.JLabel();
         JbLimpiar = new javax.swing.JButton();
-        jLabel13 = new javax.swing.JLabel();
         jcbInactivo = new javax.swing.JComboBox<>();
         jcbCategoria = new javax.swing.JComboBox<>();
         jtCantidad = new javax.swing.JTextField();
@@ -96,8 +92,6 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         });
         Fondo.add(jbActualizarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 460, -1, -1));
 
-        Fondo.add(jcbEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 270, -1));
-
         TituloModificacion.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         TituloModificacion.setForeground(new java.awt.Color(255, 255, 255));
         TituloModificacion.setText("Seleccione Producto a Modificar.");
@@ -113,7 +107,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
                 jcbProductosActionPerformed(evt);
             }
         });
-        Fondo.add(jcbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 270, -1));
+        Fondo.add(jcbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 270, -1));
 
         Cerrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         Cerrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,7 +130,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Seleccione Inactivos");
-        Fondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 190, 30));
+        Fondo.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 190, 30));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,7 +188,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Seleccione Producto");
-        Fondo.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 190, 30));
+        Fondo.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 190, 30));
 
         jbCrearProducto.setText("Cargar Producto");
         jbCrearProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -222,12 +216,6 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         });
         Fondo.add(JbLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 460, 130, -1));
 
-        jLabel13.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Seleccione Encargado");
-        Fondo.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 190, 30));
-
         jcbInactivo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jcbInactivoMouseClicked(evt);
@@ -238,7 +226,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
                 jcbInactivoActionPerformed(evt);
             }
         });
-        Fondo.add(jcbInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 270, -1));
+        Fondo.add(jcbInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 270, -1));
 
         jcbCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -276,69 +264,68 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
     private void jbActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarProductoActionPerformed
         ProductoData pd = new ProductoData();
         Producto p = new Producto();
-        //boolean cambiarTabla=false;
-        //int posicion;
-//        if (jcbEncargado.isEnabled()){
-//            posicion=jcbEncargado.getSelectedIndex();
-//        }else{
-//            posicion=jcbProductos.getSelectedIndex();
-//        }
-//        m.setIdMesero(Integer.parseInt(jlIdProducto.getText()));
-//        m.setNombre(jtNombre.getText());
-//        m.setApellido(jtPrecio.getText());
-//        m.setDni(Integer.parseInt(jtDni.getText()));
-//        m.setEstado(jrbActivo.isSelected());
-//        if (jrbActivo.isSelected()){
-//            m.setAcceso(1);
-//        }else{
-//            m.setAcceso(2);
-//        }
-//        m.setPassword(jtPassword.getText());
-//        Mesero meseroActual = mesd.buscarMeseroPorId(m.getIdMesero());
-//        if (meseroActual.getAcceso()!=m.getAcceso()){
-//            cambiarTabla=true;
-//        }
-//        mesd.modificarMesero(m);
-//        if (cambiarTabla){
-//            if (jcbEncargado.isEnabled()){
-//            List<Mesero> listaMeseros = mesd.ListarMeseros();
-//                for (Mesero me:listaMeseros){
-//                    if(me.getIdMesero()==m.getIdMesero()){
-//                        posicion = listaMeseros.indexOf(me);
-//                    }
-//                }
-//                jcbEncargado.removeAllItems();
-//                
-//                jcbEncargado.setEnabled(false);
-//                jcbProductos.setEnabled(true);
-//                CargarComboMeseros();
-//                jcbProductos.setSelectedIndex(posicion);
-//            }else{
-//                if (jcbProductos.isEnabled()){
-//                    List<Mesero> listaEncargados = mesd.ListarEncargados();
-//                    for (Mesero me:listaEncargados){
-//                        if(me.getIdMesero()==m.getIdMesero()){
-//                            posicion = listaEncargados.indexOf(me);
-//                        }
-//                    }
-//                    jcbProductos.removeAllItems();
-//                    jcbProductos.setEnabled(false);
-//                    jcbEncargado.setEnabled(true);
-//                    CargarComboEncargados();
-//                    jcbEncargado.setSelectedIndex(posicion);
-//                }
-//            }
-//        }else{
-//            if (jcbEncargado.isEnabled()){
-//                jcbEncargado.removeAllItems();
-//                CargarComboEncargados();
-//                jcbEncargado.setSelectedIndex(posicion);
-//            }else{
-//                jcbProductos.removeAllItems();
-//                CargarComboMeseros();
-//                jcbProductos.setSelectedIndex(posicion);
-//            }
-//        }
+        boolean cambiarTabla=false;
+        int posicion;
+        if (jcbProductos.isEnabled()){
+            posicion=jcbProductos.getSelectedIndex();
+        }else{
+            posicion=jcbInactivo.getSelectedIndex();
+        }
+        
+        p.setIdProducto(Integer.parseInt(jlIdProducto.getText()));
+        p.setNombre(jtNombre.getText());
+        p.setCantidad(Integer.parseInt(jtCantidad.getText()));
+        p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
+        p.setPrecio(Double.parseDouble(jtPrecio.getText()));
+        if (jrbActivo.isSelected()){
+            p.setEstado(true);
+        }else{
+           p.setEstado(false);
+        }
+        Producto productoActual = pd.buscarProducto(p.getIdProducto());
+        if (productoActual.isEstado()!=p.isEstado()){
+            cambiarTabla=true;
+        }
+        pd.modificarProducto(p);
+        if (cambiarTabla){
+            if (jcbProductos.isEnabled()){
+                List<Producto> listaProductos = pd.listarProductos();
+                    for (Producto prod:listaProductos){
+                        if (prod.getIdProducto()==p.getIdProducto()){
+                            posicion = listaProductos.indexOf(prod);
+                        }
+                    }
+                    jcbProductos.removeAllItems();
+                    jcbProductos.setEnabled(false);
+                    jcbInactivo.setEnabled(true);
+                    CargarComboInactivos();
+                    jcbInactivo.setSelectedIndex(posicion);
+            }else{
+                if (jcbInactivo.isEnabled()){
+                    List<Producto> listaInactivos = pd.listarProductosInactivos();
+                    for (Producto prod:listaInactivos){
+                        if (prod.getIdProducto()==p.getIdProducto()){
+                            posicion= listaInactivos.indexOf(prod);
+                        }
+                    }
+                    jcbInactivo.removeAllItems();
+                    jcbInactivo.setEnabled(false);
+                    jcbProductos.setEnabled(true);
+                    CargarComboProductos();
+                    jcbProductos.setSelectedIndex(posicion);
+                }
+            }
+        }else{
+            if (jcbProductos.isEnabled()){
+                jcbProductos.removeAllItems();
+                CargarComboProductos();
+                jcbProductos.setSelectedIndex(posicion);
+            }else{
+                jcbInactivo.removeAllItems();
+                CargarComboInactivos();
+                jcbInactivo.setSelectedIndex(posicion);
+            }
+        }
     }//GEN-LAST:event_jbActualizarProductoActionPerformed
 
     private void jcbProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProductosActionPerformed
@@ -417,7 +404,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         ProductoData pd = new ProductoData();
         Producto p = new Producto();
         p.setNombre(jtNombre.getText());
-        p.setCantidad(Integer.parseInt(jtPrecio.getText()));
+        p.setCantidad(Integer.parseInt(jtCantidad.getText()));
         p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
         p.setPrecio(Integer.parseInt(jtPrecio.getText()));
         if (jrbActivo.isSelected()){
@@ -438,6 +425,8 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         //jcbEncargado.removeAllItems();
         //jcbEncargado.setEnabled(false);
         //jcbEncargado.removeAllItems();
+        jcbInactivo.setEnabled(false);
+        jcbInactivo.removeAllItems();
         LimpiarCampos();
         jbCrearProducto.setEnabled(false);
         jbActualizarProducto.setEnabled(true);
@@ -468,15 +457,17 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         //jcbEncargado.removeAllItems();
         //jcbEncargado.setEnabled(false);
         //jcbEncargado.removeAllItems();
+        jcbProductos.setEnabled(false);
+        jcbProductos.removeAllItems();
         LimpiarCampos();
         jbCrearProducto.setEnabled(false);
         jbActualizarProducto.setEnabled(true);
         jcbInactivo.removeAllItems();
         CargarComboInactivos();
-        if (jcbInactivo.getItemCount()==0){
-            JOptionPane.showMessageDialog(this, "No hay Productos Inactivos");
-            jcbInactivo.setEnabled(false);
-        }
+        //if (jcbInactivo.getItemCount()==0){
+          //  JOptionPane.showMessageDialog(this, "No hay Productos Inactivos");
+            //jcbInactivo.setEnabled(false);
+        //}
         }
     }//GEN-LAST:event_jcbInactivoMouseClicked
 
@@ -534,7 +525,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         
         for (Producto p: pd.listarProductosInactivos()){
                 //jcbMesero.setRenderer(new CustomRenderer());
-                jcbProductos.addItem(p);
+                jcbInactivo.addItem(p);
         
         }
         
@@ -580,7 +571,6 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel TransparenciaModificar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -589,8 +579,7 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbActualizarProducto;
     private javax.swing.JButton jbCrearProducto;
     private javax.swing.JComboBox<Categoria> jcbCategoria;
-    private javax.swing.JComboBox<Mesero> jcbEncargado;
-    private javax.swing.JComboBox<Mesero> jcbInactivo;
+    private javax.swing.JComboBox<Producto> jcbInactivo;
     private javax.swing.JComboBox<Producto> jcbProductos;
     private javax.swing.JLabel jlIdProducto;
     private javax.swing.JRadioButton jrbActivo;

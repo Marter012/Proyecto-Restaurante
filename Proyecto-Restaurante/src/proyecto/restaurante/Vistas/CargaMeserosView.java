@@ -550,10 +550,10 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         
         if (!jcbMesero.isEnabled()){
         jcbEncargado.removeAllItems();
-        jcbEncargado.addItem(null);
+        //jcbEncargado.addItem(null);
         //jcbEncargado.setRenderer(jcbEncargado.getRenderer());
         jcbMesero.setEnabled(true);
-        jcbEncargado.removeAllItems();
+        //jcbEncargado.removeAllItems();
         jcbEncargado.setEnabled(false);
         //jcbEncargado.removeAllItems();
         jcbInactivos.setEnabled(false);

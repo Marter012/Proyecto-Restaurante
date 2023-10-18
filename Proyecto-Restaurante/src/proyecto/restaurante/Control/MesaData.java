@@ -21,11 +21,12 @@ public class MesaData {
         /*
             En este metodo crearemos las Mesas para el Restaurante
         */
-        String sql="insert into mesas(Capacidad,Estado) values(?,?)";
+        String sql="insert into mesas(Capacidad,Estado,Actividad) values(?,?,?)";
         try {
             ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,m.getCapacidad());
             ps.setString(2,String.valueOf(m.getEstado()));
+            ps.setBoolean(3,true);
             ps.executeUpdate();
             
             rs=ps.getGeneratedKeys();
@@ -68,12 +69,13 @@ public class MesaData {
         /*
             Este metodo modifica el estado de la Mesa en la BD
         */
-        String sql="update mesas set capacidad=?, Estado = ? WHERE idMesa=?;";
+        String sql="update mesas set capacidad=?, Estado = ?, Actividad = ? WHERE idMesa=?;";
         try {
             ps=con.prepareStatement(sql);
             ps.setInt(1,m.getCapacidad());
             ps.setString(2,String.valueOf(m.getEstado()));
-            ps.setInt(3,m.getIdMesa());
+            ps.setBoolean(3,m.getActividad());
+            ps.setInt(4,m.getIdMesa());
             int rst=ps.executeUpdate();
             if(rst==1){
                 JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente");

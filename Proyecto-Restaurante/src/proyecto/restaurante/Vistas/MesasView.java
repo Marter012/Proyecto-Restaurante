@@ -73,6 +73,7 @@ public class MesasView extends javax.swing.JInternalFrame {
         jlTransparenciaModificar = new javax.swing.JLabel();
         jlFondoImagen = new javax.swing.JLabel();
 
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
         setMinimumSize(new java.awt.Dimension(540, 580));
         setPreferredSize(new java.awt.Dimension(540, 590));
 
@@ -156,9 +157,9 @@ public class MesasView extends javax.swing.JInternalFrame {
         jrbMesasInactivas.setText("Mesas Inactivas");
         jrbMesasInactivas.setBorder(null);
         jrbMesasInactivas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jrbMesasInactivas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jrbMesasInactivasMouseClicked(evt);
+        jrbMesasInactivas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbMesasInactivasActionPerformed(evt);
             }
         });
         jpFondo.add(jrbMesasInactivas, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, -1, -1));
@@ -190,7 +191,7 @@ public class MesasView extends javax.swing.JInternalFrame {
                 jbModificarActionPerformed(evt);
             }
         });
-        jpFondo.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
+        jpFondo.add(jbModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
         jbActivar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jbActivar.setForeground(new java.awt.Color(0, 0, 0));
@@ -201,7 +202,7 @@ public class MesasView extends javax.swing.JInternalFrame {
                 jbActivarActionPerformed(evt);
             }
         });
-        jpFondo.add(jbActivar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, -1, -1));
+        jpFondo.add(jbActivar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, -1, -1));
 
         jbDesactivar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jbDesactivar.setForeground(new java.awt.Color(0, 0, 0));
@@ -212,7 +213,7 @@ public class MesasView extends javax.swing.JInternalFrame {
                 jbDesactivarActionPerformed(evt);
             }
         });
-        jpFondo.add(jbDesactivar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 410, -1, -1));
+        jpFondo.add(jbDesactivar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 410, -1, -1));
 
         jlTransparenciaCarga.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlTransparenciaCarga.setOpaque(true);
@@ -272,6 +273,15 @@ public class MesasView extends javax.swing.JInternalFrame {
                 m.setCapacidad(Integer.parseInt(jtCapacidad.getText()));
                 m.setEstado(Estado.LIBRE);
                 md.crearMesa(m);
+                borrarFila();
+                for(Mesa ms:md.obtenerMesasActivas()){
+                    dtm.addRow(new Object[]{
+                        ms.getIdMesa(),
+                        ms.getCapacidad(),
+                        ms.getEstado()
+                    });
+                }
+                jtCapacidad.setText("");
             }catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this,"No se puede ingresar letra");
             }
@@ -290,6 +300,15 @@ public class MesasView extends javax.swing.JInternalFrame {
                 m.setCapacidad(Integer.parseInt(jtCapacidad.getText()));
                 m.setEstado(Estado.LIBRE);
                 md.crearMesa(m);
+                borrarFila();
+                for(Mesa ms:md.obtenerMesasActivas()){
+                    dtm.addRow(new Object[]{
+                        ms.getIdMesa(),
+                        ms.getCapacidad(),
+                        ms.getEstado()
+                    });
+                }
+                jtCapacidad.setText("");
             } catch (NumberFormatException e) {
                 jtCapacidad.setText("");
                 JOptionPane.showMessageDialog(this,"No se puede ingresar letra");
@@ -318,30 +337,9 @@ public class MesasView extends javax.swing.JInternalFrame {
             }
         }
         jrbMesasActivas.setEnabled(false);
+        jbActivar.setEnabled(false);
+        jbDesactivar.setEnabled(true);
     }//GEN-LAST:event_jrbMesasActivasActionPerformed
-
-    private void jrbMesasInactivasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jrbMesasInactivasMouseClicked
-        md=new MesaData();
-        borrarFila();
-        jrbMesasActivas.setEnabled(true);
-        jbActivar.setEnabled(true);
-        jbDesactivar.setEnabled(false);
-        if(jtCapacidad.getText().isEmpty()){
-            jtCapacidad.setForeground(Color.gray);
-            jtCapacidad.setText("cantidad de clientes");
-        }
-        if(jrbMesasActivas.isSelected()){
-            jrbMesasActivas.setSelected(false);
-            for(Mesa ms:md.obtenerMesasInactivas()){
-                dtm.addRow(new Object[]{
-                    ms.getIdMesa(),
-                    ms.getCapacidad(),
-                    ms.getEstado()
-                });
-            }
-        }
-        jrbMesasInactivas.setEnabled(false);
-    }//GEN-LAST:event_jrbMesasInactivasMouseClicked
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         md=new MesaData();
@@ -368,8 +366,8 @@ public class MesasView extends javax.swing.JInternalFrame {
             m.setActividad(true);
             md.modificarMesa(m);
             borrarFila();
-            jrbMesasActivas.setSelected(true);
-            jrbMesasInactivas.setSelected(false);
+            jrbMesasActivas.setEnabled(true);
+            jrbMesasInactivas.setEnabled(false);
             for(Mesa ms:md.obtenerMesasActivas()){
                 dtm.addRow(new Object[]{
                     ms.getIdMesa(),
@@ -377,6 +375,12 @@ public class MesasView extends javax.swing.JInternalFrame {
                     ms.getEstado()
                 });
             }
+            jrbMesasActivas.setSelected(true);
+            jrbMesasInactivas.setSelected(false);
+            jrbMesasActivas.setEnabled(false);
+            jrbMesasInactivas.setEnabled(true);
+            jbActivar.setEnabled(false);
+            jbDesactivar.setEnabled(true);
         }else{
             JOptionPane.showMessageDialog(this,"Debe seleccionar una mesa");
         }
@@ -392,17 +396,50 @@ public class MesasView extends javax.swing.JInternalFrame {
             m.setActividad(false);
             md.modificarMesa(m);
             borrarFila();
-            for(Mesa ms:md.obtenerMesasActivas()){
+            jrbMesasActivas.setEnabled(false);
+            jrbMesasInactivas.setEnabled(true);
+            for(Mesa ms:md.obtenerMesasInactivas()){
                 dtm.addRow(new Object[]{
                     ms.getIdMesa(),
                     ms.getCapacidad(),
                     ms.getEstado()
                 });
             }
+            jrbMesasActivas.setSelected(false);
+            jrbMesasInactivas.setSelected(true);
+            jrbMesasActivas.setEnabled(true);
+            jrbMesasInactivas.setEnabled(false);
+            jbDesactivar.setEnabled(false);
+            jbActivar.setEnabled(true);
         }else{
             JOptionPane.showMessageDialog(this,"Debe seleccionar una mesa");
         }
     }//GEN-LAST:event_jbDesactivarActionPerformed
+
+    private void jrbMesasInactivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMesasInactivasActionPerformed
+        md=new MesaData();
+        borrarFila();
+        jrbMesasActivas.setEnabled(true);
+        jbActivar.setEnabled(true);
+        jbDesactivar.setEnabled(false);
+        if(jtCapacidad.getText().isEmpty()){
+            jtCapacidad.setForeground(Color.gray);
+            jtCapacidad.setText("cantidad de clientes");
+        }
+        if(jrbMesasActivas.isSelected()){
+            jrbMesasActivas.setSelected(false);
+            for(Mesa ms:md.obtenerMesasInactivas()){
+                dtm.addRow(new Object[]{
+                    ms.getIdMesa(),
+                    ms.getCapacidad(),
+                    ms.getEstado()
+                });
+            }
+        }
+        jrbMesasInactivas.setEnabled(false);
+        jbDesactivar.setEnabled(false);
+        jbActivar.setEnabled(true);
+    }//GEN-LAST:event_jrbMesasInactivasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
