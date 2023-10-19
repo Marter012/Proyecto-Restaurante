@@ -34,5 +34,8 @@ public class ProyectoRestaurante {
     }
     
     
+    MeseroData md= new MeseroData();
+    
+    System.out.println(md.buscarMeseroPorDNI(41521048));
     }
 }

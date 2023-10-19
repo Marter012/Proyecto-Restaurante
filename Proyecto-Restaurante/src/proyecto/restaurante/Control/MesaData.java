@@ -12,6 +12,7 @@ public class MesaData {
     private ResultSet rs;
     private ArrayList<Mesa> listaMesa;
     private Mesa m;
+    private MesaData md;
 
     public MesaData() {
         con=Conexion.getConexion();
@@ -165,29 +166,13 @@ public class MesaData {
         return listaMesasLibres;
     }
     
-    public ArrayList<Mesa> obtenerMesasLibres(){
-        /*
-            Este metodo obtiene de la BD las Mesas disponibles(Libres)
-        */
-        ArrayList<Mesa> listaMesasLibres=new ArrayList();
-        String sql="select * from mesas where mesas.estado=?";
-        try {
-            ps=con.prepareStatement(sql);
-            ps.setString(1,String.valueOf(Estado.LIBRE));
-            rs=ps.executeQuery();
-            while(rs.next()){
-                Mesa ms=new Mesa();
-                ms.setIdMesa(rs.getInt("idMesa"));
-                ms.setCapacidad(rs.getInt("Capacidad"));
-                ms.setEstado(Estado.valueOf(rs.getString("Estado")));
-                listaMesasLibres.add(ms);
+    public ArrayList<Mesa> obtenerMesasLibres(){        
+        md = new MesaData();
+        ArrayList<Mesa> listaMesasLibres = new ArrayList();
+        for ( Mesa mesa : md.obtenerMesasActivas()){
+            if(mesa.getActividad() == true && mesa.getEstado() == Estado.LIBRE){
+                listaMesasLibres.add(mesa);
             }
-            ps.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"MesaData: Error en la extraccion de la base de datos");
-        }
-        if(listaMesasLibres.isEmpty()){
-            JOptionPane.showMessageDialog(null,"La lista esta vacia");
         }
         return listaMesasLibres;
     }
@@ -247,4 +232,45 @@ public class MesaData {
     }
 
   
+     public void ocuparMesa(Mesa m){
+        /*
+            Este metodo modifica el estado de la Mesa en la BD
+        */
+        String sql="UPDATE mesas SET Estado = ? WHERE idMesa=?;";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1,"OCUPADA");
+            ps.setInt(2,m.getIdMesa());
+            int rst=ps.executeUpdate();
+            if(rst==1){
+                JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null,"No se ha podido a podido actualizar");
+            }
+            ps.close();
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null,"MesaData: Error al Actualizar la Base de Datos");
+        }
+    }
+     
+     public void liberarMesa(Mesa m){
+        /*
+            Este metodo modifica el estado de la Mesa en la BD
+        */
+        String sql="UPDATE mesas SET Estado = ? WHERE idMesa=?;";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1,"LIBRE");
+            ps.setInt(2,m.getIdMesa());
+            int rst=ps.executeUpdate();
+            if(rst==1){
+                JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null,"No se ha podido a podido actualizar");
+            }
+            ps.close();
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null,"MesaData: Error al Actualizar la Base de Datos");
+        }
+    }
 }

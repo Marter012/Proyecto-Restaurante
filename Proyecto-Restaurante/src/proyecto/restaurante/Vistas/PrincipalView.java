@@ -409,7 +409,8 @@ public class PrincipalView extends javax.swing.JFrame {
     private void btMesasMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMesasMeserosActionPerformed
         EscritorioFrames.removeAll();
         EscritorioFrames.repaint();
-        MeserosView mv = new MeserosView();
+        int DNI = m.getDni();
+        MeserosView mv = new MeserosView(DNI);
         mv.setVisible(true);
         EscritorioFrames.add(mv);
         EscritorioFrames.moveToFront(mv); 
