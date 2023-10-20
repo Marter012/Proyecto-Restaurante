@@ -285,7 +285,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
 
         TransparenciaModificar.setOpaque(true);
         Fondo.add(TransparenciaModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 500, 360));
-        Fondo.add(jlIdMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, 20, 20));
+        Fondo.add(jlIdMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 20, 30));
 
         FondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
         FondoImagen.setLabelFor(Fondo);
