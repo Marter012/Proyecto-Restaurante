@@ -32,9 +32,11 @@ public class PedidoData {
     private PreparedStatement ps;
     private ResultSet rs;
     private Pedido p;
+    private PedidoData pd;
     private MesaData mad;
     private MeseroData mod;
     private Mesa m;
+    
 
     public PedidoData() {
         con = Conexion.getConexion();
@@ -69,7 +71,7 @@ public class PedidoData {
     
     public Pedido buscarPedido(int id){
         p = null;
-        sql = "SELECT * FROM productos WHERE idPedido=?" ;
+        sql = "SELECT * FROM pedidos WHERE idPedido=?" ;
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1,id);            
@@ -182,5 +184,19 @@ public class PedidoData {
             JOptionPane.showMessageDialog(null, "ProductoData : Error al listar los productos"+ex.getMessage());
         }        
         return listaMesas;
+    }
+    
+    public ArrayList<Pedido> obtenerMesasLibresPorMesero(int idMesero){        
+        
+        ArrayList<Pedido> listaMesasMeseros = new ArrayList();
+        pd = new PedidoData();
+        for(Pedido pedidos : pd.listarPedidos()){
+            if(pedidos.getMesa().getEstado() == Estado.OCUPADA && pedidos.getMesero().getIdMesero() == idMesero){
+                listaMesasMeseros.add(pedidos);
+            }
+            
+        }
+               
+        return listaMesasMeseros;
     }
 }

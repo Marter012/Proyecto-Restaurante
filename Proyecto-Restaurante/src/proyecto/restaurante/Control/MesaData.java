@@ -5,6 +5,7 @@ import proyecto.restaurante.Entidades.Estado;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import proyecto.restaurante.Entidades.Pedido;
 
 public class MesaData {
     private Connection con;
@@ -13,6 +14,8 @@ public class MesaData {
     private ArrayList<Mesa> listaMesa;
     private Mesa m;
     private MesaData md;
+    private Pedido pedido;
+    private PedidoData pedidoData;
 
     public MesaData() {
         con=Conexion.getConexion();
@@ -177,6 +180,7 @@ public class MesaData {
         return listaMesasLibres;
     }
     
+        
     public ArrayList<Mesa> obtenerMesasOcupadas(){
         /*
             Este metodo obtiene de la BD las Mesas Ocupadas

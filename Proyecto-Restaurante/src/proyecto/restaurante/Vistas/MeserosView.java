@@ -34,7 +34,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
     Pedido pedido = new Pedido();
     PedidoData pedidoData = new PedidoData();
     ReservaData reservaData = new ReservaData();
-    private int idMesero; 
+    private int DNIMesero; 
         
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
@@ -52,7 +52,8 @@ public class MeserosView extends javax.swing.JInternalFrame {
         armarCabecera();
         cargarComboBox();
         borrarFilas();
-        idMesero = DNI;
+        DNIMesero = DNI;
+        cargarTablaOcupada();
     }
     
     private void estilos(){
@@ -105,7 +106,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
             jrbMesasLibres.setSelected(false);
             jrbMesasReservadas.setSelected(false);
         }
-        cargarTabla("OCUPADA");
+        cargarTablaOcupada();
         jbDarBaja.setEnabled(false);
         jbLiberar.setEnabled(true);
     }
@@ -336,7 +337,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
     private void jbAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAsignarActionPerformed
         mesa = (Mesa) jcbMesas.getSelectedItem();
         mesaData.ocuparMesa(mesa);        
-        mesero = meseroData.buscarMeseroPorDNI(idMesero);  
+        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);  
         pedido = new Pedido(mesa,mesero,LocalDate.now(),LocalTime.now(),250,true);
         pedidoData.guardarPedido(pedido);
         activarTablaOcupadas();
@@ -394,6 +395,19 @@ public class MeserosView extends javax.swing.JInternalFrame {
             modelo.addRow(new Object[]{
             mesas.getIdMesa(),
             mesas.getCapacidad(),
+            });
+        }
+    }
+    
+    private void cargarTablaOcupada(){
+        List<Pedido> listaMesas = new ArrayList();
+        mesaData = new MesaData();
+        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
+        listaMesas = pedidoData.obtenerMesasLibresPorMesero(mesero.getIdMesero());
+        for (Pedido pedidos :listaMesas){
+            modelo.addRow(new Object[]{
+            pedidos.getMesa().getIdMesa(),
+            pedidos.getMesa().getCapacidad()
             });
         }
     }
