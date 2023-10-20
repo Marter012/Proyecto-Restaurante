@@ -17,6 +17,7 @@ import proyecto.restaurante.Entidades.Mesero;
 public class PrincipalView extends javax.swing.JFrame {
     private static MeseroData md;
     private static Mesero m;
+        
     public PrincipalView() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -561,7 +562,8 @@ public class PrincipalView extends javax.swing.JFrame {
     private void btPedidosMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPedidosMeserosActionPerformed
         EscritorioFrames.removeAll();
         EscritorioFrames.repaint();
-        PedidosView pv = new PedidosView();
+        int DNI = m.getDni();
+        PedidosView pv = new PedidosView(DNI);
         pv.setVisible(true);
         EscritorioFrames.add(pv);
         EscritorioFrames.moveToFront(pv);         

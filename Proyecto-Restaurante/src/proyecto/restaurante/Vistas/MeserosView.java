@@ -53,7 +53,8 @@ public class MeserosView extends javax.swing.JInternalFrame {
         cargarComboBox();
         borrarFilas();
         DNIMesero = DNI;
-        cargarTablaOcupada();
+        cargarTablaLibre();
+        jrbMesasLibres.setSelected(true);
     }
     
     private void estilos(){
@@ -94,7 +95,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
             jrbMesasOcupadas.setSelected(false);
             jrbMesasReservadas.setSelected(false);
         }
-        cargarTabla("LIBRE");
+        cargarTablaLibre();
         jbDarBaja.setEnabled(false);
         jbLiberar.setEnabled(false);
     }
@@ -357,7 +358,6 @@ public class MeserosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jrbMesasOcupadasActionPerformed
 
     private void jrbMesasReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMesasReservadasActionPerformed
-                
         activarTablaReserva();
     }//GEN-LAST:event_jrbMesasReservadasActionPerformed
 
@@ -388,9 +388,10 @@ public class MeserosView extends javax.swing.JInternalFrame {
         }        
     }//GEN-LAST:event_jbLiberarActionPerformed
    
-    private void cargarTabla(String estado){
+    
+    private void cargarTablaLibre(){
         List<Mesa> listaMesas = new ArrayList();
-        listaMesas = mesaData.ListarMesasPorEstado(estado);
+        listaMesas = mesaData.ListarMesasPorEstado("LIBRE");
         for (Mesa mesas:listaMesas){
             modelo.addRow(new Object[]{
             mesas.getIdMesa(),

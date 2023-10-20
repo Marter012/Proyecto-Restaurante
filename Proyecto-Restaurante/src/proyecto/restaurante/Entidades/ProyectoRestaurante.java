@@ -34,7 +34,8 @@ public class ProyectoRestaurante {
     PedidoData pd = new PedidoData();
     MesaData md = new MesaData();
     
-    
+    MeseroData med = new MeseroData();
+    System.out.println(med.buscarMeseroPorDNI(41521048));
     
     }
     
