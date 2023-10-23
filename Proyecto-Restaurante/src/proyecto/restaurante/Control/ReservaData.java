@@ -7,6 +7,7 @@ package proyecto.restaurante.Control;
 
 import java.sql.*;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -144,14 +145,16 @@ public ArrayList<Reserva> listarReservasPorFecha(Date Fecha){
         return reservasPorFecha;
     }
      
-public  ArrayList<Mesa> mesasDisponibles(LocalDate Fecha,LocalTime Hora){
-    List <Mesa> lista= new ArrayList();
+public  ArrayList<Mesa> mesasDisponibles(String Fecha,String Hora){
+    ArrayList <Mesa> lista= new ArrayList();
     sql="SELECT * FROM mesas m WHERE m.estado=? AND m.idMesa NOT IN (SELECT r.idMesa FROM reservas r WHERE r.Fecha=? AND r.Hora=?)";
-        try {
+       SimpleDateFormat formatoDate= new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatoTime = new SimpleDateFormat("HH:mm:ss");
+    try {
             ps=con.prepareStatement(sql);
             ps.setString(1,String.valueOf(Estado.LIBRE));
-            ps.setDate(2, Date.valueOf(Fecha));
-            ps.setTime(3, Time.valueOf(Hora));
+            ps.setDate(2, (Date) formatoDate.parse(Fecha));
+            ps.setTime(3, (Time) formatoTime.parse(Hora));
             rs=ps.executeQuery();
             while(rs.next()){
                 m=new Mesa();
@@ -164,8 +167,8 @@ public  ArrayList<Mesa> mesasDisponibles(LocalDate Fecha,LocalTime Hora){
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"ReservaData: Error al obtener mesas disponibles"+ex.getMessage());
         }
-        
-}
+       return lista;
+        }
 
     public void modificarReserva(Reserva res){
         sql="UPDATE reservas SET NombreClientE=?,DNI=?,Fecha=?,Hora=?,Estado=?,idMesa=? WHERE idReserva=?";
