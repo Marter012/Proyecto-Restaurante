@@ -98,12 +98,13 @@ public ReservaData(){
             
             while (rs.next()){
                res=new Reserva();
-               res.setNombreCliente(rs.getString(1));
-               res.setDni(rs.getInt(2));
-               res.setFecha(rs.getDate(3).toLocalDate());
-               res.setHora(rs.getTime(4).toLocalTime());
-               res.setEstado(rs.getBoolean(5));
-               res.setMesa(md.obtenerMesa(rs.getInt(6)));
+               res.setIdReserva(rs.getInt("idReserva"));
+               res.setNombreCliente(rs.getString("NombreCliente"));
+               res.setDni(rs.getInt("DNI"));
+               res.setFecha(rs.getDate("Fecha").toLocalDate());
+               res.setHora(rs.getTime("Hora").toLocalTime());
+               res.setEstado(rs.getBoolean("Estado"));
+               res.setMesa(md.obtenerMesa(rs.getInt("idMesa")));
                listaReservas.add(res);
             }
             ps.close();

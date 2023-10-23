@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import proyecto.restaurante.Control.ReservaData;
 import proyecto.restaurante.Entidades.Reserva;
@@ -26,13 +27,27 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
                 return false;
         }
     };
+    
     public ReservaMeseroView() {
         initComponents();
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        estilos();   
         armarCabecera();
         jcbFechas.setEnabled(false);
-        completarTabla();
     }
-
+    
+    
+    public void estilos(){
+        TransparenciaCargar.setBackground(new Color(35,34,36,190));
+        TransparenciaModificar.setBackground(new Color(35,34,36,190));
+    }
+    
+    private void borrarFilas(){
+        int f = jtReservas.getRowCount()-1;
+        for(;f >= 0; f--){
+            modelo.removeRow(f);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,17 +74,17 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
         Fondo.setBackground(new java.awt.Color(0, 0, 0));
         Fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Seleccione Fecha de Reserva.");
-        Fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+        jLabel3.setText("Fechas con reservas");
+        Fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
 
         jcbFechas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jcbFechasMouseClicked(evt);
             }
         });
-        Fondo.add(jcbFechas, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 270, -1));
+        Fondo.add(jcbFechas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 270, -1));
 
         Cerrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         Cerrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -122,7 +137,7 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
         Fondo.add(jlIdMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 20, 30));
 
         FondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
-        Fondo.add(FondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 590));
+        Fondo.add(FondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 550, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,7 +170,7 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
 
     private void jcbFechasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbFechasMouseClicked
         if (!jcbFechas.isEnabled()){
-            jcbFechas.removeAllItems();
+            jcbFechas.setEnabled(true);
             cargarCombo();
         }
     }//GEN-LAST:event_jcbFechasMouseClicked
@@ -181,16 +196,19 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
     }
     
     private void completarTabla(){
+        borrarFilas();
+        LocalDate dataFecha = (LocalDate)jcbFechas.getSelectedItem();
        rd =  new ReservaData();
-       for (Reserva reservas:rd.listarReservas()){
-        modelo.addRow(new Object[]{
-            reservas.getIdReserva(),
-            reservas.getNombreCliente(),
-            reservas.getDni(),
-            reservas.getFecha(),
-            reservas.getHora(),
-            reservas.isEstado(),
-            reservas.getMesa().getIdMesa()
+       for (Reserva reservas:rd.listarReservasPorFecha(dataFecha)){
+             modelo.addRow(new Object[]{
+               reservas.getIdReserva(),
+               reservas.getNombreCliente(),
+               reservas.getDni(),
+               reservas.getFecha(),
+               reservas.getHora(),
+               reservas.isEstado(),
+               reservas.getMesa().getIdMesa(),
+               
             });
        }
     }
