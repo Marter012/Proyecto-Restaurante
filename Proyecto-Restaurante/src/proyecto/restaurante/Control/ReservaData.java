@@ -117,8 +117,7 @@ public ReservaData(){
 
     public ArrayList<Reserva> listarReservasPorFecha(LocalDate Fecha){
         ArrayList <Reserva> reservasPorFecha = new ArrayList();
-        HashSet<Reserva> hashReservas = new HashSet<Reserva>();
-
+       
         sql="SELECT * FROM reservas WHERE fecha=?";
         
         try {
@@ -136,14 +135,6 @@ public ReservaData(){
                res.setEstado(rs.getBoolean("Estado"));
                res.setMesa(md.obtenerMesa(rs.getInt("idMesa")));
                reservasPorFecha.add(res);
-            }
-            
-            for(Reserva reserva : reservasPorFecha){
-                hashReservas.add(reserva);                
-            }
-            reservasPorFecha.clear();
-            for(Reserva reserva : hashReservas){
-                reservasPorFecha.add(reserva);
             }
             ps.close();
              
