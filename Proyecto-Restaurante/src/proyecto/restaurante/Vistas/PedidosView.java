@@ -28,6 +28,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
     private MeseroData meseroData;
     private int DNIMesero;
     private MesaData mesaData;
+    private Mesa mesa;
     
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
@@ -67,10 +68,10 @@ public class PedidosView extends javax.swing.JInternalFrame {
     }
     
     private void armarCabecera(){       
-        
-        modelo.addColumn("Mesa");
         modelo.addColumn("Pedido");
-        modelo.addColumn("Importe");        
+        modelo.addColumn("Mesa");
+        modelo.addColumn("Importe"); 
+        modelo.addColumn("Hora");
         jtPedidos.setModel(modelo);
 
     }
@@ -87,18 +88,24 @@ public class PedidosView extends javax.swing.JInternalFrame {
         pedidoData = new PedidoData();
         meseroData = new MeseroData();
         mesero = new Mesero();
+        mesa = new Mesa();
         mesero = meseroData.buscarMeseroPorDNI(DNIMesero);        
         List<Pedido> listaPedidos = new ArrayList();  
         
         Mesa mesaSeleccionada = (Mesa)jcbMesas.getSelectedItem();
-        listaPedidos = pedidoData.listarPedidosPorMesa(mesaSeleccionada.getIdMesa(), mesero.getIdMesero());
-        for (Pedido pedidos:listaPedidos){
-            modelo.addRow(new Object[]{
-            pedidos.getMesa(),
-            pedidos.getIdPedido(),
-            pedidos.getImporte()
-            });
+        if(mesaSeleccionada != null){
+            listaPedidos = pedidoData.listarPedidosPorMesa(mesaSeleccionada.getIdMesa(), mesero.getIdMesero());
         }
+        if(!listaPedidos.isEmpty()){
+            for (Pedido pedidos:listaPedidos){
+                modelo.addRow(new Object[]{
+                pedidos.getIdPedido(),
+                pedidos.getMesa(),                
+                pedidos.getImporte(),                
+                pedidos.getHoraPedido(),
+                });
+            }
+        }        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,8 +122,6 @@ public class PedidosView extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jcbMesas = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        jtHora = new javax.swing.JTextField();
         jpPedidos = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtPedidos = new javax.swing.JTable();
@@ -157,11 +162,14 @@ public class PedidosView extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Seleccione mesa :");
-        jpMesas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 53, -1, 27));
+        jpMesas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, 27));
 
         jcbMesas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jcbMesasMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jcbMesasMousePressed(evt);
             }
         });
         jcbMesas.addActionListener(new java.awt.event.ActionListener() {
@@ -169,13 +177,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
                 jcbMesasActionPerformed(evt);
             }
         });
-        jpMesas.add(jcbMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 56, 221, -1));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Hora de ingreso :");
-        jpMesas.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
-        jpMesas.add(jtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 210, 30));
+        jpMesas.add(jcbMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 221, -1));
 
         Fondo.add(jpMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 500, 130));
 
@@ -249,15 +251,22 @@ public class PedidosView extends javax.swing.JInternalFrame {
         if(!jcbMesas.isEnabled()){
             jcbMesas.setEnabled(true);
             cargarComboBox();
-            cargarTabla();
-        }else{
-            cargarTabla();
         }
     }//GEN-LAST:event_jcbMesasMouseClicked
 
     private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
-        
+        if(!jcbMesas.isEnabled()){
+            jcbMesas.setEnabled(true);
+            cargarComboBox();
+            cargarTabla();
+        }else{
+            cargarTabla();
+        }
     }//GEN-LAST:event_jcbMesasActionPerformed
+
+    private void jcbMesasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMousePressed
+       
+    }//GEN-LAST:event_jcbMesasMousePressed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -268,12 +277,10 @@ public class PedidosView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox<Mesa> jcbMesas;
     private javax.swing.JPanel jpMesas;
     private javax.swing.JPanel jpPedidos;
-    private javax.swing.JTextField jtHora;
     private javax.swing.JTable jtPedidos;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@ import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Estado;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.swing.JOptionPane;
 import proyecto.restaurante.Entidades.Pedido;
@@ -282,6 +283,7 @@ public class MesaData {
      public ArrayList<Mesa> verificacionMesaOcupada (int idMesero){
         pedidoData = new PedidoData();
         md = new MesaData();
+        HashSet<Mesa> hashMesa = new HashSet<Mesa>();
         
         ArrayList<Pedido> listaMesasPedidos = new ArrayList();
         listaMesasPedidos = pedidoData.obtenerMesasOcupadasPorMesero(idMesero);
@@ -294,11 +296,15 @@ public class MesaData {
         for(Mesa mesas : listaMesasMeseros){
             for(Pedido pedidos : listaMesasPedidos){
                 if(mesas.getIdMesa() == pedidos.getMesa().getIdMesa()){
-                    listaFinal.add(mesas);
+                    hashMesa.add(mesas);
                 }
-            }
-        }
+            }        
+        } 
         
+        for(Mesa mesas : hashMesa){
+            listaFinal.add(mesas);
+        }
         return listaFinal;
     }
+     
 }
