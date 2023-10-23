@@ -7,10 +7,13 @@ package proyecto.restaurante.Control;
 
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import proyecto.restaurante.Entidades.Estado;
 import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Reserva;
 
@@ -141,6 +144,29 @@ public ArrayList<Reserva> listarReservasPorFecha(Date Fecha){
         return reservasPorFecha;
     }
      
+public  ArrayList<Mesa> mesasDisponibles(LocalDate Fecha,LocalTime Hora){
+    List <Mesa> lista= new ArrayList();
+    sql="SELECT * FROM mesas m WHERE m.estado=? AND m.idMesa NOT IN (SELECT r.idMesa FROM reservas r WHERE r.Fecha=? AND r.Hora=?)";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1,String.valueOf(Estado.LIBRE));
+            ps.setDate(2, Date.valueOf(Fecha));
+            ps.setTime(3, Time.valueOf(Hora));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                m=new Mesa();
+                m.setIdMesa(rs.getInt("idMesa"));
+                m.setCapacidad(rs.getInt("Capacidad"));
+                lista.add(m);
+            }
+            ps.close();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"ReservaData: Error al obtener mesas disponibles"+ex.getMessage());
+        }
+        
+}
+
     public void modificarReserva(Reserva res){
         sql="UPDATE reservas SET NombreClientE=?,DNI=?,Fecha=?,Hora=?,Estado=?,idMesa=? WHERE idReserva=?";
         try {
@@ -184,17 +210,4 @@ public ArrayList<Reserva> listarReservasPorFecha(Date Fecha){
         }
         
     }
-
- /* public ArrayList<String> horasDisponibles(){
-      List<String> horas=new ArrayList<>();
-      horas.add("12:00");
-      horas.add("13:00");
-      horas.add("21:00");
-      horas.add("22:00");
-      return (ArrayList<String>) horas;
-      
-  }
-            
-    */
-   
 }

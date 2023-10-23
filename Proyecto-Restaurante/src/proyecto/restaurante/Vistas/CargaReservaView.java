@@ -5,9 +5,18 @@
  */
 package proyecto.restaurante.Vistas;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import proyecto.restaurante.Control.MesaData;
+import proyecto.restaurante.Control.ReservaData;
+import proyecto.restaurante.Entidades.Mesa;
+import proyecto.restaurante.Entidades.Reserva;
 
 /**
  *
@@ -17,10 +26,14 @@ public class CargaReservaView extends javax.swing.JFrame {
    
     private DefaultTableModel modelo= new DefaultTableModel();
     
+    private ReservaData rd;
+    private MesaData md;
+    
     public CargaReservaView() {
         initComponents();
         armarCabecera();
         horasDisponibles();
+        cargarMesas();
     }
 
     /**
@@ -34,9 +47,9 @@ public class CargaReservaView extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jdCalendario = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jcbMesaLibre = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -49,7 +62,7 @@ public class CargaReservaView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
-        jcbHoras = new javax.swing.JComboBox<>();
+        jcbHora = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -60,8 +73,6 @@ public class CargaReservaView extends javax.swing.JFrame {
         jLabel2.setText("FECHA");
 
         jLabel3.setText("Cantidad ");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setText("Mesas Disponibles");
 
@@ -101,9 +112,9 @@ public class CargaReservaView extends javax.swing.JFrame {
 
         jButton4.setText("Buscar");
 
-        jcbHoras.addActionListener(new java.awt.event.ActionListener() {
+        jcbHora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbHorasActionPerformed(evt);
+                jcbHoraActionPerformed(evt);
             }
         });
 
@@ -146,7 +157,7 @@ public class CargaReservaView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jcbMesaLibre, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,11 +169,11 @@ public class CargaReservaView extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jdCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(87, 87, 87)
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(42, 42, 42)
-                                        .addComponent(jcbHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jcbHora, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 292, Short.MAX_VALUE))))
         );
@@ -175,15 +186,15 @@ public class CargaReservaView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                        .addComponent(jdCalendario, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
-                    .addComponent(jcbHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbHora, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbMesaLibre, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,9 +223,9 @@ public class CargaReservaView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jcbHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbHorasActionPerformed
+    private void jcbHoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbHoraActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcbHorasActionPerformed
+    }//GEN-LAST:event_jcbHoraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -268,18 +279,26 @@ public class CargaReservaView extends javax.swing.JFrame {
       hora.add("21:00");
       hora.add("22:00");
      for(String horas: hora){
-         jcbHoras.addItem(horas);
+         jcbHora.addItem(horas);
      }
-        
     }
+    
+ private void cargarMesas(){
+     List<Mesa> lista= new ArrayList();
+     rd= new ReservaData();
+     lista= rd.mesasDisponibles(jdCalendario.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),(LocalTime)jcbHora.getSelectedItem());
+     for(Mesa mesa: lista){
+         jcbMesaLibre.addItem(mesa);
+     }
+ }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -291,7 +310,9 @@ public class CargaReservaView extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JComboBox<String> jcbHoras;
+    private javax.swing.JComboBox<String> jcbHora;
+    private javax.swing.JComboBox<Mesa> jcbMesaLibre;
+    private com.toedter.calendar.JDateChooser jdCalendario;
     // End of variables declaration//GEN-END:variables
 
 
