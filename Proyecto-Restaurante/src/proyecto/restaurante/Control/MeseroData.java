@@ -9,7 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import proyecto.restaurante.Entidades.Estado;
+import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Mesero;
+import proyecto.restaurante.Entidades.Pedido;
 
 /**
  *
@@ -21,6 +24,8 @@ public class MeseroData {
     private PreparedStatement ps;
     private ResultSet rs;
     private Mesero m;
+    public PedidoData pedidoData;
+    public MesaData mesaData;
 
     public MeseroData (){
         con = Conexion.getConexion();

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import proyecto.restaurante.Control.MesaData;
 import proyecto.restaurante.Control.MeseroData;
 import proyecto.restaurante.Control.PedidoData;
 import proyecto.restaurante.Entidades.Mesa;
@@ -26,6 +27,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
     private Mesero mesero;
     private MeseroData meseroData;
     private int DNIMesero;
+    private MesaData mesaData;
     
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
@@ -41,11 +43,10 @@ public class PedidosView extends javax.swing.JInternalFrame {
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         estilos();
         DNIMesero = DNI;     
+        System.out.println(DNIMesero);
         armarCabecera();
         borrarFilas();
-        cargarTabla();               
-        cargarComboBox();
-
+        jcbMesas.setEnabled(false);
     }
     private void estilos(){
         Fondo.setBackground(new Color(35,34,36,210));
@@ -54,12 +55,14 @@ public class PedidosView extends javax.swing.JInternalFrame {
     }
     
     public void cargarComboBox(){
-        pedidoData = new PedidoData();
+        mesaData = new MesaData();
         meseroData = new MeseroData();
         mesero = new Mesero();
-        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
-        for (Pedido pedidos: pedidoData.obtenerMesasLibresPorMesero(mesero.getIdMesero())){
-            jcbMesas.addItem(pedidos);
+        mesero = meseroData.buscarMeseroPorDNI(41521048);
+        
+        
+        for (Mesa mesas: mesaData.verificacionMesaOcupada(mesero.getIdMesero())){
+            jcbMesas.addItem(mesas);
         }
     }
     
@@ -80,12 +83,15 @@ public class PedidosView extends javax.swing.JInternalFrame {
     }
      
     private void cargarTabla(){
+        borrarFilas();
         pedidoData = new PedidoData();
         meseroData = new MeseroData();
         mesero = new Mesero();
         mesero = meseroData.buscarMeseroPorDNI(DNIMesero);        
-        List<Pedido> listaPedidos = new ArrayList();
-        listaPedidos = pedidoData.obtenerMesasLibresPorMesero(mesero.getDni());
+        List<Pedido> listaPedidos = new ArrayList();  
+        
+        Mesa mesaSeleccionada = (Mesa)jcbMesas.getSelectedItem();
+        listaPedidos = pedidoData.listarPedidosPorMesa(mesaSeleccionada.getIdMesa(), mesero.getIdMesero());
         for (Pedido pedidos:listaPedidos){
             modelo.addRow(new Object[]{
             pedidos.getMesa(),
@@ -156,6 +162,11 @@ public class PedidosView extends javax.swing.JInternalFrame {
         jcbMesas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jcbMesasMouseClicked(evt);
+            }
+        });
+        jcbMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbMesasActionPerformed(evt);
             }
         });
         jpMesas.add(jcbMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 56, 221, -1));
@@ -235,8 +246,18 @@ public class PedidosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jcbMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMouseClicked
-       
+        if(!jcbMesas.isEnabled()){
+            jcbMesas.setEnabled(true);
+            cargarComboBox();
+            cargarTabla();
+        }else{
+            cargarTabla();
+        }
     }//GEN-LAST:event_jcbMesasMouseClicked
+
+    private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
+        
+    }//GEN-LAST:event_jcbMesasActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -249,7 +270,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JComboBox<Pedido> jcbMesas;
+    private javax.swing.JComboBox<Mesa> jcbMesas;
     private javax.swing.JPanel jpMesas;
     private javax.swing.JPanel jpPedidos;
     private javax.swing.JTextField jtHora;

@@ -186,7 +186,7 @@ public class PedidoData {
         return listaMesas;
     }
     
-    public ArrayList<Pedido> obtenerMesasLibresPorMesero(int idMesero){        
+    public ArrayList<Pedido> obtenerMesasOcupadasPorMesero(int idMesero){        
         
         ArrayList<Pedido> listaMesasMeseros = new ArrayList();
         pd = new PedidoData();
@@ -198,5 +198,22 @@ public class PedidoData {
         }
                
         return listaMesasMeseros;
+    }
+    
+    
+    public ArrayList<Pedido> listarPedidosPorMesa(int idMesa, int idMesero){
+        ArrayList<Pedido> listaPedidos = new ArrayList();
+        pd = new PedidoData();
+        
+        
+        for(Pedido pedidos : pd.obtenerMesasOcupadasPorMesero(idMesero)){
+            if(pedidos.getMesa().getIdMesa() == idMesa && pedidos.getMesero().getIdMesero() == idMesero){
+                listaPedidos.add(pedidos);
+            }            
+        }
+        
+            
+        return listaPedidos;
+
     }
 }

@@ -4,6 +4,7 @@ import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Estado;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import proyecto.restaurante.Entidades.Pedido;
 
@@ -276,5 +277,28 @@ public class MesaData {
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null,"MesaData: Error al Actualizar la Base de Datos");
         }
+    }
+     
+     public ArrayList<Mesa> verificacionMesaOcupada (int idMesero){
+        pedidoData = new PedidoData();
+        md = new MesaData();
+        
+        ArrayList<Pedido> listaMesasPedidos = new ArrayList();
+        listaMesasPedidos = pedidoData.obtenerMesasOcupadasPorMesero(idMesero);
+        
+        ArrayList<Mesa> listaMesasMeseros = new ArrayList();
+        listaMesasMeseros = md.ListarMesasPorEstado("OCUPADA");
+        
+        ArrayList<Mesa> listaFinal = new ArrayList();
+        
+        for(Mesa mesas : listaMesasMeseros){
+            for(Pedido pedidos : listaMesasPedidos){
+                if(mesas.getIdMesa() == pedidos.getMesa().getIdMesa()){
+                    listaFinal.add(mesas);
+                }
+            }
+        }
+        
+        return listaFinal;
     }
 }

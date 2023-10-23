@@ -404,7 +404,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
         List<Pedido> listaMesas = new ArrayList();
         mesaData = new MesaData();
         mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
-        listaMesas = pedidoData.obtenerMesasLibresPorMesero(mesero.getIdMesero());
+        listaMesas = pedidoData.obtenerMesasOcupadasPorMesero(mesero.getIdMesero());
         for (Pedido pedidos :listaMesas){
             modelo.addRow(new Object[]{
             pedidos.getMesa().getIdMesa(),
