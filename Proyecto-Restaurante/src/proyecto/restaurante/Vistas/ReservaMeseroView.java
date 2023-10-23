@@ -84,6 +84,11 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
                 jcbFechasMouseClicked(evt);
             }
         });
+        jcbFechas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbFechasActionPerformed(evt);
+            }
+        });
         Fondo.add(jcbFechas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 270, -1));
 
         Cerrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -174,6 +179,16 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
             cargarCombo();
         }
     }//GEN-LAST:event_jcbFechasMouseClicked
+
+    private void jcbFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFechasActionPerformed
+        if(!jcbFechas.isEnabled()){
+            jcbFechas.setEnabled(true);
+            cargarCombo();
+            completarTabla();
+        }else{
+            completarTabla();
+        }
+    }//GEN-LAST:event_jcbFechasActionPerformed
 
     private void armarCabecera(){       
         
