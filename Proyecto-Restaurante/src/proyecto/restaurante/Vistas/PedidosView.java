@@ -231,8 +231,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
 
     private void jbVerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerDetalleActionPerformed
         
-        PedidosView pv = new PedidosView();
-        pv.removeAll();
+        
         
     }//GEN-LAST:event_jbVerDetalleActionPerformed
 
