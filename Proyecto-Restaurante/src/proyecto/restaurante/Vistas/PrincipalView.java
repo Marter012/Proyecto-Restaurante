@@ -687,7 +687,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel CerrarIFrame;
     private javax.swing.JLabel Contenedor;
     private javax.swing.JDesktopPane Escritorio;
-    public javax.swing.JDesktopPane EscritorioFrames;
+    private javax.swing.JDesktopPane EscritorioFrames;
     private javax.swing.JLabel Fondo;
     private javax.swing.JLabel FondoTransparente;
     private javax.swing.JLabel FondoTransparente1;
