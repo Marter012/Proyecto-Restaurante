@@ -9,6 +9,7 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 import proyecto.restaurante.Control.MeseroData;
 import proyecto.restaurante.Entidades.Mesero;
+import proyecto.restaurante.Vistas.ProductosView;
 
 /**
  *
@@ -610,6 +611,14 @@ public class PrincipalView extends javax.swing.JFrame {
         EscritorioFrames.moveToFront(rm);
     }//GEN-LAST:event_btReservaMeserosActionPerformed
 
+    public void cargaProductosView(){
+        EscritorioFrames.removeAll();
+        EscritorioFrames.repaint();
+        ProductosView pv = new ProductosView();
+        pv.setVisible(true);
+        EscritorioFrames.add(pv);
+        EscritorioFrames.moveToFront(pv);
+    }
     private void ActivarMesero(int dni){
         md = new MeseroData();
         m =  new Mesero();
