@@ -6,6 +6,8 @@
 package proyecto.restaurante.Vistas;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import proyecto.restaurante.Control.*;
@@ -36,6 +38,7 @@ public class IngresosView extends javax.swing.JInternalFrame {
         jcbMeseros.setEnabled(false);
         armarCabecera();
         cargarTabla();
+        sumarTotal();
     }
 
     /**
@@ -55,6 +58,8 @@ public class IngresosView extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtListaDetalles = new javax.swing.JTable();
         jbListarTodo = new javax.swing.JButton();
+        jlTotal = new javax.swing.JLabel();
+        jtTotal = new javax.swing.JTextField();
         jlFondoTrasparente1 = new javax.swing.JLabel();
         jlCerrar = new javax.swing.JLabel();
         jlFondoImage = new javax.swing.JLabel();
@@ -103,7 +108,7 @@ public class IngresosView extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtListaDetalles);
 
-        jpFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, 120));
+        jpFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, 250));
 
         jbListarTodo.setText("Listar Todo");
         jbListarTodo.addActionListener(new java.awt.event.ActionListener() {
@@ -111,10 +116,17 @@ public class IngresosView extends javax.swing.JInternalFrame {
                 jbListarTodoActionPerformed(evt);
             }
         });
-        jpFondo.add(jbListarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
+        jpFondo.add(jbListarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, -1, -1));
+
+        jlTotal.setBackground(new java.awt.Color(255, 255, 255));
+        jlTotal.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jlTotal.setForeground(new java.awt.Color(255, 255, 255));
+        jlTotal.setText("Total:");
+        jpFondo.add(jlTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 470, 50, 30));
+        jpFondo.add(jtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 470, 130, -1));
 
         jlFondoTrasparente1.setOpaque(true);
-        jpFondo.add(jlFondoTrasparente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 100, 500, 360));
+        jpFondo.add(jlFondoTrasparente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 100, 500, 460));
 
         jlCerrar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jlCerrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -152,7 +164,7 @@ public class IngresosView extends javax.swing.JInternalFrame {
     private void jcbMeserosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMeserosMouseClicked
         if(!jcbMeseros.isEnabled()){
             jcbMeseros.setEnabled(true);
-            jcbMeseros.setFocusable(true);
+            //jcbMeseros.setFocusable(true);
             cargarBox();
         }
     }//GEN-LAST:event_jcbMeserosMouseClicked
@@ -161,12 +173,15 @@ public class IngresosView extends javax.swing.JInternalFrame {
         jcbMeseros.removeAllItems();
         jcbMeseros.setEnabled(false);
         borrarFila();
+        cargarTabla();
+        sumarTotal();
     }//GEN-LAST:event_jbListarTodoActionPerformed
 
     private void jcbMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMeserosActionPerformed
         pd=new PedidoData();
         borrarFila();
         mesero=(Mesero)jcbMeseros.getSelectedItem();
+        if (mesero!=null){
         for(Pedido p:pd.obtenerMesasOcupadasPorMesero(mesero.getIdMesero())){
             dtm.addRow(new Object[]{
                 p.getMesero().getNombre(),
@@ -174,6 +189,8 @@ public class IngresosView extends javax.swing.JInternalFrame {
                 p.getMesa().getIdMesa(),
                 p.getImporte()
             });
+        }
+        sumarTotal();
         }
     }//GEN-LAST:event_jcbMeserosActionPerformed
 
@@ -183,8 +200,8 @@ public class IngresosView extends javax.swing.JInternalFrame {
 
     private void cargarTabla(){
         pd=new PedidoData();
-        borrarFila();
-        for(Pedido p:pd.listarPedidos()){
+        List<Pedido> listaPedidos = pd.listarPedidos();
+        for(Pedido p:listaPedidos){
             dtm.addRow(new Object[]{
                 p.getMesero().getNombre(),
                 p.getMesero().getApellido(),
@@ -212,13 +229,16 @@ public class IngresosView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jlFondoTrasparente1;
     private javax.swing.JLabel jlMesero;
     private javax.swing.JLabel jlTituloIngresos;
+    private javax.swing.JLabel jlTotal;
     private javax.swing.JPanel jpFondo;
     private javax.swing.JTable jtListaDetalles;
+    private javax.swing.JTextField jtTotal;
     // End of variables declaration//GEN-END:variables
 
     private void borrarFila(){
         int f=jtListaDetalles.getRowCount()-1;
         for(;f>=0;f--){
+            System.out.println("Borrando fila"+f);
             dtm.removeRow(f);
         }
     }
@@ -228,5 +248,15 @@ public class IngresosView extends javax.swing.JInternalFrame {
         dtm.addColumn("Mesa/s");
         dtm.addColumn("Importe");
         jtListaDetalles.setModel(dtm);
+    }
+    
+    private void sumarTotal(){
+        int f= dtm.getRowCount()-1;
+        double total=0;
+        for(;f>=0;f--){
+            double valor = Double.parseDouble((String.valueOf(dtm.getValueAt(f, 3))));
+            total+=valor;
+        }
+        jtTotal.setText(String.valueOf(total));
     }
 }
