@@ -121,7 +121,7 @@ public class PedidoData {
     }
     
     public void eliminarPedido(int id){
-        sql = "UPDATE pedidos SET estado=? WHERE idPedidos=?";   
+        sql = "UPDATE pedidos SET estado=? WHERE idPedido=?";   
         try {
             ps = con.prepareStatement(sql);
             ps.setBoolean(1, false);
@@ -193,6 +193,8 @@ public class PedidoData {
         for(Pedido pedidos : pd.listarPedidos()){
             if(pedidos.getMesa().getEstado() == Estado.OCUPADA && pedidos.getMesero().getIdMesero() == idMesero){
                 listaMesasMeseros.add(pedidos);
+            }else{
+                continue;
             }
             
         }
