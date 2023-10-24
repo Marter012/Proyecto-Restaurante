@@ -160,7 +160,6 @@ public class IngresosView extends javax.swing.JInternalFrame {
     private void jbListarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbListarTodoActionPerformed
         jcbMeseros.removeAllItems();
         jcbMeseros.setEnabled(false);
-//        cargarTabla();
         borrarFila();
     }//GEN-LAST:event_jbListarTodoActionPerformed
 
@@ -184,7 +183,6 @@ public class IngresosView extends javax.swing.JInternalFrame {
 
     private void cargarTabla(){
         pd=new PedidoData();
-        //6688223
         borrarFila();
         for(Pedido p:pd.listarPedidos()){
             dtm.addRow(new Object[]{
