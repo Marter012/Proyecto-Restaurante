@@ -341,6 +341,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
         mesero = meseroData.buscarMeseroPorDNI(DNIMesero);  
         pedido = new Pedido(mesa,mesero,LocalDate.now(),LocalTime.now(),250,true);
         pedidoData.guardarPedido(pedido);
+        cargarComboBox();
         activarTablaOcupadas();
         
     }//GEN-LAST:event_jbAsignarActionPerformed

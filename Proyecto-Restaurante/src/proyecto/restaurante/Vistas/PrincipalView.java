@@ -216,7 +216,7 @@ public class PrincipalView extends javax.swing.JFrame {
         btPedidosMeseros1.setBackground(new java.awt.Color(153, 153, 0));
         btPedidosMeseros1.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         btPedidosMeseros1.setForeground(new java.awt.Color(51, 51, 51));
-        btPedidosMeseros1.setText("Pedidos");
+        btPedidosMeseros1.setText("Reserva");
         btPedidosMeseros1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btPedidosMeseros1ActionPerformed(evt);
@@ -590,7 +590,7 @@ public class PrincipalView extends javax.swing.JFrame {
         EscritorioFrames.removeAll();
         EscritorioFrames.repaint();
         int DNI = m.getDni();
-        ReservaMeseroView rm = new ReservaMeseroView();
+        ReservaMeseroView rm = new ReservaMeseroView(DNI);
         rm.setVisible(true);
         EscritorioFrames.add(rm);
         EscritorioFrames.moveToFront(rm);

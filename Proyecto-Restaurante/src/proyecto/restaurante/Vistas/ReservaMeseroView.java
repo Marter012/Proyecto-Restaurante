@@ -9,9 +9,12 @@ import java.awt.Color;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import proyecto.restaurante.Control.MesaData;
 import proyecto.restaurante.Control.ReservaData;
+import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Reserva;
 
 
@@ -20,18 +23,23 @@ import proyecto.restaurante.Entidades.Reserva;
  * @author Emito
  */
 public class ReservaMeseroView extends javax.swing.JInternalFrame {
-    private ReservaData rd;
     private Reserva r;
+    private Mesa mesa;
+    private MesaData mesaData;
+    private ReservaData reservaData; 
+    private int DNIMesero;
+    
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
                 return false;
         }
     };
     
-    public ReservaMeseroView() {
+    public ReservaMeseroView(int DNI) {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-        estilos();   
+        estilos();
+        DNIMesero = DNI;
         armarCabecera();
         jcbFechas.setEnabled(false);
     }
@@ -132,6 +140,11 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
         Fondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, 270));
 
         jbCancelarReserva.setText("Cancelar Reserva");
+        jbCancelarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCancelarReservaActionPerformed(evt);
+            }
+        });
         Fondo.add(jbCancelarReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 510, -1, -1));
 
         TransparenciaCargar.setOpaque(true);
@@ -185,6 +198,28 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jcbFechasActionPerformed
 
+    private void jbCancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarReservaActionPerformed
+        mesa = new Mesa();
+        mesaData = new MesaData();
+        reservaData = new ReservaData();
+        int Fila = jtReservas.getSelectedRow();
+        if(Fila != -1){
+            mesa = new Mesa();
+            int idMesa = Integer.parseInt(String.valueOf(jtReservas.getValueAt(Fila,6)));
+            System.out.println(Fila);
+            int DNICliente = Integer.parseInt(String.valueOf(jtReservas.getValueAt(Fila,2)));
+            mesa = mesaData.obtenerMesa(idMesa);
+            reservaData.eliminarReserva(DNICliente);
+            mesaData.liberarMesa(mesa);
+            cargarCombo();
+            completarTabla();
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione una mesa.");
+        } 
+        
+        
+    }//GEN-LAST:event_jbCancelarReservaActionPerformed
+
     private void armarCabecera(){       
         
         modelo.addColumn("Id");
@@ -199,17 +234,17 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
     }
     
     private void cargarCombo(){
-        rd = new ReservaData();
-        for (Reserva reservas:rd.listarReservas()){
-            jcbFechas.addItem(reservas.getFecha());
+        reservaData = new ReservaData();
+        for (LocalDate fecha:reservaData.listarSoloFecha()){
+            jcbFechas.addItem(fecha);
         }
     }
     
     private void completarTabla(){
         borrarFilas();
         LocalDate dataFecha = (LocalDate)jcbFechas.getSelectedItem();
-       rd =  new ReservaData();
-       for (Reserva reservas:rd.listarReservasPorFecha(dataFecha)){
+       reservaData =  new ReservaData();
+       for (Reserva reservas:reservaData.listarReservasPorFecha(dataFecha)){
              modelo.addRow(new Object[]{
                reservas.getIdReserva(),
                reservas.getNombreCliente(),

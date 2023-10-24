@@ -29,6 +29,7 @@ public class ReservaData {
     private MesaData md;
     private Mesa m;
     private Reserva res;
+    private ReservaData reservaData;
     
 public ReservaData(){
     con=Conexion.getConexion();
@@ -142,6 +143,19 @@ public ReservaData(){
            JOptionPane.showMessageDialog(null,"ReservaData: Error al obtener lista de reservas en la fecha seleccionada"+ex.getMessage());
         }
         return reservasPorFecha;
+    }
+    
+    public HashSet<LocalDate> listarSoloFecha(){
+        ArrayList <Reserva> reservasPorFecha = new ArrayList();
+        HashSet<LocalDate> reservasSoloFecha = new HashSet<LocalDate>();
+        reservaData = new ReservaData();
+        reservasPorFecha = reservaData.listarReservas();
+        
+        for(Reserva reserva : reservasPorFecha){
+            reservasSoloFecha.add(reserva.getFecha());
+        }
+        
+        return reservasSoloFecha;
     }
      
     public void modificarReserva(Reserva res){
