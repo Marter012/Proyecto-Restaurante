@@ -674,6 +674,17 @@ public class PrincipalView extends javax.swing.JFrame {
         btProductos.setEnabled(false);
         btIngresos.setEnabled(false);
     }
+    
+    public static void cargaProductosView(){
+        EscritorioFrames.removeAll();
+        EscritorioFrames.repaint();
+        //int DNI = m.getDni();
+        ProductosView prov = new ProductosView();
+        prov.setVisible(true);
+        EscritorioFrames.add(prov);
+        EscritorioFrames.moveToFront(prov);
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -714,7 +725,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel CerrarIFrame;
     private javax.swing.JLabel Contenedor;
     private javax.swing.JDesktopPane Escritorio;
-    private javax.swing.JDesktopPane EscritorioFrames;
+    private static javax.swing.JDesktopPane EscritorioFrames;
     private javax.swing.JLabel Fondo;
     private javax.swing.JLabel FondoTransparente;
     private javax.swing.JLabel FondoTransparente1;

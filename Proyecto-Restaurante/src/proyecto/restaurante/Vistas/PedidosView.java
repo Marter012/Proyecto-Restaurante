@@ -16,6 +16,7 @@ import proyecto.restaurante.Control.PedidoData;
 import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Mesero;
 import proyecto.restaurante.Entidades.Pedido;
+import static proyecto.restaurante.Vistas.PrincipalView.cargaProductosView;
 
 /**
  *
@@ -230,9 +231,8 @@ public class PedidosView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbVerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerDetalleActionPerformed
+        cargaProductosView();
         
-        PedidosView pv = new PedidosView();
-        pv.removeAll();
         
     }//GEN-LAST:event_jbVerDetalleActionPerformed
 
