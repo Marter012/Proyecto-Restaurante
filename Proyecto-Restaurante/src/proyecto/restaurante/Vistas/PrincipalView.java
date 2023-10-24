@@ -62,7 +62,7 @@ public class PrincipalView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btPedidosMeseros = new javax.swing.JButton();
-        btPedidosMeseros1 = new javax.swing.JButton();
+        btReservaMeseros = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         FondoTransparente = new javax.swing.JLabel();
         EscritorioFrames = new javax.swing.JDesktopPane();
@@ -172,7 +172,7 @@ public class PrincipalView extends javax.swing.JFrame {
                 btMesasMeserosActionPerformed(evt);
             }
         });
-        MenuLateral.add(btMesasMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 169, 50));
+        MenuLateral.add(btMesasMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 169, 50));
 
         jSeparator5.setBackground(new java.awt.Color(189, 193, 96));
         jSeparator5.setForeground(new java.awt.Color(189, 193, 96));
@@ -196,11 +196,11 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/pedidoIcon.png"))); // NOI18N
-        MenuLateral.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 430, 60, -1));
+        MenuLateral.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 60, -1));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/pedidoIcon.png"))); // NOI18N
-        MenuLateral.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 60, -1));
+        MenuLateral.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 60, -1));
 
         btPedidosMeseros.setBackground(new java.awt.Color(153, 153, 0));
         btPedidosMeseros.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
@@ -211,22 +211,22 @@ public class PrincipalView extends javax.swing.JFrame {
                 btPedidosMeserosActionPerformed(evt);
             }
         });
-        MenuLateral.add(btPedidosMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 169, 50));
+        MenuLateral.add(btPedidosMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, 169, 50));
 
-        btPedidosMeseros1.setBackground(new java.awt.Color(153, 153, 0));
-        btPedidosMeseros1.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
-        btPedidosMeseros1.setForeground(new java.awt.Color(51, 51, 51));
-        btPedidosMeseros1.setText("Reserva");
-        btPedidosMeseros1.addActionListener(new java.awt.event.ActionListener() {
+        btReservaMeseros.setBackground(new java.awt.Color(153, 153, 0));
+        btReservaMeseros.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        btReservaMeseros.setForeground(new java.awt.Color(51, 51, 51));
+        btReservaMeseros.setText("Reserva");
+        btReservaMeseros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPedidosMeseros1ActionPerformed(evt);
+                btReservaMeserosActionPerformed(evt);
             }
         });
-        MenuLateral.add(btPedidosMeseros1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 550, 169, 50));
+        MenuLateral.add(btReservaMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 169, 50));
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/pedidoIcon.png"))); // NOI18N
-        MenuLateral.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 60, -1));
+        MenuLateral.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 60, -1));
 
         FondoTransparente.setOpaque(true);
         MenuLateral.add(FondoTransparente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
@@ -477,6 +477,7 @@ public class PrincipalView extends javax.swing.JFrame {
             dni=Integer.parseInt(jtUsuario.getText());
             ps=String.valueOf(jtPassword.getPassword());
             m = md.buscarMeseroPorDNI(dni);
+            if (m.isEstado()){
             if(md.loginMesero(dni, ps)){
                 
                 EscritorioFrames.removeAll();
@@ -492,9 +493,18 @@ public class PrincipalView extends javax.swing.JFrame {
                 //JOptionPane.showMessageDialog(null, "Mesero");
                 DesactivarAdmin();
                 ActivarMesero(dni);
+                jtUsuario.setText("");
+                jtPassword.setText("");
                 }
             }else{
                 JOptionPane.showMessageDialog(null,"No ingresa");
+                jtUsuario.setText("Ingrese Dni");
+                jtUsuario.setForeground(Color.gray);
+                jtPassword.setText("********");
+                jtPassword.setForeground(Color.gray);
+            }
+            }else{
+                JOptionPane.showMessageDialog(null,"El usuario fue Dado de Baja.");
                 jtUsuario.setText("Ingrese Dni");
                 jtUsuario.setForeground(Color.gray);
                 jtPassword.setText("********");
@@ -506,8 +516,7 @@ public class PrincipalView extends javax.swing.JFrame {
         catch(NullPointerException e){
             JOptionPane.showMessageDialog(null, "Complete todos los campos "+e);
         }
-        jtUsuario.setText("");
-        jtPassword.setText("");
+        
     }//GEN-LAST:event_jbIngresarActionPerformed
 
     private void jtPasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtPasswordMousePressed
@@ -591,7 +600,7 @@ public class PrincipalView extends javax.swing.JFrame {
         EscritorioFrames.moveToFront(pv);         
     }//GEN-LAST:event_btPedidosMeserosActionPerformed
 
-    private void btPedidosMeseros1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPedidosMeseros1ActionPerformed
+    private void btReservaMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btReservaMeserosActionPerformed
         EscritorioFrames.removeAll();
         EscritorioFrames.repaint();
         int DNI = m.getDni();
@@ -599,7 +608,7 @@ public class PrincipalView extends javax.swing.JFrame {
         rm.setVisible(true);
         EscritorioFrames.add(rm);
         EscritorioFrames.moveToFront(rm);
-    }//GEN-LAST:event_btPedidosMeseros1ActionPerformed
+    }//GEN-LAST:event_btReservaMeserosActionPerformed
 
     private void ActivarMesero(int dni){
         md = new MeseroData();
@@ -608,12 +617,14 @@ public class PrincipalView extends javax.swing.JFrame {
         jlMeseros.setText(m.getNombre());
         btMesasMeseros.setEnabled(true);
         btPedidosMeseros.setEnabled(true);
+        btReservaMeseros.setEnabled(true);
     }
     
     private void DesactivarMesero(){
         jlMeseros.setText("Meseros");
         btMesasMeseros.setEnabled(false);
         btPedidosMeseros.setEnabled(false);
+        btReservaMeseros.setEnabled(false);
     }
     
     private void ActivarAdmin(int dni){
@@ -625,6 +636,7 @@ public class PrincipalView extends javax.swing.JFrame {
         btMesas.setEnabled(true);
         btProductos.setEnabled(true);
         btIngresos.setEnabled(true);
+        
     
     }
     
@@ -692,8 +704,8 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JButton btMesasMeseros;
     private javax.swing.JButton btMeseros;
     private javax.swing.JButton btPedidosMeseros;
-    private javax.swing.JButton btPedidosMeseros1;
     private javax.swing.JButton btProductos;
+    private javax.swing.JButton btReservaMeseros;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

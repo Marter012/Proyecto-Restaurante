@@ -45,14 +45,15 @@ public class PedidoData {
     }
     
     public void guardarPedido(Pedido p){
-        sql = "INSERT INTO pedidos(idMesa,idMesero,FechaPedido,HoraPedido,estado) VALUES (?,?,?,?,?)";                
+        sql = "INSERT INTO pedidos(idMesa,idMesero,FechaPedido,HoraPedido,importe,estado) VALUES (?,?,?,?,?,?)";                
         try {
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,p.getMesa().getIdMesa());
             ps.setInt(2, p.getMesero().getIdMesero());
             ps.setDate(3, Date.valueOf(p.getFechaPedido()));
             ps.setTime(4, Time.valueOf(p.getHoraPedido()));
-            ps.setBoolean(5, p.isEstado());
+            ps.setDouble(5,p.getImporte());
+            ps.setBoolean(6, p.isEstado());
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
