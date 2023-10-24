@@ -39,6 +39,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
      * Creates new form CargaMeserosView
      * @param DNI
      */
+    public PedidosView(){}
     public PedidosView(int DNI) {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
@@ -126,7 +127,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtPedidos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jbVerDetalle = new javax.swing.JButton();
         FondoImagen = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
@@ -200,13 +201,13 @@ public class PedidosView extends javax.swing.JInternalFrame {
         jLabel1.setText("Pedidos por mesa");
         jpPedidos.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, -1, -1));
 
-        jButton1.setText("Ver detalle");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbVerDetalle.setText("Ver detalle");
+        jbVerDetalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbVerDetalleActionPerformed(evt);
             }
         });
-        jpPedidos.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(402, 19, -1, -1));
+        jpPedidos.add(jbVerDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(402, 19, -1, -1));
 
         Fondo.add(jpPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 500, 410));
 
@@ -228,10 +229,27 @@ public class PedidosView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_CerrarMouseClicked
+    private void jbVerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerDetalleActionPerformed
+        
+        PedidosView pv = new PedidosView();
+        pv.removeAll();
+        
+    }//GEN-LAST:event_jbVerDetalleActionPerformed
+
+    private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
+        cargarTabla();
+    }//GEN-LAST:event_jcbMesasActionPerformed
+
+    private void jcbMesasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMousePressed
+
+    }//GEN-LAST:event_jcbMesasMousePressed
+
+    private void jcbMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMouseClicked
+        if(!jcbMesas.isEnabled()){
+            jcbMesas.setEnabled(true);
+            cargarComboBox();
+        }
+    }//GEN-LAST:event_jcbMesasMouseClicked
 
     private void CerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseEntered
         // TODO add your handling code here:
@@ -243,35 +261,21 @@ public class PedidosView extends javax.swing.JInternalFrame {
         Cerrar.setForeground(Color.white);
     }//GEN-LAST:event_CerrarMouseExited
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void CerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jcbMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMouseClicked
-        if(!jcbMesas.isEnabled()){
-            jcbMesas.setEnabled(true);
-            cargarComboBox();
-        }
-    }//GEN-LAST:event_jcbMesasMouseClicked
-
-    private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
-            cargarTabla();
-    }//GEN-LAST:event_jcbMesasActionPerformed
-
-    private void jcbMesasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMousePressed
-       
-    }//GEN-LAST:event_jcbMesasMousePressed
+        this.dispose();
+    }//GEN-LAST:event_CerrarMouseClicked
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cerrar;
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel FondoImagen;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jbVerDetalle;
     private javax.swing.JComboBox<Mesa> jcbMesas;
     private javax.swing.JPanel jpMesas;
     private javax.swing.JPanel jpPedidos;

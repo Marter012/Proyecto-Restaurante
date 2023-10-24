@@ -395,7 +395,7 @@ public class PrincipalView extends javax.swing.JFrame {
 
     private void btMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMeserosActionPerformed
         EscritorioFrames.removeAll();
-        EscritorioFrames.repaint();
+        EscritorioFrames.repaint();        
         CargaMeserosView cmv = new CargaMeserosView();
         cmv.setVisible(true);
         EscritorioFrames.add(cmv);
