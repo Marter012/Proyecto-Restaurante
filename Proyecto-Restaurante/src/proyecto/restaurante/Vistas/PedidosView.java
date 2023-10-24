@@ -59,7 +59,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
         mesaData = new MesaData();
         meseroData = new MeseroData();
         mesero = new Mesero();
-        mesero = meseroData.buscarMeseroPorDNI(41521048);
+        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
         
         
         for (Mesa mesas: mesaData.verificacionMesaOcupada(mesero.getIdMesero())){
@@ -255,13 +255,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbMesasMouseClicked
 
     private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
-        if(!jcbMesas.isEnabled()){
-            jcbMesas.setEnabled(true);
-            cargarComboBox();
             cargarTabla();
-        }else{
-            cargarTabla();
-        }
     }//GEN-LAST:event_jcbMesasActionPerformed
 
     private void jcbMesasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMousePressed

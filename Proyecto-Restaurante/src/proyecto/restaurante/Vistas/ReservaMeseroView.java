@@ -181,13 +181,8 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbFechasMouseClicked
 
     private void jcbFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFechasActionPerformed
-        if(!jcbFechas.isEnabled()){
-            jcbFechas.setEnabled(true);
-            cargarCombo();
-            completarTabla();
-        }else{
-            completarTabla();
-        }
+        completarTabla();
+        
     }//GEN-LAST:event_jcbFechasActionPerformed
 
     private void armarCabecera(){       
