@@ -59,7 +59,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
         mesaData = new MesaData();
         meseroData = new MeseroData();
         mesero = new Mesero();
-        mesero = meseroData.buscarMeseroPorDNI(41521048);
+        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
         
         
         for (Mesa mesas: mesaData.verificacionMesaOcupada(mesero.getIdMesero())){
@@ -154,10 +154,10 @@ public class PedidosView extends javax.swing.JInternalFrame {
 
         jpMesas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("adasdadadadasdasdadadasdasdasdasd");
-        jpMesas.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 11, 346, 24));
+        jLabel2.setText("Lista de mesas con pedidos.");
+        jpMesas.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 346, 24));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -255,13 +255,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbMesasMouseClicked
 
     private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
-        if(!jcbMesas.isEnabled()){
-            jcbMesas.setEnabled(true);
-            cargarComboBox();
             cargarTabla();
-        }else{
-            cargarTabla();
-        }
     }//GEN-LAST:event_jcbMesasActionPerformed
 
     private void jcbMesasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMousePressed
