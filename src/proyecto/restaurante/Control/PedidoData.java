@@ -45,15 +45,14 @@ public class PedidoData {
     }
     
     public void guardarPedido(Pedido p){
-        sql = "INSERT INTO pedidos(idMesa,idMesero,FechaPedido,HoraPedido,importe,estado) VALUES (?,?,?,?,?,?)";                
+        sql = "INSERT INTO pedidos(idMesa,idMesero,FechaPedido,HoraPedido,estado) VALUES (?,?,?,?,?)";                
         try {
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,p.getMesa().getIdMesa());
             ps.setInt(2, p.getMesero().getIdMesero());
             ps.setDate(3, Date.valueOf(p.getFechaPedido()));
             ps.setTime(4, Time.valueOf(p.getHoraPedido()));
-            ps.setDouble(5,p.getImporte());
-            ps.setBoolean(6, p.isEstado());
+            ps.setBoolean(5, p.isEstado());
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
@@ -122,7 +121,7 @@ public class PedidoData {
     }
     
     public void eliminarPedido(int id){
-        sql = "UPDATE pedidos SET estado=? WHERE idPedido=?";   
+        sql = "UPDATE pedidos SET estado=? WHERE idPedidos=?";   
         try {
             ps = con.prepareStatement(sql);
             ps.setBoolean(1, false);
@@ -190,16 +189,9 @@ public class PedidoData {
     public ArrayList<Pedido> obtenerMesasOcupadasPorMesero(int idMesero){        
         
         ArrayList<Pedido> listaMesasMeseros = new ArrayList();
-        pd = new PedidoData();
-        for(Pedido pedidos : pd.listarPedidos()){
-            if(pedidos.getMesa().getEstado() == Estado.OCUPADA && pedidos.getMesero().getIdMesero() == idMesero){
-                listaMesasMeseros.add(pedidos);
-            }else{
-                continue;
-            }
-            
+        for(Pedido pedidos : listarMesasOcupadas(Estado.OCUPADA)){
+            listaMesasMeseros.add(pedidos);
         }
-               
         return listaMesasMeseros;
     }
     
@@ -217,6 +209,32 @@ public class PedidoData {
         
             
         return listaPedidos;
-
+    }
+    private ArrayList<Pedido> listarMesasOcupadas(Estado estado){
+        
+        sql="SELECT * FROM pedidos pd JOIN mesas m on(m.idMesa=pd.idMesa) WHERE pd.estado = ? AND m.Estado='OCUPADA'";
+        ArrayList<Pedido> listapedido=new ArrayList();
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setBoolean(1,true);
+//            ps.setString(2,String.valueOf(estado));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                Pedido pedido=new Pedido();
+                pedido.setIdPedido(rs.getInt(1));
+                pedido.setMesa(mad.obtenerMesa(rs.getInt(2)));
+                pedido.setMesero(mod.buscarMeseroPorId(rs.getInt(3)));
+                pedido.setFechaPedido(rs.getDate(4).toLocalDate());
+                pedido.setHoraPedido(rs.getTime(5).toLocalTime());
+                pedido.setImporte(rs.getDouble(6));
+                pedido.setEstado(rs.getBoolean(7));
+                
+                listapedido.add(pedido);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"PedidoData: Error al ejecutar la consulta");
+        }
+        return listapedido;
     }
 }
