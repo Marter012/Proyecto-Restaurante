@@ -412,7 +412,12 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_btMesasActionPerformed
 
     private void btIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIngresosActionPerformed
-        // TODO add your handling code here:
+        EscritorioFrames.removeAll();
+        EscritorioFrames.repaint();
+        IngresosView iv= new IngresosView();
+        iv.setVisible(true);
+        EscritorioFrames.add(iv);
+        EscritorioFrames.moveToFront(iv);
     }//GEN-LAST:event_btIngresosActionPerformed
 
     private void btProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProductosActionPerformed
