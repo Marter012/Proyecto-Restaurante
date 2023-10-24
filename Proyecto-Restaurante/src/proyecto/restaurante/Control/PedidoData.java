@@ -12,10 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import proyecto.restaurante.Entidades.Categoria;
+import proyecto.restaurante.Entidades.Estado;
+import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Pedido;
 import proyecto.restaurante.Entidades.Producto;
 
@@ -31,6 +34,7 @@ public class PedidoData {
     private Pedido p;
     private MesaData mad;
     private MeseroData mod;
+    private Mesa m;
 
     public PedidoData() {
         con = Conexion.getConexion();
@@ -156,5 +160,27 @@ public class PedidoData {
             JOptionPane.showMessageDialog(null, "ProductoData : Error al listar los productos"+ex.getMessage());
         }        
         return listaPedidos;
+    }
+    
+    public List<Mesa> listarMesas(int mesero){
+        List<Mesa> listaMesas= new ArrayList();
+        sql = "SELECT * FROM mesas JOIN pedidos ON mesas.idMesa = pedidos.idMesa WHERE pedidos.estado =? AND IdMesero = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setBoolean(1, true);
+            ps.setInt(2, mesero);
+            rs = ps.executeQuery();            
+            while(rs.next()){
+                m = new Mesa();
+                m.setIdMesa(rs.getInt("idMesa"));
+                m.setCapacidad(rs.getInt("Capacidad"));
+                m.setEstado(Estado.valueOf(rs.getString("Estado")));
+                listaMesas.add(m);
+            }    
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ProductoData : Error al listar los productos"+ex.getMessage());
+        }        
+        return listaMesas;
     }
 }

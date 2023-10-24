@@ -10,6 +10,8 @@ public class MesaData {
     private Connection con;
     private PreparedStatement ps;
     private ResultSet rs;
+    private ArrayList<Mesa> listaMesa;
+    private Mesa m;
 
     public MesaData() {
         con=Conexion.getConexion();
@@ -19,11 +21,12 @@ public class MesaData {
         /*
             En este metodo crearemos las Mesas para el Restaurante
         */
-        String sql="insert into mesas(Capacidad,Estado) values(?,?)";
+        String sql="insert into mesas(Capacidad,Estado,Actividad) values(?,?,?)";
         try {
             ps=con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,m.getCapacidad());
             ps.setString(2,String.valueOf(m.getEstado()));
+            ps.setBoolean(3,true);
             ps.executeUpdate();
             
             rs=ps.getGeneratedKeys();
@@ -53,7 +56,7 @@ public class MesaData {
                 mesa.setIdMesa(rs.getInt("idMesa"));
                 mesa.setCapacidad(rs.getInt("Capacidad"));
                 mesa.setEstado(Estado.valueOf(rs.getString("Estado")));
-                System.out.println(mesa);
+                //System.out.println(mesa);
             }
             ps.close();
         } catch (SQLException e) {
@@ -66,12 +69,13 @@ public class MesaData {
         /*
             Este metodo modifica el estado de la Mesa en la BD
         */
-        String sql="update mesas set capacidad=?, Estado = ? WHERE idMesa=?;";
+        String sql="update mesas set capacidad=?, Estado = ?, Actividad = ? WHERE idMesa=?;";
         try {
             ps=con.prepareStatement(sql);
             ps.setInt(1,m.getCapacidad());
             ps.setString(2,String.valueOf(m.getEstado()));
-            ps.setInt(3,m.getIdMesa());
+            ps.setBoolean(3,m.getActividad());
+            ps.setInt(4,m.getIdMesa());
             int rst=ps.executeUpdate();
             if(rst==1){
                 JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente");
@@ -82,6 +86,83 @@ public class MesaData {
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null,"MesaData: Error al Actualizar la Base de Datos");
         }
+    }
+    
+    public ArrayList<Mesa> obtenerMesasActivas(){
+        /*
+            Este metodo retorna una Lista de Mesas Activas
+        */
+        listaMesa=new ArrayList();
+        String sql="select * from mesas where Actividad=?";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setBoolean(1,true);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                m=new Mesa();
+                m.setIdMesa(rs.getInt("idMesa"));
+                m.setCapacidad(rs.getInt("Capacidad"));
+                m.setEstado(Estado.valueOf(rs.getString("Estado")));
+                m.setActividad(rs.getBoolean("Actividad"));
+                listaMesa.add(m);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"MesaData: Hubo un Error en la consulta");
+        }
+        return listaMesa;
+    }
+    
+    public ArrayList<Mesa> obtenerMesasInactivas(){
+        /*
+            Este metodo retorna una Lista de Mesas Inactivas
+        */
+        listaMesa=new ArrayList();
+        String sql="select * from mesas where Actividad=?";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setBoolean(1,false);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                m=new Mesa();
+                m.setIdMesa(rs.getInt("idMesa"));
+                m.setCapacidad(rs.getInt("Capacidad"));
+                m.setEstado(Estado.valueOf(rs.getString("Estado")));
+                m.setActividad(rs.getBoolean("Actividad"));
+                listaMesa.add(m);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"MesaData: Hubo un Error en la consulta");
+        }
+        return listaMesa;
+    }
+    
+    public ArrayList<Mesa> ListarMesasPorEstado(String estados){
+        /*
+            Este metodo obtiene de la BD las Mesas Totales.
+        */
+        ArrayList<Mesa> listaMesasLibres=new ArrayList();
+        String sql="SELECT `idMesa`, `Capacidad`, `Estado` FROM `mesas` WHERE mesas.Estado=?";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setString(1,String.valueOf(estados));
+            rs=ps.executeQuery();
+            while(rs.next()){
+                Mesa ms=new Mesa();
+                ms.setIdMesa(rs.getInt("idMesa"));
+                ms.setCapacidad(rs.getInt("Capacidad"));
+                ms.setEstado(Estado.valueOf(rs.getString("Estado")));
+                listaMesasLibres.add(ms);
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"MesaData: Error en la extraccion de la base de datos");
+        }
+        if(listaMesasLibres.isEmpty()){
+            JOptionPane.showMessageDialog(null,"MesaData: La lista esta vacia");
+        }
+        return listaMesasLibres;
     }
     
     public ArrayList<Mesa> obtenerMesasLibres(){

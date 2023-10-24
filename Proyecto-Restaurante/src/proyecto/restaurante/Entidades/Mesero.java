@@ -12,25 +12,30 @@ public class Mesero {
 
     private boolean estado;
     
+    private int acceso;
+    
     private String password;
 
     public Mesero() {
     }
+
     
-    public Mesero(String nombre, String apellido, int dni, boolean estado, String password) {        
+    public Mesero(String nombre, String apellido, int dni, boolean estado, int acceso, String password) {        
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.estado = estado;
+        this.acceso = acceso;
         this.password = password;
     }
 
-    public Mesero(int idMesero, String nombre, String apellido, int dni, boolean estado, String password) {
+    public Mesero(int idMesero, String nombre, String apellido, int dni, boolean estado, int acceso, String password) {
         this.idMesero = idMesero;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.estado = estado;
+        this.acceso = acceso;
         this.password = password;
     }
 
@@ -73,6 +78,15 @@ public class Mesero {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+    
+    public int getAcceso() {
+        return acceso;
+    }
+
+    public void setAcceso(int acceso) {
+        this.acceso = acceso;
+    }
+    
 
     public String getPassword() {
         return password;
@@ -84,7 +98,7 @@ public class Mesero {
 
     @Override
     public String toString() {
-        return "Mesero{" + "idMesero=" + idMesero + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", estado=" + estado + ", password=" + password + '}';
+        return "Id: " + idMesero + ", " + nombre + " " + apellido;
     }
 
     public void setVisible(boolean b) {

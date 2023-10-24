@@ -5,6 +5,7 @@ public class Mesa {
     private int idMesa;
     private int capacidad;
     private Estado estado;
+    private Boolean Actividad;
 
     public Mesa() {
         
@@ -45,9 +46,19 @@ public class Mesa {
         this.estado = estado;
     }
 
+    public Boolean getActividad() {
+        return Actividad;
+    }
+
+    public void setActividad(Boolean Actividad) {
+        this.Actividad = Actividad;
+    }
+    
+    
+
     @Override
     public String toString() {
-        return "Mesa{" + "idMesa=" + idMesa + ", capacidad=" + capacidad + ", estado=" + estado + '}';
+        return "Mesa " + idMesa + ", capacidad " + capacidad;
     }
 
 }
