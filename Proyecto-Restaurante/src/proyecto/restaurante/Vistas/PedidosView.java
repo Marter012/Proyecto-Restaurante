@@ -8,6 +8,7 @@ package proyecto.restaurante.Vistas;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import proyecto.restaurante.Control.MesaData;
@@ -46,7 +47,6 @@ public class PedidosView extends javax.swing.JInternalFrame {
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         estilos();
         DNIMesero = DNI;     
-        System.out.println(DNIMesero);
         armarCabecera();
         borrarFilas();
         jcbMesas.setEnabled(false);
@@ -231,9 +231,14 @@ public class PedidosView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbVerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerDetalleActionPerformed
-        cargaProductosView();
-        
-        
+        mesa = new Mesa();
+        int Fila = jtPedidos.getSelectedRow();
+        if(Fila != -1){
+            mesa = (Mesa) jtPedidos.getValueAt(Fila,1);
+            cargaProductosView(DNIMesero,mesa.getIdMesa());
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione un pedido.");
+        } 
     }//GEN-LAST:event_jbVerDetalleActionPerformed
 
     private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
