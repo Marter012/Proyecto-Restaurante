@@ -33,34 +33,41 @@ import proyecto.restaurante.Entidades.Producto;
  *
  * @author Emito
  */
-public class ProductosView extends javax.swing.JInternalFrame {
+public final class ProductosView extends javax.swing.JInternalFrame {
 
     List<Producto> listaProducto = new ArrayList();
     List<DetallePedido> listaProductoCantidad = new ArrayList();
+    
     private Connection con = null;
-    private Mesero mesero;
-    private MeseroData meseroData;
+    
+    private Mesero mesero = new Mesero();
+    private MeseroData meseroData = new MeseroData();
+    
+    private Mesa mesa = new Mesa();
+    private MesaData mesaData = new MesaData();
+    
+        
+    private Producto producto = new Producto();
+    private ProductoData productoData = new ProductoData();
+    
+    private Pedido pedido = new Pedido();
+    private PedidoData pedidoData = new PedidoData();
+    
+    private DetallePedido detallePedido = new DetallePedido();
+    
+    private int idPedidoSelec = -1;
     private int DNIMesero;
     private int codigoMesa;
-    private MesaData mesaData;
-    private Mesa mesa;
-    private ProductoData productoData;    
-    private Producto producto;
-    private Pedido pedido;
-    private PedidoData pedidoData;
-    private int idPedidoSelec = -1;
-    private DetallePedido detallePedido;
 
     
     private DefaultTableModel modelo = new DefaultTableModel(){
+        @Override
         public boolean isCellEditable(int f, int c){
                 return false;
         }
     };
     /**
      * Creates new form CargaMeserosView
-     * @param DNI
-     * @param idMesa
      */
     
     public ProductosView(){}
@@ -89,37 +96,15 @@ public class ProductosView extends javax.swing.JInternalFrame {
         jpSeccionConfirmar.setBackground(new Color(35,35,36,180));
     }
     
-    public void cargarComboBoxPedidos(boolean valid){
-        pedido = new Pedido();
-        pedidoData = new PedidoData();
-        mesa = new Mesa();
-        mesaData = new MesaData();
-        mesero = new Mesero();
-        meseroData = new MeseroData();
-        if(valid){            
-            mesa = mesaData.obtenerMesa(codigoMesa);
-            mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
-            for (Pedido pedidos: pedidoData.listarPedidosPorMesa(mesa.getIdMesa(), mesero.getIdMesero())){
-            jcbPedido.addItem("Pedido: " + pedidos.getIdPedido());
-            }
-        }else{
-            jcbPedido.addItem("Pedido: " + idPedidoSelec);
-        }
-    }
-    
+        
     public void cargarComboBoxProductos(){
-        producto = new Producto();
-        productoData = new ProductoData();
         for (Producto productos: productoData.listarProductos()){
-            //System.out.println(productos);
             jcbProductos.addItem(productos);
         }
     }
     
     public void cargarComboBoxProductosTotales(){
         jcbTotalProductos.removeAllItems();
-        producto = new Producto();
-        productoData = new ProductoData();
         int corte2 = 0;
         for (DetallePedido productos: listaProductoCantidad){
             String pedidoSelec = productos.toString();
@@ -133,8 +118,21 @@ public class ProductosView extends javax.swing.JInternalFrame {
         }
     }
     
+    public void cargarComboBoxPedidos(boolean valid){
+        if(valid){            
+            mesa = mesaData.obtenerMesa(codigoMesa);
+            mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
+            for (Pedido pedidos: pedidoData.listarPedidosPorMesa(mesa.getIdMesa(), mesero.getIdMesero())){
+            jcbPedido.addItem("Pedido: " + pedidos.getIdPedido());
+            }
+        }else{
+            jcbPedido.addItem("Pedido: " + idPedidoSelec);
+        }
+    }
+    
     private void armarCabecera(){ 
         modelo.addColumn("Codigo");
+        modelo.addColumn("Hora");
         modelo.addColumn("Nombre");
         modelo.addColumn("Cantidad");
         modelo.addColumn("Precio Unitario"); 
@@ -152,10 +150,6 @@ public class ProductosView extends javax.swing.JInternalFrame {
      
     private void cargarTabla(boolean valid){
         borrarFilas();
-        producto = new Producto();
-        productoData = new ProductoData();
-        pedido = new Pedido();
-        pedidoData = new PedidoData();
         List<DetallePedido> listaProductos = new ArrayList(); 
         if(valid){
             String pedidoSeleccionado = (String)jcbPedido.getSelectedItem();
@@ -167,6 +161,7 @@ public class ProductosView extends javax.swing.JInternalFrame {
                 for (DetallePedido productos:listaProductos){
                     modelo.addRow(new Object[]{
                         productos.getIdProducto(),
+                        pedidoData.buscarPedido(productos.getIdPedido()).getHoraPedido(),
                         productoData.buscarProducto(productos.getIdProducto()).getNombre(),
                         productos.getCantidad(),
                         productoData.buscarProducto(productos.getIdProducto()).getPrecio(),
@@ -501,8 +496,6 @@ public class ProductosView extends javax.swing.JInternalFrame {
             listaProducto.clear();
             cargarComboBoxProductosTotales();
             jcbTotalProductos.setEnabled(true);
-            //System.out.println(listaProducto);
-            //System.out.println(listaProductoCantidad);
         }else{
             JOptionPane.showMessageDialog(null,"Seleccione un producto");
         }
@@ -523,35 +516,32 @@ public class ProductosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfirmarActionPerformed
-        mesa = new Mesa();
-        pedidoData = new PedidoData();
-        mesero = new Mesero();
-        meseroData = new MeseroData();
-        mesaData = new MesaData(); 
+        double ImporteTotal = 0;
         
-        if(!listaProductoCantidad.isEmpty()){
-            double ImporteTotal = 0;
-            mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
-            mesa = mesaData.obtenerMesa(codigoMesa);
+        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
+        mesa = mesaData.obtenerMesa(codigoMesa);
+
+        pedido = new Pedido(mesa,mesero,LocalDate.now(),LocalTime.now(),ImporteTotal,true);        
+        pedidoData.guardarPedido(pedido);
+            
+        if(!listaProductoCantidad.isEmpty()){            
             for(DetallePedido pedidos : listaProductoCantidad){
                 productoData = new ProductoData();
                 producto = new Producto();
                 producto = productoData.buscarProducto(pedidos.getIdProducto());
                 ImporteTotal = ImporteTotal + (producto.getPrecio()*pedidos.getCantidad());
             }
-            
-            pedido = new Pedido(mesa,mesero,LocalDate.now(),LocalTime.now(),ImporteTotal,true);        
-            pedidoData.guardarPedido(pedido); 
-            
+                                     
             for(DetallePedido productos : listaProductoCantidad){  
-                //Producto productos, Pedido pedidos, int cantidad
                 producto = productoData.buscarProducto(productos.getIdProducto());
                 cargarProductosBD(producto,pedido,productos.getCantidad());                
             }
-            cargarTabla(true);
         }else{
             JOptionPane.showMessageDialog(null,"Agrege productos.");
         }
+        listaProductoCantidad.clear();
+        jcbTotalProductos.setEnabled(false);
+        cargarTabla(true);
     }//GEN-LAST:event_jbConfirmarActionPerformed
 
     private void jcbPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbPedidoMouseClicked
