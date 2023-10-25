@@ -6,6 +6,11 @@
 package proyecto.restaurante.Vistas;
 
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -14,13 +19,16 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import proyecto.restaurante.Control.Conexion;
 import proyecto.restaurante.Control.MesaData;
 import proyecto.restaurante.Control.MeseroData;
 import proyecto.restaurante.Control.PedidoData;
+import proyecto.restaurante.Control.ProductoData;
 import proyecto.restaurante.Control.ReservaData;
 import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Mesero;
 import proyecto.restaurante.Entidades.Pedido;
+import proyecto.restaurante.Entidades.Producto;
 import proyecto.restaurante.Entidades.Reserva;
 
 /**
@@ -28,14 +36,18 @@ import proyecto.restaurante.Entidades.Reserva;
  * @author Emito
  */
 public class MeserosView extends javax.swing.JInternalFrame {
+    
+    private Connection con = null;
     Mesa mesa = new Mesa();
     MesaData mesaData = new MesaData();
     Mesero mesero = new Mesero();
+    private ProductoData productoData;
     MeseroData meseroData = new MeseroData();
     Pedido pedido = new Pedido();
     PedidoData pedidoData = new PedidoData();
     ReservaData reservaData = new ReservaData();
     private int DNIMesero; 
+    private Producto producto;
         
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
@@ -290,7 +302,24 @@ public class MeserosView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Cerrar.setForeground(Color.white);
     }//GEN-LAST:event_CerrarMouseExited
+    public void cargarServicioBD(Producto productos, Pedido pedidos){
+        String sql = "INSERT INTO `detallepedidos`(`idProducto`, `idPedido`, `Cantidad`) VALUES (?,?,?)";                
+        PreparedStatement ps;
+        con = Conexion.getConexion();
+        try {
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1,productos.getIdProducto());
+            ps.setInt(2,pedidos.getIdPedido());
+            ps.setInt(3,1);
+            ps.executeUpdate();
 
+            ResultSet rs = ps.getGeneratedKeys();
+            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al asignar producto "+ex.getMessage());
+        }
+    }
     private void jbAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAsignarActionPerformed
         int Fila = jtListas.getSelectedRow();
         if(Fila != -1){
@@ -300,6 +329,14 @@ public class MeserosView extends javax.swing.JInternalFrame {
             mesero = meseroData.buscarMeseroPorDNI(DNIMesero);  
             pedido = new Pedido(mesa,mesero,LocalDate.now(),LocalTime.now(),250,true);
             pedidoData.guardarPedido(pedido);
+            
+            producto = new Producto();
+            productoData = new ProductoData();
+            producto = productoData.buscarProducto(1);
+            System.out.println(producto.getIdProducto());
+            System.out.println(pedido.getIdPedido());
+            cargarServicioBD(producto,pedido);  
+            
             activarTablaOcupadas();  
         }else{
             JOptionPane.showMessageDialog(null,"Seleccione una mesa.");

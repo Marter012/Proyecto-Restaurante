@@ -31,6 +31,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
     private int DNIMesero;
     private MesaData mesaData;
     private Mesa mesa;
+    private Pedido pedido;
     
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
@@ -232,10 +233,13 @@ public class PedidosView extends javax.swing.JInternalFrame {
 
     private void jbVerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerDetalleActionPerformed
         mesa = new Mesa();
+        pedido = new Pedido();
         int Fila = jtPedidos.getSelectedRow();
         if(Fila != -1){
             mesa = (Mesa) jtPedidos.getValueAt(Fila,1);
-            cargaProductosView(DNIMesero,mesa.getIdMesa());
+            int idPedido = (int) jtPedidos.getValueAt(Fila,0);
+            pedido = pedidoData.buscarPedido(idPedido);
+            cargaProductosView(DNIMesero,mesa.getIdMesa(),pedido.getIdPedido());
         }else{
             JOptionPane.showMessageDialog(null,"Seleccione un pedido.");
         } 

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import proyecto.restaurante.Entidades.Categoria;
+import proyecto.restaurante.Entidades.DetallePedido;
 import proyecto.restaurante.Entidades.Producto;
 
 /**
@@ -26,6 +27,7 @@ public class ProductoData {
     private PreparedStatement ps;
     private ResultSet rs;
     private Producto p;
+    private DetallePedido detalleProducto;
 
     public ProductoData() {
         con = Conexion.getConexion();
@@ -176,4 +178,27 @@ public class ProductoData {
         }        
         return listaProductos;
     }
+    
+    public List<DetallePedido> listarProductosPorId(int idPedido){
+        List<DetallePedido> listaProductos= new ArrayList();
+        sql = "SELECT * FROM `detallepedidos` WHERE idPedido=?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,idPedido);
+            rs = ps.executeQuery();            
+            while(rs.next()){
+                detalleProducto = new DetallePedido();
+                detalleProducto.setIdDetallePedido(rs.getInt("idDetallePedido"));
+                detalleProducto.setIdProducto(rs.getInt("idProducto"));
+                detalleProducto.setIdPedido(rs.getInt("idPedido"));
+                detalleProducto.setCantidad(rs.getInt("Cantidad"));
+                listaProductos.add(detalleProducto);
+            }    
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ProductoData : Error al listar los productos"+ex.getMessage());
+        }        
+        return listaProductos;
+    }
+    
 }
