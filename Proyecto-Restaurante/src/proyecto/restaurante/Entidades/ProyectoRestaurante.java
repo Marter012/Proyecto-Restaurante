@@ -28,11 +28,16 @@ public class ProyectoRestaurante {
 //        System.out.println(pd.listarProductos());
 
     
+    
+    
+    
     PedidoData pd = new PedidoData();
-    for (Pedido pedido : pd.listarPedidos()){
-        System.out.println(pedido);
+    MesaData md = new MesaData();
+    
+    MeseroData med = new MeseroData();
+    System.out.println(med.buscarMeseroPorDNI(41521048));
+    
     }
     
     
-    }
 }

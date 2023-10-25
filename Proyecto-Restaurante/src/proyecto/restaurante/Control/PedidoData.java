@@ -32,9 +32,11 @@ public class PedidoData {
     private PreparedStatement ps;
     private ResultSet rs;
     private Pedido p;
+    private PedidoData pd;
     private MesaData mad;
     private MeseroData mod;
     private Mesa m;
+    
 
     public PedidoData() {
         con = Conexion.getConexion();
@@ -43,14 +45,15 @@ public class PedidoData {
     }
     
     public void guardarPedido(Pedido p){
-        sql = "INSERT INTO pedidos(idMesa,idMesero,FechaPedido,HoraPedido,estado) VALUES (?,?,?,?,?)";                
+        sql = "INSERT INTO pedidos(idMesa,idMesero,FechaPedido,HoraPedido,importe,estado) VALUES (?,?,?,?,?,?)";                
         try {
             ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1,p.getMesa().getIdMesa());
             ps.setInt(2, p.getMesero().getIdMesero());
             ps.setDate(3, Date.valueOf(p.getFechaPedido()));
             ps.setTime(4, Time.valueOf(p.getHoraPedido()));
-            ps.setBoolean(5, p.isEstado());
+            ps.setDouble(5,p.getImporte());
+            ps.setBoolean(6, p.isEstado());
             ps.executeUpdate();
 
             rs = ps.getGeneratedKeys();
@@ -69,7 +72,7 @@ public class PedidoData {
     
     public Pedido buscarPedido(int id){
         p = null;
-        sql = "SELECT * FROM productos WHERE idPedido=?" ;
+        sql = "SELECT * FROM pedidos WHERE idPedido=?" ;
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1,id);            
@@ -119,7 +122,7 @@ public class PedidoData {
     }
     
     public void eliminarPedido(int id){
-        sql = "UPDATE pedidos SET estado=? WHERE idPedidos=?";   
+        sql = "UPDATE pedidos SET estado=? WHERE idPedido=?";   
         try {
             ps = con.prepareStatement(sql);
             ps.setBoolean(1, false);
@@ -182,5 +185,38 @@ public class PedidoData {
             JOptionPane.showMessageDialog(null, "ProductoData : Error al listar los productos"+ex.getMessage());
         }        
         return listaMesas;
+    }
+    
+    public ArrayList<Pedido> obtenerMesasOcupadasPorMesero(int idMesero){        
+        
+        ArrayList<Pedido> listaMesasMeseros = new ArrayList();
+        pd = new PedidoData();
+        for(Pedido pedidos : pd.listarPedidos()){
+            if(pedidos.getMesa().getEstado() == Estado.OCUPADA && pedidos.getMesero().getIdMesero() == idMesero){
+                listaMesasMeseros.add(pedidos);
+            }else{
+                continue;
+            }
+            
+        }
+               
+        return listaMesasMeseros;
+    }
+    
+    
+    public ArrayList<Pedido> listarPedidosPorMesa(int idMesa, int idMesero){
+        ArrayList<Pedido> listaPedidos = new ArrayList();
+        pd = new PedidoData();
+        
+        
+        for(Pedido pedidos : pd.obtenerMesasOcupadasPorMesero(idMesero)){
+            if(pedidos.getMesa().getIdMesa() == idMesa && pedidos.getMesero().getIdMesero() == idMesero){
+                listaPedidos.add(pedidos);
+            }            
+        }
+        
+            
+        return listaPedidos;
+
     }
 }

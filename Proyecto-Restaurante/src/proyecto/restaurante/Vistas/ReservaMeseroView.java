@@ -9,8 +9,12 @@ import java.awt.Color;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import proyecto.restaurante.Control.MesaData;
 import proyecto.restaurante.Control.ReservaData;
+import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Reserva;
 
 
@@ -19,20 +23,39 @@ import proyecto.restaurante.Entidades.Reserva;
  * @author Emito
  */
 public class ReservaMeseroView extends javax.swing.JInternalFrame {
-    private ReservaData rd;
     private Reserva r;
+    private Mesa mesa;
+    private MesaData mesaData;
+    private ReservaData reservaData; 
+    private int DNIMesero;
+    
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
                 return false;
         }
     };
-    public ReservaMeseroView() {
+    
+    public ReservaMeseroView(int DNI) {
         initComponents();
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        estilos();
+        DNIMesero = DNI;
         armarCabecera();
         jcbFechas.setEnabled(false);
-        completarTabla();
     }
-
+    
+    
+    public void estilos(){
+        TransparenciaCargar.setBackground(new Color(35,34,36,190));
+        TransparenciaModificar.setBackground(new Color(35,34,36,190));
+    }
+    
+    private void borrarFilas(){
+        int f = jtReservas.getRowCount()-1;
+        for(;f >= 0; f--){
+            modelo.removeRow(f);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,17 +82,22 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
         Fondo.setBackground(new java.awt.Color(0, 0, 0));
         Fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Seleccione Fecha de Reserva.");
-        Fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
+        jLabel3.setText("Fechas con reservas");
+        Fondo.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
 
         jcbFechas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jcbFechasMouseClicked(evt);
             }
         });
-        Fondo.add(jcbFechas, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 270, -1));
+        jcbFechas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbFechasActionPerformed(evt);
+            }
+        });
+        Fondo.add(jcbFechas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 270, -1));
 
         Cerrar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         Cerrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -112,6 +140,11 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
         Fondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, 270));
 
         jbCancelarReserva.setText("Cancelar Reserva");
+        jbCancelarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCancelarReservaActionPerformed(evt);
+            }
+        });
         Fondo.add(jbCancelarReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 510, -1, -1));
 
         TransparenciaCargar.setOpaque(true);
@@ -122,7 +155,7 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
         Fondo.add(jlIdMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 20, 30));
 
         FondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
-        Fondo.add(FondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 590));
+        Fondo.add(FondoImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 550, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,10 +188,37 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
 
     private void jcbFechasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbFechasMouseClicked
         if (!jcbFechas.isEnabled()){
-            jcbFechas.removeAllItems();
+            jcbFechas.setEnabled(true);
             cargarCombo();
         }
     }//GEN-LAST:event_jcbFechasMouseClicked
+
+    private void jcbFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbFechasActionPerformed
+        completarTabla();
+        
+    }//GEN-LAST:event_jcbFechasActionPerformed
+
+    private void jbCancelarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarReservaActionPerformed
+        mesa = new Mesa();
+        mesaData = new MesaData();
+        reservaData = new ReservaData();
+        int Fila = jtReservas.getSelectedRow();
+        if(Fila != -1){
+            mesa = new Mesa();
+            int idMesa = Integer.parseInt(String.valueOf(jtReservas.getValueAt(Fila,6)));
+            System.out.println(Fila);
+            int DNICliente = Integer.parseInt(String.valueOf(jtReservas.getValueAt(Fila,2)));
+            mesa = mesaData.obtenerMesa(idMesa);
+            reservaData.eliminarReserva(DNICliente);
+            mesaData.liberarMesa(mesa);
+            cargarCombo();
+            completarTabla();
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione una mesa.");
+        } 
+        
+        
+    }//GEN-LAST:event_jbCancelarReservaActionPerformed
 
     private void armarCabecera(){       
         
@@ -174,23 +234,26 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
     }
     
     private void cargarCombo(){
-        rd = new ReservaData();
-        for (Reserva reservas:rd.listarReservas()){
-            jcbFechas.addItem(reservas.getFecha());
+        reservaData = new ReservaData();
+        for (LocalDate fecha:reservaData.listarSoloFecha()){
+            jcbFechas.addItem(fecha);
         }
     }
     
     private void completarTabla(){
-       rd =  new ReservaData();
-       for (Reserva reservas:rd.listarReservas()){
-        modelo.addRow(new Object[]{
-            reservas.getIdReserva(),
-            reservas.getNombreCliente(),
-            reservas.getDni(),
-            reservas.getFecha(),
-            reservas.getHora(),
-            reservas.isEstado(),
-            reservas.getMesa().getIdMesa()
+        borrarFilas();
+        LocalDate dataFecha = (LocalDate)jcbFechas.getSelectedItem();
+       reservaData =  new ReservaData();
+       for (Reserva reservas:reservaData.listarReservasPorFecha(dataFecha)){
+             modelo.addRow(new Object[]{
+               reservas.getIdReserva(),
+               reservas.getNombreCliente(),
+               reservas.getDni(),
+               reservas.getFecha(),
+               reservas.getHora(),
+               reservas.isEstado(),
+               reservas.getMesa().getIdMesa(),
+               
             });
        }
     }

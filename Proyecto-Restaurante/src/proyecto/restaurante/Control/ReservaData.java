@@ -7,9 +7,13 @@ package proyecto.restaurante.Control;
 
 import java.sql.*;
 import java.sql.Date;
+<<<<<<< HEAD
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+=======
+import java.time.LocalDate;
+>>>>>>> Emito
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +36,7 @@ public class ReservaData {
     private MesaData md;
     private Mesa m;
     private Reserva res;
+    private ReservaData reservaData;
     
 public ReservaData(){
     con=Conexion.getConexion();
@@ -101,12 +106,13 @@ public ReservaData(){
             
             while (rs.next()){
                res=new Reserva();
-               res.setNombreCliente(rs.getString(1));
-               res.setDni(rs.getInt(2));
-               res.setFecha(rs.getDate(3).toLocalDate());
-               res.setHora(rs.getTime(4).toLocalTime());
-               res.setEstado(rs.getBoolean(5));
-               res.setMesa(md.obtenerMesa(rs.getInt(6)));
+               res.setIdReserva(rs.getInt("idReserva"));
+               res.setNombreCliente(rs.getString("NombreCliente"));
+               res.setDni(rs.getInt("DNI"));
+               res.setFecha(rs.getDate("Fecha").toLocalDate());
+               res.setHora(rs.getTime("Hora").toLocalTime());
+               res.setEstado(rs.getBoolean("Estado"));
+               res.setMesa(md.obtenerMesa(rs.getInt("idMesa")));
                listaReservas.add(res);
             }
             ps.close();
@@ -117,24 +123,25 @@ public ReservaData(){
         return listaReservas;
     }
 
-public ArrayList<Reserva> listarReservasPorFecha(Date Fecha){
+    public ArrayList<Reserva> listarReservasPorFecha(LocalDate Fecha){
         ArrayList <Reserva> reservasPorFecha = new ArrayList();
        
-        sql="SELECT * FROM reserva WHERE fecha=?";
+        sql="SELECT * FROM reservas WHERE fecha=?";
         
         try {
             ps=con.prepareStatement(sql);
-            ps.setDate(1,Fecha);
+            ps.setDate(1,Date.valueOf(Fecha));
             rs=ps.executeQuery();
           
             while (rs.next()){
                res=new Reserva();
-               res.setNombreCliente(rs.getString(1));
-               res.setDni(rs.getInt(2));
-               res.setFecha(rs.getDate(3).toLocalDate());
-               res.setHora(rs.getTime(4).toLocalTime());
-               res.setEstado(rs.getBoolean(5));
-               res.setMesa(md.obtenerMesa(rs.getInt(6)));
+               res.setIdReserva(rs.getInt("idReserva"));
+               res.setNombreCliente(rs.getString("NombreCliente"));
+               res.setDni(rs.getInt("DNI"));
+               res.setFecha(rs.getDate("Fecha").toLocalDate());
+               res.setHora(rs.getTime("Hora").toLocalTime());
+               res.setEstado(rs.getBoolean("Estado"));
+               res.setMesa(md.obtenerMesa(rs.getInt("idMesa")));
                reservasPorFecha.add(res);
             }
             ps.close();
@@ -143,6 +150,19 @@ public ArrayList<Reserva> listarReservasPorFecha(Date Fecha){
            JOptionPane.showMessageDialog(null,"ReservaData: Error al obtener lista de reservas en la fecha seleccionada"+ex.getMessage());
         }
         return reservasPorFecha;
+    }
+    
+    public HashSet<LocalDate> listarSoloFecha(){
+        ArrayList <Reserva> reservasPorFecha = new ArrayList();
+        HashSet<LocalDate> reservasSoloFecha = new HashSet<LocalDate>();
+        reservaData = new ReservaData();
+        reservasPorFecha = reservaData.listarReservas();
+        
+        for(Reserva reserva : reservasPorFecha){
+            reservasSoloFecha.add(reserva.getFecha());
+        }
+        
+        return reservasSoloFecha;
     }
      
 public  ArrayList<Mesa> mesasDisponibles(String Fecha,String Hora){

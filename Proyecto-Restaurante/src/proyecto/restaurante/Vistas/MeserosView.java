@@ -6,15 +6,22 @@
 package proyecto.restaurante.Vistas;
 
 import java.awt.Color;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import proyecto.restaurante.Control.MesaData;
 import proyecto.restaurante.Control.MeseroData;
+import proyecto.restaurante.Control.PedidoData;
 import proyecto.restaurante.Control.ReservaData;
 import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Mesero;
+import proyecto.restaurante.Entidades.Pedido;
+import proyecto.restaurante.Entidades.Reserva;
 
 /**
  *
@@ -23,9 +30,13 @@ import proyecto.restaurante.Entidades.Mesero;
 public class MeserosView extends javax.swing.JInternalFrame {
     Mesa mesa = new Mesa();
     MesaData mesaData = new MesaData();
-    Mesero mesero = null;
-    MeseroData meseroData = null;
-    
+    Mesero mesero = new Mesero();
+    MeseroData meseroData = new MeseroData();
+    Pedido pedido = new Pedido();
+    PedidoData pedidoData = new PedidoData();
+    ReservaData reservaData = new ReservaData();
+    private int DNIMesero; 
+        
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
                 return false;
@@ -33,30 +44,23 @@ public class MeserosView extends javax.swing.JInternalFrame {
     };
     /**
      * Creates new form CargaMeserosView
+     * @param hola
      */
-    public MeserosView() {
+    public MeserosView(int DNI) {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         estilos();   
         armarCabecera();
-        cargarComboBox();
         borrarFilas();
-        
+        DNIMesero = DNI;
+        cargarTablaLibre();
+        jrbMesasLibres.setSelected(true);
     }
+    
     private void estilos(){
         Fondo.setBackground(new Color(35,34,36,210));
-        TransparenciaAsignar.setBackground(new Color(35,34,36,190));
         TransparenciaListado.setBackground(new Color(35,34,36,190));
-        jbLiberar.setEnabled(false);
-        jbDarBaja.setEnabled(false);
-                
-    }
-    public void cargarComboBox(){
-        mesaData = new MesaData();
-        
-        for (Mesa mesas: mesaData.obtenerMesasLibres()){
-            jcbMesas.addItem(mesas.toString());
-        }
+        jbLiberar.setEnabled(false);                
     }
     private void armarCabecera(){       
         
@@ -73,8 +77,43 @@ public class MeserosView extends javax.swing.JInternalFrame {
             modelo.removeRow(f);
         }
     }
+        
+    private void activarTablaLibre(){
+        jrbMesasLibres.setSelected(true);
+        borrarFilas();
+        if(jrbMesasLibres.isSelected()){
+            jrbMesasOcupadas.setSelected(false);
+            jrbMesasReservadas.setSelected(false);
+        }
+        cargarTablaLibre();
+        jbAsignar.setEnabled(true);
+        jbLiberar.setEnabled(false);
+    }
     
+    private void activarTablaOcupadas(){
+        jrbMesasOcupadas.setSelected(true);
+        borrarFilas();
+        if(jrbMesasOcupadas.isSelected()){
+            jrbMesasLibres.setSelected(false);
+            jrbMesasReservadas.setSelected(false);
+        }
+        cargarTablaOcupada();
+        jbAsignar.setEnabled(false);
+        jbLiberar.setEnabled(true);
+    }
     
+    private void activarTablaReserva(){
+        jrbMesasReservadas.setSelected(true);
+        borrarFilas();
+        if(jrbMesasReservadas.isSelected()){
+            jrbMesasLibres.setSelected(false);
+            jrbMesasOcupadas.setSelected(false);
+            
+        }
+        cargarTablaReserva();
+        jbAsignar.setEnabled(false);
+        jbLiberar.setEnabled(false);    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,15 +127,6 @@ public class MeserosView extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         Fondo = new javax.swing.JPanel();
         Cerrar = new javax.swing.JLabel();
-        TransparenciaAsignar = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jcbMesas = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jtNombre = new javax.swing.JTextField();
-        jtDocumento = new javax.swing.JTextField();
-        jbAsignar = new javax.swing.JButton();
         TransparenciaListado = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jrbMesasLibres = new javax.swing.JRadioButton();
@@ -105,7 +135,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtListas = new javax.swing.JTable();
         jbLiberar = new javax.swing.JButton();
-        jbDarBaja = new javax.swing.JButton();
+        jbAsignar = new javax.swing.JButton();
         FondoImagen = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -144,47 +174,6 @@ public class MeserosView extends javax.swing.JInternalFrame {
         });
         Fondo.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 0, 50, 30));
 
-        TransparenciaAsignar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Seleccionar Mesa");
-        TransparenciaAsignar.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 66, -1, 20));
-
-        jcbMesas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbMesasActionPerformed(evt);
-            }
-        });
-        TransparenciaAsignar.add(jcbMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 66, 213, -1));
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Nombre");
-        TransparenciaAsignar.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 107, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Documento");
-        TransparenciaAsignar.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(67, 145, -1, -1));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Asignar Mesas");
-        TransparenciaAsignar.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 11, -1, -1));
-        TransparenciaAsignar.add(jtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 104, 213, -1));
-        TransparenciaAsignar.add(jtDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 142, 213, -1));
-
-        jbAsignar.setText("Asignar");
-        jbAsignar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbAsignarActionPerformed(evt);
-            }
-        });
-        TransparenciaAsignar.add(jbAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(381, 168, -1, -1));
-
-        Fondo.add(TransparenciaAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 460, 200));
-
         TransparenciaListado.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -220,11 +209,11 @@ public class MeserosView extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jrbMesasLibres)
-                .addGap(71, 71, 71)
+                .addGap(43, 43, 43)
                 .addComponent(jrbMesasOcupadas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jrbMesasReservadas)
-                .addContainerGap())
+                .addGap(31, 31, 31))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,20 +238,25 @@ public class MeserosView extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(jtListas);
 
-        TransparenciaListado.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 54, 440, 210));
+        TransparenciaListado.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 54, 440, 420));
 
         jbLiberar.setText("Liberar Mesa");
-        TransparenciaListado.add(jbLiberar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, -1, -1));
-
-        jbDarBaja.setText("Dar de baja Reserva");
-        jbDarBaja.addActionListener(new java.awt.event.ActionListener() {
+        jbLiberar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbDarBajaActionPerformed(evt);
+                jbLiberarActionPerformed(evt);
             }
         });
-        TransparenciaListado.add(jbDarBaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, -1, -1));
+        TransparenciaListado.add(jbLiberar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 490, -1, -1));
 
-        Fondo.add(TransparenciaListado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 460, 310));
+        jbAsignar.setText("Asignar");
+        jbAsignar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAsignarActionPerformed(evt);
+            }
+        });
+        TransparenciaListado.add(jbAsignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 490, -1, -1));
+
+        Fondo.add(TransparenciaListado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 460, 540));
 
         FondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
         FondoImagen.setLabelFor(Fondo);
@@ -298,56 +292,59 @@ public class MeserosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CerrarMouseExited
 
     private void jbAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAsignarActionPerformed
+        int Fila = jtListas.getSelectedRow();
+        if(Fila != -1){
+            int idMesa = Integer.parseInt(String.valueOf(jtListas.getValueAt(Fila,0)));
+            mesa = mesaData.obtenerMesa(idMesa);
+            mesaData.ocuparMesa(mesa);        
+            mesero = meseroData.buscarMeseroPorDNI(DNIMesero);  
+            pedido = new Pedido(mesa,mesero,LocalDate.now(),LocalTime.now(),250,true);
+            pedidoData.guardarPedido(pedido);
+            activarTablaOcupadas();  
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione una mesa.");
+        }
         
     }//GEN-LAST:event_jbAsignarActionPerformed
 
-    private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcbMesasActionPerformed
-
     private void jrbMesasLibresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMesasLibresActionPerformed
-       borrarFilas();
-        if(jrbMesasLibres.isSelected()){
-            jrbMesasOcupadas.setSelected(false);
-            jrbMesasReservadas.setSelected(false);
-
-        }
-        cargarTabla("LIBRE");
-        jbDarBaja.setEnabled(false);
-        jbLiberar.setEnabled(false);
+       activarTablaLibre();
     }//GEN-LAST:event_jrbMesasLibresActionPerformed
 
     private void jrbMesasOcupadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMesasOcupadasActionPerformed
-        borrarFilas();
-        if(jrbMesasOcupadas.isSelected()){
-            jrbMesasLibres.setSelected(false);
-            jrbMesasReservadas.setSelected(false);
-        }
-        cargarTabla("OCUPADA");
-        jbDarBaja.setEnabled(false);
-        jbLiberar.setEnabled(true);
+       activarTablaOcupadas();
     }//GEN-LAST:event_jrbMesasOcupadasActionPerformed
 
     private void jrbMesasReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMesasReservadasActionPerformed
-        borrarFilas();
-        if(jrbMesasReservadas.isSelected()){
-            jrbMesasLibres.setSelected(false);
-            jrbMesasOcupadas.setSelected(false);
-            
-        }
-        cargarTabla("RESERVADA");
-        jbDarBaja.setEnabled(true);
-        jbLiberar.setEnabled(false);
+        activarTablaReserva();
     }//GEN-LAST:event_jrbMesasReservadasActionPerformed
 
-    private void jbDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDarBajaActionPerformed
-        ReservaData reservaData = new ReservaData();
-        //reservaData.
-    }//GEN-LAST:event_jbDarBajaActionPerformed
+    private void jbLiberarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLiberarActionPerformed
+        int Fila = jtListas.getSelectedRow();
+        List<Pedido> listaPedidos = new ArrayList();
+        if(Fila != -1){
+            mesa = new Mesa();
+            mesero = new Mesero();
+            mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
+            reservaData = new ReservaData();            
+            int idMesa = Integer.parseInt(String.valueOf(jtListas.getValueAt(Fila,0)));
+            mesa = mesaData.obtenerMesa(idMesa);
+            listaPedidos = pedidoData.listarPedidosPorMesa(mesa.getIdMesa(), mesero.getIdMesero());                  
+            for(Pedido pedidos : listaPedidos){
+                System.out.println(pedidos.getIdPedido());
+                pedidoData.eliminarPedido(pedidos.getIdPedido());
+            }
+            mesaData.liberarMesa(mesa);      
+            activarTablaLibre();
+        }else{
+            JOptionPane.showMessageDialog(null,"Seleccione una mesa.");
+        }        
+    }//GEN-LAST:event_jbLiberarActionPerformed
    
-    private void cargarTabla(String estado){
+    
+    private void cargarTablaLibre(){
         List<Mesa> listaMesas = new ArrayList();
-        listaMesas = mesaData.ListarMesasPorEstado(estado);
+        listaMesas = mesaData.ListarMesasPorEstado("LIBRE");
         for (Mesa mesas:listaMesas){
             modelo.addRow(new Object[]{
             mesas.getIdMesa(),
@@ -356,29 +353,44 @@ public class MeserosView extends javax.swing.JInternalFrame {
         }
     }
     
+    private void cargarTablaOcupada(){
+        List<Mesa> listaMesas = new ArrayList();
+        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
+        listaMesas = mesaData.verificacionMesaOcupada(mesero.getIdMesero());
+        for (Mesa mesa :listaMesas){
+            System.out.println(mesa);
+            modelo.addRow(new Object[]{
+                mesa.getIdMesa(),
+                mesa.getCapacidad(),
+            });
+        }
+    }
+    
+    private void cargarTablaReserva(){
+        List<Reserva> listaReserva = new ArrayList();
+        listaReserva = reservaData.listarReservasPorFecha(LocalDate.now());
+        for (Reserva reserva : listaReserva){
+            modelo.addRow(new Object[]{
+            reserva.getMesa().getIdMesa(),
+            reserva.getMesa().getCapacidad()
+            });
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cerrar;
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel FondoImagen;
-    private javax.swing.JPanel TransparenciaAsignar;
     private javax.swing.JPanel TransparenciaListado;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbAsignar;
-    private javax.swing.JButton jbDarBaja;
     private javax.swing.JButton jbLiberar;
-    private javax.swing.JComboBox<String> jcbMesas;
     private javax.swing.JRadioButton jrbMesasLibres;
     private javax.swing.JRadioButton jrbMesasOcupadas;
     private javax.swing.JRadioButton jrbMesasReservadas;
-    private javax.swing.JTextField jtDocumento;
     private javax.swing.JTable jtListas;
-    private javax.swing.JTextField jtNombre;
     // End of variables declaration//GEN-END:variables
 }

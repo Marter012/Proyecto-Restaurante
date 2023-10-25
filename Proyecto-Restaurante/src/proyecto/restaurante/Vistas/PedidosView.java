@@ -10,9 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import proyecto.restaurante.Control.MesaData;
+import proyecto.restaurante.Control.MeseroData;
 import proyecto.restaurante.Control.PedidoData;
 import proyecto.restaurante.Entidades.Mesa;
+import proyecto.restaurante.Entidades.Mesero;
 import proyecto.restaurante.Entidades.Pedido;
+import static proyecto.restaurante.Vistas.PrincipalView.cargaProductosView;
 
 /**
  *
@@ -21,6 +25,11 @@ import proyecto.restaurante.Entidades.Pedido;
 public class PedidosView extends javax.swing.JInternalFrame {
 
     PedidoData pedidoData = new PedidoData();
+    private Mesero mesero;
+    private MeseroData meseroData;
+    private int DNIMesero;
+    private MesaData mesaData;
+    private Mesa mesa;
     
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
@@ -29,35 +38,42 @@ public class PedidosView extends javax.swing.JInternalFrame {
     };
     /**
      * Creates new form CargaMeserosView
+     * @param DNI
      */
-    public PedidosView() {
+    public PedidosView(){}
+    public PedidosView(int DNI) {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         estilos();
-        cargarComboBox();
+        DNIMesero = DNI;     
+        System.out.println(DNIMesero);
         armarCabecera();
-        cargarTabla();
+        borrarFilas();
+        jcbMesas.setEnabled(false);
     }
     private void estilos(){
         Fondo.setBackground(new Color(35,34,36,210));
         jpMesas.setBackground(new Color(35,34,36,160));
-        jpDatos.setBackground(new Color(35,34,36,160));
         jpPedidos.setBackground(new Color(35,34,36,160));
     }
     
     public void cargarComboBox(){
-        pedidoData = new PedidoData();
+        mesaData = new MesaData();
+        meseroData = new MeseroData();
+        mesero = new Mesero();
+        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
         
-        for (Mesa mesa: pedidoData.listarMesas(1)){
-            jcbMesas.addItem(mesa.toString());
+        
+        for (Mesa mesas: mesaData.verificacionMesaOcupada(mesero.getIdMesero())){
+            jcbMesas.addItem(mesas);
         }
     }
     
     private void armarCabecera(){       
-        
-        modelo.addColumn("Mesa");
         modelo.addColumn("Pedido");
-        modelo.addColumn("Importe");        
+        modelo.addColumn("Mesa");
+        modelo.addColumn("Importe"); 
+        modelo.addColumn("Hora");
         jtPedidos.setModel(modelo);
 
     }
@@ -69,16 +85,29 @@ public class PedidosView extends javax.swing.JInternalFrame {
         }
     }
      
-     private void cargarTabla(){
-        List<Pedido> listaPedidos = new ArrayList();
-        listaPedidos = pedidoData.listarPedidos();
-        for (Pedido pedidos:listaPedidos){
-            modelo.addRow(new Object[]{
-            pedidos.getMesa(),
-            pedidos.getIdPedido(),
-            pedidos.getImporte()
-            });
+    private void cargarTabla(){
+        borrarFilas();
+        pedidoData = new PedidoData();
+        meseroData = new MeseroData();
+        mesero = new Mesero();
+        mesa = new Mesa();
+        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);        
+        List<Pedido> listaPedidos = new ArrayList();  
+        
+        Mesa mesaSeleccionada = (Mesa)jcbMesas.getSelectedItem();
+        if(mesaSeleccionada != null){
+            listaPedidos = pedidoData.listarPedidosPorMesa(mesaSeleccionada.getIdMesa(), mesero.getIdMesero());
         }
+        if(!listaPedidos.isEmpty()){
+            for (Pedido pedidos:listaPedidos){
+                modelo.addRow(new Object[]{
+                pedidos.getIdPedido(),
+                pedidos.getMesa(),                
+                pedidos.getImporte(),                
+                pedidos.getHoraPedido(),
+                });
+            }
+        }        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -95,19 +124,11 @@ public class PedidosView extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jcbMesas = new javax.swing.JComboBox<>();
-        jpDatos = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jtNombre = new javax.swing.JTextField();
-        jtDNI = new javax.swing.JTextField();
-        jtHora = new javax.swing.JTextField();
         jpPedidos = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtPedidos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jbVerDetalle = new javax.swing.JButton();
         FondoImagen = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 2, true));
@@ -135,51 +156,32 @@ public class PedidosView extends javax.swing.JInternalFrame {
 
         jpMesas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("adasdadadadasdasdadadasdasdasdasd");
-        jpMesas.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 11, 346, 24));
+        jLabel2.setText("Lista de mesas con pedidos.");
+        jpMesas.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 346, 24));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Seleccione mesa :");
-        jpMesas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 53, -1, 27));
+        jpMesas.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, 27));
 
         jcbMesas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jcbMesasMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jcbMesasMousePressed(evt);
+            }
         });
-        jpMesas.add(jcbMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 56, 221, -1));
+        jcbMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbMesasActionPerformed(evt);
+            }
+        });
+        jpMesas.add(jcbMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 221, -1));
 
-        Fondo.add(jpMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 500, 110));
-
-        jpDatos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Dni : ");
-        jpDatos.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Nombre :");
-        jpDatos.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Hora de ingreso :");
-        jpDatos.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Datos del cliente");
-        jpDatos.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, -1));
-        jpDatos.add(jtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 210, -1));
-        jpDatos.add(jtDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 210, -1));
-        jpDatos.add(jtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 210, -1));
-
-        Fondo.add(jpDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 500, 130));
+        Fondo.add(jpMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 500, 130));
 
         jpPedidos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -193,22 +195,22 @@ public class PedidosView extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(jtPedidos);
 
-        jpPedidos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 480, 230));
+        jpPedidos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 480, 330));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Pedidos por mesa");
         jpPedidos.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, -1, -1));
 
-        jButton1.setText("Ver detalle");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbVerDetalle.setText("Ver detalle");
+        jbVerDetalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbVerDetalleActionPerformed(evt);
             }
         });
-        jpPedidos.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(402, 19, -1, -1));
+        jpPedidos.add(jbVerDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(402, 19, -1, -1));
 
-        Fondo.add(jpPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 500, 300));
+        Fondo.add(jpPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 500, 410));
 
         FondoImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/FondoInternalFrames.jpg"))); // NOI18N
         FondoImagen.setLabelFor(Fondo);
@@ -228,10 +230,26 @@ public class PedidosView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseClicked
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_CerrarMouseClicked
+    private void jbVerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerDetalleActionPerformed
+        cargaProductosView();
+        
+        
+    }//GEN-LAST:event_jbVerDetalleActionPerformed
+
+    private void jcbMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesasActionPerformed
+        cargarTabla();
+    }//GEN-LAST:event_jcbMesasActionPerformed
+
+    private void jcbMesasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMousePressed
+
+    }//GEN-LAST:event_jcbMesasMousePressed
+
+    private void jcbMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMouseClicked
+        if(!jcbMesas.isEnabled()){
+            jcbMesas.setEnabled(true);
+            cargarComboBox();
+        }
+    }//GEN-LAST:event_jcbMesasMouseClicked
 
     private void CerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseEntered
         // TODO add your handling code here:
@@ -243,35 +261,24 @@ public class PedidosView extends javax.swing.JInternalFrame {
         Cerrar.setForeground(Color.white);
     }//GEN-LAST:event_CerrarMouseExited
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void CerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jcbMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMesasMouseClicked
-       
-    }//GEN-LAST:event_jcbMesasMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_CerrarMouseClicked
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cerrar;
     private javax.swing.JPanel Fondo;
     private javax.swing.JLabel FondoImagen;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JComboBox<String> jcbMesas;
-    private javax.swing.JPanel jpDatos;
+    private javax.swing.JButton jbVerDetalle;
+    private javax.swing.JComboBox<Mesa> jcbMesas;
     private javax.swing.JPanel jpMesas;
     private javax.swing.JPanel jpPedidos;
-    private javax.swing.JTextField jtDNI;
-    private javax.swing.JTextField jtHora;
-    private javax.swing.JTextField jtNombre;
     private javax.swing.JTable jtPedidos;
     // End of variables declaration//GEN-END:variables
 }
