@@ -172,7 +172,7 @@ public class PrincipalView extends javax.swing.JFrame {
                 btMesasMeserosActionPerformed(evt);
             }
         });
-        MenuLateral.add(btMesasMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, 169, 50));
+        MenuLateral.add(btMesasMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 169, 50));
 
         jSeparator5.setBackground(new java.awt.Color(189, 193, 96));
         jSeparator5.setForeground(new java.awt.Color(189, 193, 96));
@@ -196,11 +196,11 @@ public class PrincipalView extends javax.swing.JFrame {
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/pedidoIcon.png"))); // NOI18N
-        MenuLateral.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 60, -1));
+        MenuLateral.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 60, 50));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/pedidoIcon.png"))); // NOI18N
-        MenuLateral.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 60, -1));
+        MenuLateral.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 60, 50));
 
         btPedidosMeseros.setBackground(new java.awt.Color(153, 153, 0));
         btPedidosMeseros.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
@@ -211,7 +211,7 @@ public class PrincipalView extends javax.swing.JFrame {
                 btPedidosMeserosActionPerformed(evt);
             }
         });
-        MenuLateral.add(btPedidosMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, 169, 50));
+        MenuLateral.add(btPedidosMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 169, 50));
 
         btReservaMeseros.setBackground(new java.awt.Color(153, 153, 0));
         btReservaMeseros.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
@@ -222,11 +222,11 @@ public class PrincipalView extends javax.swing.JFrame {
                 btReservaMeserosActionPerformed(evt);
             }
         });
-        MenuLateral.add(btReservaMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 169, 50));
+        MenuLateral.add(btReservaMeseros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, 169, 50));
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/restaurante/resources/imagenes/pedidoIcon.png"))); // NOI18N
-        MenuLateral.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 60, -1));
+        MenuLateral.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 60, 50));
 
         FondoTransparente.setOpaque(true);
         MenuLateral.add(FondoTransparente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 600));
@@ -648,11 +648,10 @@ public class PrincipalView extends javax.swing.JFrame {
         btIngresos.setEnabled(false);
     }
     
-    public static void cargaProductosView(){
+    public static void cargaProductosView(int DNI, int idMesa){
         EscritorioFrames.removeAll();
         EscritorioFrames.repaint();
-        //int DNI = m.getDni();
-        ProductosView prov = new ProductosView();
+        ProductosView prov = new ProductosView(DNI,idMesa);
         prov.setVisible(true);
         EscritorioFrames.add(prov);
         EscritorioFrames.moveToFront(prov);
