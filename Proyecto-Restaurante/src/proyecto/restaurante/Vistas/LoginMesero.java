@@ -8,7 +8,6 @@ package proyecto.restaurante.Vistas;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import proyecto.restaurante.Control.MeseroData;
-import proyecto.restaurante.Entidades.Mesero;
 
 /**
  *

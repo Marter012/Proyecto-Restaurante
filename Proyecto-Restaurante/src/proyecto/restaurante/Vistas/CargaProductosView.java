@@ -9,20 +9,15 @@ import java.awt.Color;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import proyecto.restaurante.Control.MeseroData;
-import proyecto.restaurante.Control.ProductoData;
-import proyecto.restaurante.Entidades.Categoria;
-import proyecto.restaurante.Entidades.Mesero;
-import proyecto.restaurante.Entidades.Producto;
+import proyecto.restaurante.Control.*;
+import proyecto.restaurante.Entidades.*;
 
 /**
  *
  * @author Emito
  */
 public class CargaProductosView extends javax.swing.JInternalFrame {
-    /**
-     * Creates new form CargaMeserosView
-     */
+    private static Producto p;
     public CargaProductosView() {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
@@ -263,127 +258,100 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
 
     private void jbActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarProductoActionPerformed
         ProductoData pd = new ProductoData();
-        Producto p = new Producto();
-        boolean cambiarTabla=false;
-        int posicion=0;
-        if (jcbProductos.isEnabled()){
-            posicion=jcbProductos.getSelectedIndex();
-        }
-        if (jcbInactivo.isEnabled()){
-            posicion=jcbInactivo.getSelectedIndex();
-        }
-        
-        p.setIdProducto(Integer.parseInt(jlIdProducto.getText()));
-        p.setNombre(jtNombre.getText());
-        p.setCantidad(Integer.parseInt(jtCantidad.getText()));
-        p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
-        p.setPrecio(Double.parseDouble(jtPrecio.getText()));
-        if (jrbActivo.isSelected()){
-            p.setEstado(true);
-        }else{
-           p.setEstado(false);
-        }
-        Producto productoActual = pd.buscarProducto(p.getIdProducto());
-        if (productoActual.isEstado()!=p.isEstado()){
-            cambiarTabla=true;
-        }
-        pd.modificarProducto(p);
-        if (cambiarTabla){
+        try {
+            p = new Producto();
+            boolean cambiarTabla=false;
+            int posicion=0;
             if (jcbProductos.isEnabled()){
-                List<Producto> listaInactivo = pd.listarProductosInactivos();
-                    for (Producto prod:listaInactivo){
-                        if (prod.getIdProducto()==p.getIdProducto()){
-                            posicion = listaInactivo.indexOf(prod);
-                        }
-                    }
-                    jcbProductos.removeAllItems();
-                    jcbProductos.setEnabled(false);
-                    jcbInactivo.setEnabled(true);
-                    CargarComboInactivos();
-                    jcbInactivo.setSelectedIndex(posicion);
+                posicion=jcbProductos.getSelectedIndex();
+            }
+            if (jcbInactivo.isEnabled()){
+                posicion=jcbInactivo.getSelectedIndex();
+            }
+
+            p.setIdProducto(Integer.parseInt(jlIdProducto.getText()));
+            p.setNombre(jtNombre.getText());
+            p.setCantidad(Integer.parseInt(jtCantidad.getText()));
+            p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
+            p.setPrecio(Double.parseDouble(jtPrecio.getText()));
+            if (jrbActivo.isSelected()){
+                p.setEstado(true);
             }else{
-                if (jcbInactivo.isEnabled()){
-                    List<Producto> listaProductos = pd.listarProductos();
-                    for (Producto prod:listaProductos){
-                        if (prod.getIdProducto()==p.getIdProducto()){
-                            posicion= listaProductos.indexOf(prod);
+               p.setEstado(false);
+            }
+            Producto productoActual = pd.buscarProducto(p.getIdProducto());
+            if (productoActual.isEstado()!=p.isEstado()){
+                cambiarTabla=true;
+            }
+            pd.modificarProducto(p);
+            if (cambiarTabla){
+                if (jcbProductos.isEnabled()){
+                    List<Producto> listaInactivo = pd.listarProductosInactivos();
+                        for (Producto prod:listaInactivo){
+                            if (prod.getIdProducto()==p.getIdProducto()){
+                                posicion = listaInactivo.indexOf(prod);
+                            }
                         }
+                        jcbProductos.removeAllItems();
+                        jcbProductos.setEnabled(false);
+                        jcbInactivo.setEnabled(true);
+                        CargarComboInactivos();
+                        jcbInactivo.setSelectedIndex(posicion);
+                }else{
+                    if (jcbInactivo.isEnabled()){
+                        List<Producto> listaProductos = pd.listarProductos();
+                        for (Producto prod:listaProductos){
+                            if (prod.getIdProducto()==p.getIdProducto()){
+                                posicion= listaProductos.indexOf(prod);
+                            }
+                        }
+                        jcbInactivo.removeAllItems();
+                        jcbInactivo.setEnabled(false);
+                        jcbProductos.setEnabled(true);
+                        CargarComboProductos();
+                        jcbProductos.setSelectedIndex(posicion);
                     }
-                    jcbInactivo.removeAllItems();
-                    jcbInactivo.setEnabled(false);
-                    jcbProductos.setEnabled(true);
+                }
+            }else{
+                if (jcbProductos.isEnabled()){
+                    jcbProductos.removeAllItems();
                     CargarComboProductos();
                     jcbProductos.setSelectedIndex(posicion);
+                }else{
+                    jcbInactivo.removeAllItems();
+                    CargarComboInactivos();
+                    jcbInactivo.setSelectedIndex(posicion);
                 }
             }
-        }else{
-            if (jcbProductos.isEnabled()){
-                jcbProductos.removeAllItems();
-                CargarComboProductos();
-                jcbProductos.setSelectedIndex(posicion);
-            }else{
-                jcbInactivo.removeAllItems();
-                CargarComboInactivos();
-                jcbInactivo.setSelectedIndex(posicion);
-            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,"No puede ingresar letras en el campo de 'Cantidad' ni 'Presio'");
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this,"No puede haber campos vacios");
         }
     }//GEN-LAST:event_jbActualizarProductoActionPerformed
 
     private void jcbProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProductosActionPerformed
         
-        //jcbEncargado.removeAllItems();
-        //jcbEncargado.setEnabled(false);
         if (jcbProductos.getItemCount()!=0){
-            Producto p = new Producto();
+            p = new Producto();
             p = (Producto) jcbProductos.getSelectedItem();
-                if (p!=null){
-                    jlIdProducto.setText(String.valueOf(p.getIdProducto()));
-                    jtNombre.setText(p.getNombre());
-                    jtCantidad.setText(String.valueOf(p.getCantidad()));
-                    CargarComboCategoria();
-                    jcbCategoria.setEnabled(true);
-                    jcbCategoria.setSelectedItem((Categoria)p.getCategoria());
-                    jtPrecio.setText(String.valueOf(p.getPrecio()));
-                    jrbActivo.setEnabled(true);
-                    jrbInactivo.setEnabled(true);
-                        if (p.isEstado()){
-                            jrbActivo.setSelected(true);
-                        }else{
-                            jrbInactivo.setSelected(true);
-                        }
-                    
+            if (p!=null){
+                jlIdProducto.setText(String.valueOf(p.getIdProducto()));
+                jtNombre.setText(p.getNombre());
+                jtCantidad.setText(String.valueOf(p.getCantidad()));
+                CargarComboCategoria();
+                jcbCategoria.setEnabled(true);
+                jcbCategoria.setSelectedItem((Categoria)p.getCategoria());
+                jtPrecio.setText(String.valueOf(p.getPrecio()));
+                jrbActivo.setEnabled(true);
+                jrbInactivo.setEnabled(true);
+                if (p.isEstado()){
+                    jrbActivo.setSelected(true);
+                }else{
+                    jrbInactivo.setSelected(true);
                 }
+            }
         }
-        
-//            
-//        }else{
-//        Mesero m = new Mesero();
-//        m = (Mesero)jcbProductos.getSelectedItem();
-//        if (m!=null){
-//            jlIdProducto.setText(String.valueOf(m.getIdMesero()));
-//            jtNombre.setText(m.getNombre());
-//            jtPrecio.setText(m.getApellido());
-//            jtDni.setText(String.valueOf(m.getDni()));
-//            if (m.isEstado()){
-//                jrbActivo.setSelected(true);
-//                jrbInactivo.setSelected(false);
-//            }else{
-//                jrbActivo.setSelected(false);
-//                jrbInactivo.setSelected(true);
-//            }
-//            if (m.getAcceso()==1){
-//                jrbActivo.setSelected(true);
-//                jrbInactivo.setSelected(false);
-//            }else{
-//                jrbActivo.setSelected(false);
-//                jrbInactivo.setSelected(true);
-//            }
-//            jtPassword.setText(m.getPassword());
-//            
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
-//        }
-//        }
     }//GEN-LAST:event_jcbProductosActionPerformed
 
     private void CerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseClicked
@@ -403,17 +371,23 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
 
     private void jbCrearProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearProductoActionPerformed
         ProductoData pd = new ProductoData();
-        Producto p = new Producto();
-        p.setNombre(jtNombre.getText());
-        p.setCantidad(Integer.parseInt(jtCantidad.getText()));
-        p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
-        p.setPrecio(Integer.parseInt(jtPrecio.getText()));
-        if (jrbActivo.isSelected()){
-            p.setEstado(true);
-        }else{
-            p.setEstado(false);
+        try {
+            p = new Producto();
+            p.setNombre(jtNombre.getText());
+            p.setCantidad(Integer.parseInt(jtCantidad.getText()));
+            p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
+            p.setPrecio(Integer.parseInt(jtPrecio.getText()));
+            if (jrbActivo.isSelected()){
+                p.setEstado(true);
+            }else{
+                p.setEstado(false);
+            }
+            pd.guardarProducto(p);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,"No puede ingresar letras en el campo 'Cantidad' ni 'Presio'");
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this,"No puede haber campos vacios");
         }
-        pd.guardarProducto(p);
     }//GEN-LAST:event_jbCrearProductoActionPerformed
 
     private void jcbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbProductosMouseClicked
@@ -474,25 +448,24 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
 
     private void jcbInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbInactivoActionPerformed
         if (jcbInactivo.getItemCount()!=0){
-            Producto p = new Producto();
+            p = new Producto();
             p = (Producto) jcbInactivo.getSelectedItem();
-                if (p!=null){
-                    jlIdProducto.setText(String.valueOf(p.getIdProducto()));
-                    jtNombre.setText(p.getNombre());
-                    jtCantidad.setText(String.valueOf(p.getCantidad()));
-                    CargarComboCategoria();
-                    jcbCategoria.setEnabled(true);
-                    jcbCategoria.setSelectedItem((Categoria)p.getCategoria());
-                    jtPrecio.setText(String.valueOf(p.getPrecio()));
-                    jrbActivo.setEnabled(true);
-                    jrbInactivo.setEnabled(true);
-                        if (p.isEstado()){
-                            jrbActivo.setSelected(true);
-                        }else{
-                            jrbInactivo.setSelected(true);
-                        }
-                    
+            if (p!=null){
+                jlIdProducto.setText(String.valueOf(p.getIdProducto()));
+                jtNombre.setText(p.getNombre());
+                jtCantidad.setText(String.valueOf(p.getCantidad()));
+                CargarComboCategoria();
+                jcbCategoria.setEnabled(true);
+                jcbCategoria.setSelectedItem((Categoria)p.getCategoria());
+                jtPrecio.setText(String.valueOf(p.getPrecio()));
+                jrbActivo.setEnabled(true);
+                jrbInactivo.setEnabled(true);
+                if (p.isEstado()){
+                    jrbActivo.setSelected(true);
+                }else{
+                    jrbInactivo.setSelected(true);
                 }
+            }
         }
     }//GEN-LAST:event_jcbInactivoActionPerformed
 
@@ -512,24 +485,16 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbCategoriaMouseClicked
     private void CargarComboProductos(){
         ProductoData pd = new ProductoData();
-        
-        for (Producto p: pd.listarProductos()){
-                //jcbMesero.setRenderer(new CustomRenderer());
-                jcbProductos.addItem(p);
-        
+        for (Producto pro: pd.listarProductos()){
+            jcbProductos.addItem(pro);
         }
-        
     }
     
     private void CargarComboInactivos(){
         ProductoData pd = new ProductoData();
-        
-        for (Producto p: pd.listarProductosInactivos()){
-                //jcbMesero.setRenderer(new CustomRenderer());
-                jcbInactivo.addItem(p);
-        
+        for (Producto pro: pd.listarProductosInactivos()){
+                jcbInactivo.addItem(pro);
         }
-        
     }
     
     private void CargarComboCategoria(){

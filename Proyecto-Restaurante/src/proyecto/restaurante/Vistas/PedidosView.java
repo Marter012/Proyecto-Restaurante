@@ -10,12 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
-import proyecto.restaurante.Control.MesaData;
-import proyecto.restaurante.Control.MeseroData;
-import proyecto.restaurante.Control.PedidoData;
-import proyecto.restaurante.Entidades.Mesa;
-import proyecto.restaurante.Entidades.Mesero;
-import proyecto.restaurante.Entidades.Pedido;
+import proyecto.restaurante.Control.*;
+import proyecto.restaurante.Entidades.*;
 import static proyecto.restaurante.Vistas.PrincipalView.cargaProductosView;
 
 /**
@@ -29,7 +25,6 @@ public class PedidosView extends javax.swing.JInternalFrame {
     private MeseroData meseroData;
     private int DNIMesero;
     private MesaData mesaData;
-    private Mesa mesa;
     
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
@@ -90,7 +85,7 @@ public class PedidosView extends javax.swing.JInternalFrame {
         pedidoData = new PedidoData();
         meseroData = new MeseroData();
         mesero = new Mesero();
-        mesa = new Mesa();
+        Mesa mesa = new Mesa();
         mesero = meseroData.buscarMeseroPorDNI(DNIMesero);        
         List<Pedido> listaPedidos = new ArrayList();  
         

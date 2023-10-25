@@ -6,38 +6,30 @@
 package proyecto.restaurante.Vistas;
 
 import java.awt.Color;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.time.*;
 import java.util.List;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
-import proyecto.restaurante.Control.MesaData;
-import proyecto.restaurante.Control.MeseroData;
-import proyecto.restaurante.Control.PedidoData;
-import proyecto.restaurante.Control.ReservaData;
-import proyecto.restaurante.Entidades.Mesa;
-import proyecto.restaurante.Entidades.Mesero;
-import proyecto.restaurante.Entidades.Pedido;
-import proyecto.restaurante.Entidades.Reserva;
+import proyecto.restaurante.Control.*;
+import proyecto.restaurante.Entidades.*;
 
 /**
  *
  * @author Emito
  */
 public class MeserosView extends javax.swing.JInternalFrame {
-    Mesa mesa = new Mesa();
-    MesaData mesaData = new MesaData();
-    Mesero mesero = new Mesero();
-    MeseroData meseroData = new MeseroData();
-    Pedido pedido = new Pedido();
-    PedidoData pedidoData = new PedidoData();
-    ReservaData reservaData = new ReservaData();
-    private int DNIMesero; 
+    private static Mesa mesa = new Mesa();
+    private static MesaData mesaData = new MesaData();
+    private static Mesero mesero = new Mesero();
+    private static MeseroData meseroData = new MeseroData();
+    private static Pedido pedido = new Pedido();
+    private static PedidoData pedidoData = new PedidoData();
+    private static ReservaData reservaData = new ReservaData();
+    private static int DNIMesero;
         
-    private DefaultTableModel modelo = new DefaultTableModel(){
+    private final DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){
                 return false;
         }
@@ -46,13 +38,13 @@ public class MeserosView extends javax.swing.JInternalFrame {
      * Creates new form CargaMeserosView
      * @param hola
      */
-    public MeserosView(int DNI) {
+    public MeserosView(int dni) {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         estilos();   
         armarCabecera();
         borrarFilas();
-        DNIMesero = DNI;
+        DNIMesero = dni;
         cargarTablaLibre();
         jrbMesasLibres.setSelected(true);
     }
@@ -357,8 +349,8 @@ public class MeserosView extends javax.swing.JInternalFrame {
         List<Mesa> listaMesas = new ArrayList();
         mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
         listaMesas = mesaData.verificacionMesaOcupada(mesero.getIdMesero());
-        for (Mesa mesa :listaMesas){
-            System.out.println(mesa);
+        for (Mesa m :listaMesas){
+            System.out.println(m);
             modelo.addRow(new Object[]{
                 mesa.getIdMesa(),
                 mesa.getCapacidad(),

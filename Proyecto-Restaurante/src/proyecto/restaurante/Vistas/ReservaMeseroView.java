@@ -27,7 +27,7 @@ public class ReservaMeseroView extends javax.swing.JInternalFrame {
     private Mesa mesa;
     private MesaData mesaData;
     private ReservaData reservaData; 
-    private int DNIMesero;
+    private final int DNIMesero;
     
     private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable(int f, int c){

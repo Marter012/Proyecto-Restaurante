@@ -10,12 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
-import proyecto.restaurante.Control.MesaData;
-import proyecto.restaurante.Control.MeseroData;
-import proyecto.restaurante.Control.PedidoData;
-import proyecto.restaurante.Entidades.Mesa;
-import proyecto.restaurante.Entidades.Mesero;
-import proyecto.restaurante.Entidades.Pedido;
+import proyecto.restaurante.Control.*;
+import proyecto.restaurante.Entidades.*;
 
 /**
  *

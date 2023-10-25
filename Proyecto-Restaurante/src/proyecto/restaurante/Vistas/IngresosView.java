@@ -6,7 +6,6 @@
 package proyecto.restaurante.Vistas;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -19,7 +18,6 @@ import proyecto.restaurante.Entidades.*;
  */
 public class IngresosView extends javax.swing.JInternalFrame {
     private static Mesero mesero;
-    private static Mesa mesa;
     private static PedidoData pd;
     private static MeseroData md;
     DefaultTableModel dtm=new DefaultTableModel(){
@@ -164,7 +162,6 @@ public class IngresosView extends javax.swing.JInternalFrame {
     private void jcbMeserosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMeserosMouseClicked
         if(!jcbMeseros.isEnabled()){
             jcbMeseros.setEnabled(true);
-            //jcbMeseros.setFocusable(true);
             cargarBox();
         }
     }//GEN-LAST:event_jcbMeserosMouseClicked
@@ -182,15 +179,15 @@ public class IngresosView extends javax.swing.JInternalFrame {
         borrarFila();
         mesero=(Mesero)jcbMeseros.getSelectedItem();
         if (mesero!=null){
-        for(Pedido p:pd.obtenerMesasOcupadasPorMesero(mesero.getIdMesero())){
-            dtm.addRow(new Object[]{
-                p.getMesero().getNombre(),
-                p.getMesero().getApellido(),
-                p.getMesa().getIdMesa(),
-                p.getImporte()
-            });
-        }
-        sumarTotal();
+            for(Pedido p:pd.obtenerMesasOcupadasPorMesero(mesero.getIdMesero())){
+                dtm.addRow(new Object[]{
+                    p.getMesero().getNombre(),
+                    p.getMesero().getApellido(),
+                    p.getMesa().getIdMesa(),
+                    p.getImporte()
+                });
+            }
+            sumarTotal();
         }
     }//GEN-LAST:event_jcbMeserosActionPerformed
 
@@ -238,7 +235,6 @@ public class IngresosView extends javax.swing.JInternalFrame {
     private void borrarFila(){
         int f=jtListaDetalles.getRowCount()-1;
         for(;f>=0;f--){
-            System.out.println("Borrando fila"+f);
             dtm.removeRow(f);
         }
     }

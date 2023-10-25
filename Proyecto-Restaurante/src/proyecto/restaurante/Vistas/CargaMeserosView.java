@@ -17,9 +17,7 @@ import proyecto.restaurante.Entidades.Mesero;
  * @author Emito
  */
 public class CargaMeserosView extends javax.swing.JInternalFrame {
-    /**
-     * Creates new form CargaMeserosView
-     */
+    private static Mesero m;
     public CargaMeserosView() {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
@@ -307,10 +305,11 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
 
     private void jbActualizarMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarMeseroActionPerformed
         MeseroData mesd = new MeseroData();
-        Mesero m = new Mesero();
-        boolean cambiarTablaEstado=false;
-        boolean cambiarTablaActiva=false;
-        int posicion=0;
+        try {
+            m = new Mesero();
+            boolean cambiarTablaEstado=false;
+            boolean cambiarTablaActiva=false;
+            int posicion=0;
             if (jcbEncargado.isEnabled()){
                 posicion=jcbEncargado.getSelectedIndex();
             } else {
@@ -322,156 +321,160 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                     }
                 }
             }
-        m.setIdMesero(Integer.parseInt(jlIdMesero.getText()));
-        m.setNombre(jtNombre.getText());
-        m.setApellido(jtApellido.getText());
-        m.setDni(Integer.parseInt(jtDni.getText()));
-        m.setEstado(jrbActivo.isSelected());
-        if (jrbEncargado.isSelected()){
-            m.setAcceso(1);
-        }else{
-            m.setAcceso(2);
-        }
-        m.setPassword(jtPassword.getText());
-        Mesero meseroActual = mesd.buscarMeseroPorId(m.getIdMesero());
-        if (meseroActual.getAcceso()!=m.getAcceso()){
-            cambiarTablaEstado=true;
-        }
-        if (meseroActual.isEstado()!=m.isEstado()){
-            cambiarTablaActiva=true;
-        }
-        mesd.modificarMesero(m);
-        
-        if (cambiarTablaEstado){
-            if (jcbEncargado.isEnabled()){
-            List<Mesero> listaMeseros = mesd.ListarMeseros();
-                for (Mesero me:listaMeseros){
-                    if(me.getIdMesero()==m.getIdMesero()){
-                        posicion = listaMeseros.indexOf(me);
-                    }
-                }
-                jcbEncargado.removeAllItems();
-                
-                jcbEncargado.setEnabled(false);
-                jcbMesero.setEnabled(true);
-                CargarComboMeseros();
-                jcbMesero.setSelectedIndex(posicion);
+            m.setIdMesero(Integer.parseInt(jlIdMesero.getText()));
+            m.setNombre(jtNombre.getText());
+            m.setApellido(jtApellido.getText());
+            m.setDni(Integer.parseInt(jtDni.getText()));
+            m.setEstado(jrbActivo.isSelected());
+            if (jrbEncargado.isSelected()){
+                m.setAcceso(1);
             }else{
-                if (jcbMesero.isEnabled()){
-                    List<Mesero> listaEncargados = mesd.ListarEncargados();
-                    for (Mesero me:listaEncargados){
+                m.setAcceso(2);
+            }
+            m.setPassword(jtPassword.getText());
+            Mesero meseroActual = mesd.buscarMeseroPorId(m.getIdMesero());
+            if (meseroActual.getAcceso()!=m.getAcceso()){
+                cambiarTablaEstado=true;
+            }
+            if (meseroActual.isEstado()!=m.isEstado()){
+                cambiarTablaActiva=true;
+            }
+            mesd.modificarMesero(m);
+
+            if (cambiarTablaEstado){
+                if (jcbEncargado.isEnabled()){
+                List<Mesero> listaMeseros = mesd.ListarMeseros();
+                    for (Mesero me:listaMeseros){
                         if(me.getIdMesero()==m.getIdMesero()){
-                            posicion = listaEncargados.indexOf(me);
+                            posicion = listaMeseros.indexOf(me);
                         }
                     }
-                    jcbMesero.removeAllItems();
-                    jcbMesero.setEnabled(false);
-                    jcbEncargado.setEnabled(true);
-                    CargarComboEncargados();
-                    jcbEncargado.setSelectedIndex(posicion);
-                }
-            }
-        }
-        
-        if (cambiarTablaActiva){
-            if (jcbEncargado.isEnabled()){
-                List<Mesero> listaInactivos = mesd.ListarInactivos();
-                for (Mesero me:listaInactivos){
-                    if(me.getIdMesero()==m.getIdMesero()){
-                        posicion = listaInactivos.indexOf(me);
+                    jcbEncargado.removeAllItems();
+
+                    jcbEncargado.setEnabled(false);
+                    jcbMesero.setEnabled(true);
+                    CargarComboMeseros();
+                    jcbMesero.setSelectedIndex(posicion);
+                }else{
+                    if (jcbMesero.isEnabled()){
+                        List<Mesero> listaEncargados = mesd.ListarEncargados();
+                        for (Mesero me:listaEncargados){
+                            if(me.getIdMesero()==m.getIdMesero()){
+                                posicion = listaEncargados.indexOf(me);
+                            }
+                        }
+                        jcbMesero.removeAllItems();
+                        jcbMesero.setEnabled(false);
+                        jcbEncargado.setEnabled(true);
+                        CargarComboEncargados();
+                        jcbEncargado.setSelectedIndex(posicion);
                     }
                 }
-                jcbEncargado.removeAllItems();
-                jcbEncargado.setEnabled(false);
-                jcbInactivos.setEnabled(true);
-                CargarComboInactivos();
-                jcbInactivos.setSelectedIndex(posicion);
-                jrbMesero.setEnabled(false);
-                jrbEncargado.setEnabled(false);
-                
-            } else {
-                if (jcbMesero.isEnabled()){
+            }
+
+            if (cambiarTablaActiva){
+                if (jcbEncargado.isEnabled()){
                     List<Mesero> listaInactivos = mesd.ListarInactivos();
                     for (Mesero me:listaInactivos){
                         if(me.getIdMesero()==m.getIdMesero()){
                             posicion = listaInactivos.indexOf(me);
                         }
                     }
-                    jcbMesero.removeAllItems();
-                    jcbMesero.setEnabled(false);
+                    jcbEncargado.removeAllItems();
+                    jcbEncargado.setEnabled(false);
                     jcbInactivos.setEnabled(true);
                     CargarComboInactivos();
                     jcbInactivos.setSelectedIndex(posicion);
                     jrbMesero.setEnabled(false);
                     jrbEncargado.setEnabled(false);
-                }else{
-                    if (jcbInactivos.isEnabled()){
-                        if (m.getAcceso()==1){
-                        List<Mesero> listaEncargado = mesd.ListarEncargados();
-                            for (Mesero me:listaEncargado){
-                                if(me.getIdMesero()==m.getIdMesero()){
-                                    posicion = listaEncargado.indexOf(me);
-                                }
+
+                } else {
+                    if (jcbMesero.isEnabled()){
+                        List<Mesero> listaInactivos = mesd.ListarInactivos();
+                        for (Mesero me:listaInactivos){
+                            if(me.getIdMesero()==m.getIdMesero()){
+                                posicion = listaInactivos.indexOf(me);
                             }
-                            jcbInactivos.removeAllItems();
-                            jcbInactivos.setEnabled(false);
-                            jcbEncargado.setEnabled(true);
-                            CargarComboEncargados();
-                            jcbEncargado.setSelectedIndex(posicion);
-                            jrbMesero.setEnabled(true);
-                            jrbEncargado.setEnabled(true);
-                        }else{
-                            if (m.getAcceso()==2){
-                            List<Mesero> listaMeseros = mesd.ListarMeseros();
-                                for (Mesero me:listaMeseros){
+                        }
+                        jcbMesero.removeAllItems();
+                        jcbMesero.setEnabled(false);
+                        jcbInactivos.setEnabled(true);
+                        CargarComboInactivos();
+                        jcbInactivos.setSelectedIndex(posicion);
+                        jrbMesero.setEnabled(false);
+                        jrbEncargado.setEnabled(false);
+                    }else{
+                        if (jcbInactivos.isEnabled()){
+                            if (m.getAcceso()==1){
+                            List<Mesero> listaEncargado = mesd.ListarEncargados();
+                                for (Mesero me:listaEncargado){
                                     if(me.getIdMesero()==m.getIdMesero()){
-                                        posicion = listaMeseros.indexOf(me);
+                                        posicion = listaEncargado.indexOf(me);
                                     }
                                 }
                                 jcbInactivos.removeAllItems();
                                 jcbInactivos.setEnabled(false);
-                                jcbMesero.setEnabled(true);
-                                CargarComboMeseros();
-                                jcbMesero.setSelectedIndex(posicion);
+                                jcbEncargado.setEnabled(true);
+                                CargarComboEncargados();
+                                jcbEncargado.setSelectedIndex(posicion);
                                 jrbMesero.setEnabled(true);
                                 jrbEncargado.setEnabled(true);
+                            }else{
+                                if (m.getAcceso()==2){
+                                List<Mesero> listaMeseros = mesd.ListarMeseros();
+                                    for (Mesero me:listaMeseros){
+                                        if(me.getIdMesero()==m.getIdMesero()){
+                                            posicion = listaMeseros.indexOf(me);
+                                        }
+                                    }
+                                    jcbInactivos.removeAllItems();
+                                    jcbInactivos.setEnabled(false);
+                                    jcbMesero.setEnabled(true);
+                                    CargarComboMeseros();
+                                    jcbMesero.setSelectedIndex(posicion);
+                                    jrbMesero.setEnabled(true);
+                                    jrbEncargado.setEnabled(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }else{
+
+                if (cambiarTablaEstado==false & cambiarTablaActiva==false){
+                    if (jcbEncargado.isEnabled()){
+                    jcbEncargado.removeAllItems();
+                    CargarComboEncargados();
+                    jcbEncargado.setSelectedIndex(posicion);
+                    }else{
+                        if (jcbMesero.isEnabled()){
+                        jcbMesero.removeAllItems();
+                        CargarComboMeseros();
+                        jcbMesero.setSelectedIndex(posicion);
+                        }else{
+                            if (jcbInactivos.isEnabled()){
+                            jcbInactivos.removeAllItems();
+                            CargarComboInactivos();
+                            jcbInactivos.setSelectedIndex(posicion);
                             }
                         }
                     }
                 }
             }
-        }else{
-                
-                    if (cambiarTablaEstado==false & cambiarTablaActiva==false){
-                        if (jcbEncargado.isEnabled()){
-                        jcbEncargado.removeAllItems();
-                        CargarComboEncargados();
-                        jcbEncargado.setSelectedIndex(posicion);
-                        }else{
-                            if (jcbMesero.isEnabled()){
-                            jcbMesero.removeAllItems();
-                            CargarComboMeseros();
-                            jcbMesero.setSelectedIndex(posicion);
-                            }else{
-                                if (jcbInactivos.isEnabled()){
-                                jcbInactivos.removeAllItems();
-                                CargarComboInactivos();
-                                jcbInactivos.setSelectedIndex(posicion);
-                                }
-                            }
-                        }
-                    }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,"No puede ingresar letras en el campo DNI");
+            jtDni.setText("");
+            jtDni.setFocusable(true);
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this,"No puede haber campos vacios");
         }
-           
-        
-        
     }//GEN-LAST:event_jbActualizarMeseroActionPerformed
 
     private void jcbMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMeseroActionPerformed
         //jcbEncargado.removeAllItems();
         //jcbEncargado.setEnabled(false);
         if (jcbMesero.getItemCount()!=0){
-        Mesero m = new Mesero();
+        m = new Mesero();
         m = (Mesero)jcbMesero.getSelectedItem();
             if (m!=null){
                 jlIdMesero.setText(String.valueOf(m.getIdMesero()));
@@ -495,7 +498,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                 jtPassword.setText(m.getPassword());
 
             }else{
-                JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
+                JOptionPane.showMessageDialog(this, "Debe Seleccionar un Mesero");
             }
         }
     }//GEN-LAST:event_jcbMeseroActionPerformed
@@ -525,25 +528,31 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_CerrarMouseExited
 
     private void jbCrearMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearMeseroActionPerformed
-
-        
         MeseroData mesd = new MeseroData();
-        Mesero m = new Mesero();
-        m.setNombre(jtNombre.getText());
-        m.setApellido(jtApellido.getText());
-        m.setDni(Integer.parseInt(jtDni.getText()));
-        if (jrbActivo.isSelected()){
-            m.setEstado(true);
-        }else{
-            m.setEstado(false);
+        try {
+            m = new Mesero();
+            m.setNombre(jtNombre.getText());
+            m.setApellido(jtApellido.getText());
+            m.setDni(Integer.parseInt(jtDni.getText()));
+            if (jrbActivo.isSelected()){
+                m.setEstado(true);
+            }else{
+                m.setEstado(false);
+            }
+            if (jrbEncargado.isSelected()){
+                m.setAcceso(1);
+            }else{
+                m.setAcceso(2);
+            }
+            m.setPassword(jtPassword.getText());
+            mesd.agregarMesero(m);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,"No puede ingresar letras en el campo DNI");
+            jtDni.setText("");
+            jtDni.setFocusable(true);
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this,"No puede haber campos vacios");
         }
-        if (jrbEncargado.isSelected()){
-            m.setAcceso(1);
-        }else{
-            m.setAcceso(2);
-        }
-        m.setPassword(jtPassword.getText());
-        mesd.agregarMesero(m);
     }//GEN-LAST:event_jbCrearMeseroActionPerformed
 
     private void jcbMeseroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbMeseroMouseClicked
@@ -620,32 +629,32 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
 //        jcbMesero.setEnabled(false);
         if (jcbEncargado.getItemCount()==0){
         }else{
-        Mesero m = new Mesero();
-        m = (Mesero)jcbEncargado.getSelectedItem();
-        if (m!=null){
-            jlIdMesero.setText(String.valueOf(m.getIdMesero()));
-            jtNombre.setText(m.getNombre());
-            jtApellido.setText(m.getApellido());
-            jtDni.setText(String.valueOf(m.getDni()));
-            if (m.isEstado()){
-                jrbActivo.setSelected(true);
-                jrbInactivo.setSelected(false);
+            m = new Mesero();
+            m = (Mesero)jcbEncargado.getSelectedItem();
+            if (m!=null){
+                jlIdMesero.setText(String.valueOf(m.getIdMesero()));
+                jtNombre.setText(m.getNombre());
+                jtApellido.setText(m.getApellido());
+                jtDni.setText(String.valueOf(m.getDni()));
+                if (m.isEstado()){
+                    jrbActivo.setSelected(true);
+                    jrbInactivo.setSelected(false);
+                }else{
+                    jrbActivo.setSelected(false);
+                    jrbInactivo.setSelected(true);
+                }
+                if (m.getAcceso()==1){
+                    jrbEncargado.setSelected(true);
+                    jrbMesero.setSelected(false);
+                }else{
+                    jrbEncargado.setSelected(false);
+                    jrbMesero.setSelected(true);
+                }
+                jtPassword.setText(m.getPassword());
+
             }else{
-                jrbActivo.setSelected(false);
-                jrbInactivo.setSelected(true);
+                JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
             }
-            if (m.getAcceso()==1){
-                jrbEncargado.setSelected(true);
-                jrbMesero.setSelected(false);
-            }else{
-                jrbEncargado.setSelected(false);
-                jrbMesero.setSelected(true);
-            }
-            jtPassword.setText(m.getPassword());
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
-        }
         }
     }//GEN-LAST:event_jcbEncargadoActionPerformed
 
@@ -675,32 +684,32 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
 
     private void jcbInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbInactivosActionPerformed
         if (jcbInactivos.getItemCount()!=0){
-        Mesero m = new Mesero();
-        m = (Mesero)jcbInactivos.getSelectedItem();
-        if (m!=null){
-            jlIdMesero.setText(String.valueOf(m.getIdMesero()));
-            jtNombre.setText(m.getNombre());
-            jtApellido.setText(m.getApellido());
-            jtDni.setText(String.valueOf(m.getDni()));
-            if (m.isEstado()){
-                jrbActivo.setSelected(true);
-                jrbInactivo.setSelected(false);
+            m = new Mesero();
+            m = (Mesero)jcbInactivos.getSelectedItem();
+            if (m!=null){
+                jlIdMesero.setText(String.valueOf(m.getIdMesero()));
+                jtNombre.setText(m.getNombre());
+                jtApellido.setText(m.getApellido());
+                jtDni.setText(String.valueOf(m.getDni()));
+                if (m.isEstado()){
+                    jrbActivo.setSelected(true);
+                    jrbInactivo.setSelected(false);
+                }else{
+                    jrbActivo.setSelected(false);
+                    jrbInactivo.setSelected(true);
+                }
+                if (m.getAcceso()==1){
+                    jrbEncargado.setSelected(true);
+                    jrbMesero.setSelected(false);
+                }else{
+                    jrbEncargado.setSelected(false);
+                    jrbMesero.setSelected(true);
+                }
+                jtPassword.setText(m.getPassword());
+
             }else{
-                jrbActivo.setSelected(false);
-                jrbInactivo.setSelected(true);
+                JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
             }
-            if (m.getAcceso()==1){
-                jrbEncargado.setSelected(true);
-                jrbMesero.setSelected(false);
-            }else{
-                jrbEncargado.setSelected(false);
-                jrbMesero.setSelected(true);
-            }
-            jtPassword.setText(m.getPassword());
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe Seleccionar un Mesero");
-        }
         }
     }//GEN-LAST:event_jcbInactivosActionPerformed
     private void CargarComboMeseros(){
