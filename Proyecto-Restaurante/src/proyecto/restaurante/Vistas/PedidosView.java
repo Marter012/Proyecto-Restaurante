@@ -25,7 +25,7 @@ import static proyecto.restaurante.Vistas.PrincipalView.cargaProductosView;
  */
 public class PedidosView extends javax.swing.JInternalFrame {
 
-    PedidoData pedidoData = new PedidoData();
+    private PedidoData pedidoData = new PedidoData();
     private Mesero mesero;
     private MeseroData meseroData;
     private int DNIMesero;

@@ -25,6 +25,7 @@ import proyecto.restaurante.Control.MeseroData;
 import proyecto.restaurante.Control.PedidoData;
 import proyecto.restaurante.Control.ProductoData;
 import proyecto.restaurante.Control.ReservaData;
+import proyecto.restaurante.Entidades.DetallePedido;
 import proyecto.restaurante.Entidades.Mesa;
 import proyecto.restaurante.Entidades.Mesero;
 import proyecto.restaurante.Entidades.Pedido;
@@ -327,16 +328,15 @@ public class MeserosView extends javax.swing.JInternalFrame {
             mesa = mesaData.obtenerMesa(idMesa);
             mesaData.ocuparMesa(mesa);        
             mesero = meseroData.buscarMeseroPorDNI(DNIMesero);  
-            pedido = new Pedido(mesa,mesero,LocalDate.now(),LocalTime.now(),250,true);
-            pedidoData.guardarPedido(pedido);
             
             producto = new Producto();
             productoData = new ProductoData();
             producto = productoData.buscarProducto(1);
-            System.out.println(producto.getIdProducto());
-            System.out.println(pedido.getIdPedido());
-            cargarServicioBD(producto,pedido);  
             
+            pedido = new Pedido(mesa,mesero,LocalDate.now(),LocalTime.now(),producto.getPrecio(),true);
+            pedidoData.guardarPedido(pedido);            
+            
+            cargarServicioBD(producto,pedido);              
             activarTablaOcupadas();  
         }else{
             JOptionPane.showMessageDialog(null,"Seleccione una mesa.");
@@ -355,10 +355,13 @@ public class MeserosView extends javax.swing.JInternalFrame {
     private void jrbMesasReservadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMesasReservadasActionPerformed
         activarTablaReserva();
     }//GEN-LAST:event_jrbMesasReservadasActionPerformed
-
+    
     private void jbLiberarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLiberarActionPerformed
         int Fila = jtListas.getSelectedRow();
         List<Pedido> listaPedidos = new ArrayList();
+        
+        List<DetallePedido> listaProducto= new ArrayList();
+        
         if(Fila != -1){
             mesa = new Mesa();
             mesero = new Mesero();
@@ -368,9 +371,16 @@ public class MeserosView extends javax.swing.JInternalFrame {
             mesa = mesaData.obtenerMesa(idMesa);
             listaPedidos = pedidoData.listarPedidosPorMesa(mesa.getIdMesa(), mesero.getIdMesero());                  
             for(Pedido pedidos : listaPedidos){
-                System.out.println(pedidos.getIdPedido());
                 pedidoData.eliminarPedido(pedidos.getIdPedido());
+                
+                listaProducto = productoData.listarProductosPorId(pedidos.getIdPedido());
+                System.out.println(listaProducto);
+                for(DetallePedido detallePedido : listaProducto){
+                    productoData.EliminarDetallePedido(detallePedido.getIdPedido());
+                    System.out.println(detallePedido.getIdPedido());
+                }
             }
+            
             mesaData.liberarMesa(mesa);      
             activarTablaLibre();
         }else{
@@ -395,7 +405,6 @@ public class MeserosView extends javax.swing.JInternalFrame {
         mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
         listaMesas = mesaData.verificacionMesaOcupada(mesero.getIdMesero());
         for (Mesa mesa :listaMesas){
-            System.out.println(mesa);
             modelo.addRow(new Object[]{
                 mesa.getIdMesa(),
                 mesa.getCapacidad(),

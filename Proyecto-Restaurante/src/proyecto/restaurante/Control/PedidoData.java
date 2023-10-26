@@ -106,8 +106,8 @@ public class PedidoData {
             ps.setDate(3,Date.valueOf(p.getFechaPedido()));            
             ps.setTime(4,Time.valueOf(p.getHoraPedido()));
             ps.setDouble(5, p.getImporte());
-            ps.setBoolean(5, p.isEstado());
-            ps.setInt(6, p.getIdPedido());
+            ps.setBoolean(6, p.isEstado());
+            ps.setInt(7, p.getIdPedido());
             
             int resultSet = ps.executeUpdate();            
             if(resultSet == 1){

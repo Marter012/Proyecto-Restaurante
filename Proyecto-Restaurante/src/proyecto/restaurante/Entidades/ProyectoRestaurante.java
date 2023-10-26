@@ -22,6 +22,8 @@ public class ProyectoRestaurante {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
+        
+        ProductoData pd = new ProductoData();
+        System.out.println(pd.listarProductosPorId(67));
     }
 }
