@@ -648,10 +648,10 @@ public class PrincipalView extends javax.swing.JFrame {
         btIngresos.setEnabled(false);
     }
     
-    public static void cargaProductosView(int DNI, int idMesa){
+    public static void cargaProductosView(int DNI, int idMesa,int idPedidoImport){
         EscritorioFrames.removeAll();
         EscritorioFrames.repaint();
-        ProductosView prov = new ProductosView(DNI,idMesa);
+        ProductosView prov = new ProductosView(DNI,idMesa,idPedidoImport);
         prov.setVisible(true);
         EscritorioFrames.add(prov);
         EscritorioFrames.moveToFront(prov);
