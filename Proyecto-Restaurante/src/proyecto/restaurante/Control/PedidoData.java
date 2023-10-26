@@ -190,8 +190,7 @@ public class PedidoData {
     public ArrayList<Pedido> obtenerMesasOcupadasPorMesero(int idMesero){        
         
         ArrayList<Pedido> listaMesasMeseros = new ArrayList();
-        pd = new PedidoData();
-        for(Pedido pedidos : pd.listarPedidos()){
+        for(Pedido pedidos : listarPedidos()){
             if(pedidos.getMesa().getEstado() == Estado.OCUPADA && pedidos.getMesero().getIdMesero() == idMesero){
                 listaMesasMeseros.add(pedidos);
             }else{
@@ -206,10 +205,10 @@ public class PedidoData {
     
     public ArrayList<Pedido> listarPedidosPorMesa(int idMesa, int idMesero){
         ArrayList<Pedido> listaPedidos = new ArrayList();
-        pd = new PedidoData();
         
         
-        for(Pedido pedidos : pd.obtenerMesasOcupadasPorMesero(idMesero)){
+        
+        for(Pedido pedidos : obtenerMesasOcupadasPorMesero(idMesero)){
             if(pedidos.getMesa().getIdMesa() == idMesa && pedidos.getMesero().getIdMesero() == idMesero){
                 listaPedidos.add(pedidos);
             }            
