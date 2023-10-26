@@ -58,7 +58,7 @@ public final class ProductosView extends javax.swing.JInternalFrame {
     private int idPedidoSelec = -1;
     private int DNIMesero;
     private int codigoMesa;
-
+    private int idGuardado;
     
     private DefaultTableModel modelo = new DefaultTableModel(){
         @Override
@@ -83,11 +83,13 @@ public final class ProductosView extends javax.swing.JInternalFrame {
         jtNumeroMesa.setText(String.valueOf(codigoMesa));
         jcbProductos.setEnabled(false);
         jcbTotalProductos.setEnabled(false);
-        jcbPedido.setEnabled(false);
         idPedidoSelec = idPedidoImport;
+        idGuardado = idPedidoSelec;
         jtCantidad.setEnabled(false);
-        cargarComboBoxPedidos(false);
         cargarTabla(false);
+        cargarComboBoxPedidos();
+        buscarComboBoxPedido(idGuardado);
+        
     }
     private void estilos(){
         Fondo.setBackground(new Color(35,34,36,210));
@@ -118,15 +120,27 @@ public final class ProductosView extends javax.swing.JInternalFrame {
         }
     }
     
-    public void cargarComboBoxPedidos(boolean valid){
-        if(valid){            
-            mesa = mesaData.obtenerMesa(codigoMesa);
-            mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
-            for (Pedido pedidos: pedidoData.listarPedidosPorMesa(mesa.getIdMesa(), mesero.getIdMesero())){
+    public void cargarComboBoxPedidos(){
+        mesa = mesaData.obtenerMesa(codigoMesa);
+        mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
+        for (Pedido pedidos: pedidoData.listarPedidosPorMesa(mesa.getIdMesa(), mesero.getIdMesero())){
             jcbPedido.addItem(pedidos.getIdPedido());
+        }        
+    }
+    
+    public void buscarComboBoxPedido(int id){
+        int position = -1;
+        for(int i = 0 ; i < jcbPedido.getItemCount(); i++){
+            if(jcbPedido.getItemAt(i).equals(id)){
+                position = i;
+                break;
             }
+        }
+        System.out.println(id);
+        if(position != -1){
+            jcbPedido.setSelectedIndex(position);
         }else{
-            jcbPedido.setSelectedItem(idPedidoSelec);
+            JOptionPane.showMessageDialog(null,"No se encontro el id Pedido.");
         }
     }
     
@@ -152,7 +166,7 @@ public final class ProductosView extends javax.swing.JInternalFrame {
         borrarFilas();
         List<DetallePedido> listaProductos = new ArrayList(); 
         if(valid){
-            idPedidoSelec = (int)jcbPedido.getSelectedItem();          
+            idPedidoSelec = (int)jcbPedido.getSelectedItem();  
         }        
         listaProductos = productoData.listarProductosPorId(idPedidoSelec);
         if(!listaProductos.isEmpty()){
@@ -529,19 +543,29 @@ public final class ProductosView extends javax.swing.JInternalFrame {
                 producto = productoData.buscarProducto(pedidos.getIdProducto());
                 cargarProductosBD(producto,pedido,pedidos.getCantidad());  
             }
+            listaProductoCantidad.clear();
+            jtCantidad.setText("");
+            jtCantidad.setEnabled(false);
+            jcbProductos.setEnabled(false);
+            jcbProductos.removeAllItems();
+            jcbTotalProductos.setEnabled(false);
+            jcbTotalProductos.removeAllItems();
+            cargarTabla(false);
+            cargarComboBoxPedidos();
+            buscarComboBoxPedido(pedido.getIdPedido());
+            idPedidoSelec = pedido.getIdPedido();
         }else{
             JOptionPane.showMessageDialog(null,"Agrege productos.");
         }
-        listaProductoCantidad.clear();
+        
         jcbTotalProductos.setEnabled(false);
-        idPedidoSelec = pedido.getIdPedido();
-        cargarTabla(false);
+        
     }//GEN-LAST:event_jbConfirmarActionPerformed
 
     private void jcbPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbPedidoMouseClicked
         if(!jcbPedido.isEnabled()){
             jcbPedido.setEnabled(true);
-            cargarComboBoxPedidos(true);
+            cargarComboBoxPedidos();
         }
     }//GEN-LAST:event_jcbPedidoMouseClicked
 
