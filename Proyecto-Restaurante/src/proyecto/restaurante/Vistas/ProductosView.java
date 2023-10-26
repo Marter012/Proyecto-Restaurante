@@ -543,6 +543,8 @@ public final class ProductosView extends javax.swing.JInternalFrame {
                 producto = productoData.buscarProducto(pedidos.getIdProducto());
                 cargarProductosBD(producto,pedido,pedidos.getCantidad());  
             }
+            pedido.setImporte(ImporteTotal);
+            pedidoData.modificarPedido(pedido);
             listaProductoCantidad.clear();
             jtCantidad.setText("");
             jtCantidad.setEnabled(false);

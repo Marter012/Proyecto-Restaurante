@@ -201,11 +201,23 @@ public class ProductoData {
         return listaProductos;
     }
     
-    public void cerrarConexion(){
+    public List<DetallePedido> EliminarDetallePedido(int idPedido){
+        List<DetallePedido> listaProductos= new ArrayList();
+        
+        sql = "DELETE FROM `detallepedidos` WHERE idPedido=?";
+        
+        con = Conexion.getConexion();
         try {
-            con.close();
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1,idPedido);
+            ps.executeUpdate();
+            ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"No hay Conexion para borrar");
+            JOptionPane.showMessageDialog(null,"No hay productos "+ex.getMessage());
         }
-     }
+        
+        return listaProductos;
+    }
+    
+       
 }
