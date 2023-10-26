@@ -123,10 +123,10 @@ public final class ProductosView extends javax.swing.JInternalFrame {
             mesa = mesaData.obtenerMesa(codigoMesa);
             mesero = meseroData.buscarMeseroPorDNI(DNIMesero);
             for (Pedido pedidos: pedidoData.listarPedidosPorMesa(mesa.getIdMesa(), mesero.getIdMesero())){
-            jcbPedido.addItem("Pedido: " + pedidos.getIdPedido());
+            jcbPedido.addItem(pedidos.getIdPedido());
             }
         }else{
-            jcbPedido.addItem("Pedido: " + idPedidoSelec);
+            jcbPedido.setSelectedItem(idPedidoSelec);
         }
     }
     
@@ -152,9 +152,7 @@ public final class ProductosView extends javax.swing.JInternalFrame {
         borrarFilas();
         List<DetallePedido> listaProductos = new ArrayList(); 
         if(valid){
-            String pedidoSeleccionado = (String)jcbPedido.getSelectedItem();
-            String[] pedidoDivido = pedidoSeleccionado.split(" ");
-            idPedidoSelec = Integer.parseInt(pedidoDivido[1]);                   
+            idPedidoSelec = (int)jcbPedido.getSelectedItem();          
         }        
         listaProductos = productoData.listarProductosPorId(idPedidoSelec);
         if(!listaProductos.isEmpty()){
@@ -424,8 +422,8 @@ public final class ProductosView extends javax.swing.JInternalFrame {
                     .addGroup(jpSeleccionarLayout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jcbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jcbPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpSeleccionarLayout.setVerticalGroup(
@@ -526,22 +524,18 @@ public final class ProductosView extends javax.swing.JInternalFrame {
             
         if(!listaProductoCantidad.isEmpty()){            
             for(DetallePedido pedidos : listaProductoCantidad){
-                productoData = new ProductoData();
-                producto = new Producto();
                 producto = productoData.buscarProducto(pedidos.getIdProducto());
                 ImporteTotal = ImporteTotal + (producto.getPrecio()*pedidos.getCantidad());
-            }
-                                     
-            for(DetallePedido productos : listaProductoCantidad){  
-                producto = productoData.buscarProducto(productos.getIdProducto());
-                cargarProductosBD(producto,pedido,productos.getCantidad());                
+                producto = productoData.buscarProducto(pedidos.getIdProducto());
+                cargarProductosBD(producto,pedido,pedidos.getCantidad());  
             }
         }else{
             JOptionPane.showMessageDialog(null,"Agrege productos.");
         }
         listaProductoCantidad.clear();
         jcbTotalProductos.setEnabled(false);
-        cargarTabla(true);
+        idPedidoSelec = pedido.getIdPedido();
+        cargarTabla(false);
     }//GEN-LAST:event_jbConfirmarActionPerformed
 
     private void jcbPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbPedidoMouseClicked
@@ -573,7 +567,7 @@ public final class ProductosView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbAgregar;
     private javax.swing.JButton jbConfirmar;
     private javax.swing.JButton jbEliminar;
-    private javax.swing.JComboBox<String> jcbPedido;
+    private javax.swing.JComboBox<Integer> jcbPedido;
     private javax.swing.JComboBox<Producto> jcbProductos;
     private javax.swing.JComboBox<String> jcbTotalProductos;
     private javax.swing.JLabel jlIdMesa;
