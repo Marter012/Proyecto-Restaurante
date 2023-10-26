@@ -461,6 +461,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
                     }
                 }
             }
+            //mesd.
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,"No puede ingresar letras en el campo DNI");
             jtDni.setText("");
@@ -468,6 +469,7 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         }catch(NullPointerException e){
             JOptionPane.showMessageDialog(this,"No puede haber campos vacios");
         }
+        
     }//GEN-LAST:event_jbActualizarMeseroActionPerformed
 
     private void jcbMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMeseroActionPerformed

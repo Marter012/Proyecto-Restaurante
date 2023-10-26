@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyecto.restaurante.Entidades.Pedido;
 
@@ -307,4 +309,11 @@ public class MesaData {
         return listaFinal;
     }
      
+     public void cerrarConexion(){
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"No hay Conexion para borrar");
+        }
+     }
 }

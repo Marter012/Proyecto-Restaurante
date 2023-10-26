@@ -259,5 +259,12 @@ public class MeseroData {
         return listaInactivos;
     }
     
+    public void cerrarConexion(){
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"No hay Conexion para borrar");
+        }
+     }
     
 }

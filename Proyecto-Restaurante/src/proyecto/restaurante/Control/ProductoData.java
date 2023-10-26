@@ -201,4 +201,11 @@ public class ProductoData {
         return listaProductos;
     }
     
+    public void cerrarConexion(){
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"No hay Conexion para borrar");
+        }
+     }
 }

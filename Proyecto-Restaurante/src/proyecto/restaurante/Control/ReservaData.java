@@ -201,6 +201,14 @@ public ReservaData(){
         }
         
     }
+    
+    public void cerrarConexion(){
+        try {
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"No hay Conexion para borrar");
+        }
+     }
 
  /* public ArrayList<String> horasDisponibles(){
       List<String> horas=new ArrayList<>();
