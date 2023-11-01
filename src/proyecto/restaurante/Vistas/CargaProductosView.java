@@ -278,12 +278,15 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
 
     private void jbActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarProductoActionPerformed
         try {
+            String tipoProducto;
+            int posicionProducto;
+            Producto productoSeleccionado;
+            int idProducto;
             p = new Producto();
-            boolean cambiarTabla=false;
-            int posicion=0;
             
                 p.setIdProducto(Integer.parseInt(jlIdProducto.getText()));
-                
+                idProducto = p.getIdProducto();
+                productoSeleccionado = productoData.buscarProducto(idProducto);
             if (jtNombre.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Ingrese nombre para el producto");
                 jtNombre.requestFocus();
@@ -307,57 +310,43 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
                             p.setPrecio(Double.parseDouble(jtPrecio.getText()));
 
                             if (jrbActivo.isSelected()){
-                                    p.setEstado(true);
-                                }else{
-                                    p.setEstado(false);
-                            }
-
-                            Producto productoActual = productoData.buscarProducto(p.getIdProducto());
-                            if (productoActual.isEstado()!=p.isEstado()){
-                                cambiarTabla=true;
+                                p.setEstado(true);
+                                tipoProducto="Producto";
+                            }else if (jrbInactivo.isSelected()){
+                                p.setEstado(false);
+                                tipoProducto="Inactivos";
+                            }else{
+                                tipoProducto="Vacio";
                             }
                             productoData.modificarProducto(p);
-                            if (cambiarTabla){
-                                if (jcbProductos.isEnabled()){
-                                    List<Producto> listaInactivo = productoData.listarProductosInactivos();
-                                        for (Producto prod:listaInactivo){
-                                            if (prod.getIdProducto()==p.getIdProducto()){
-                                                posicion = listaInactivo.indexOf(prod);
-                                            }
-                                        }
-                                        jcbProductos.removeAllItems();
-                                        jcbProductos.setEnabled(false);
-                                        jcbInactivo.setEnabled(true);
-                                        CargarComboInactivos();
-                                        jcbInactivo.setSelectedIndex(posicion);
-                                }else{
-                                    if (jcbInactivo.isEnabled()){
-                                        List<Producto> listaProductos = productoData.listarProductos();
-                                        for (Producto prod:listaProductos){
-                                            if (prod.getIdProducto()==p.getIdProducto()){
-                                                posicion= listaProductos.indexOf(prod);
-                                            }
-                                        }
-                                        jcbInactivo.removeAllItems();
-                                        jcbInactivo.setEnabled(false);
-                                        jcbProductos.setEnabled(true);
-                                        CargarComboProductos();
-                                        jcbProductos.setSelectedIndex(posicion);
-                                    }
-                                }
-                            }else{
-                                if (jcbProductos.isEnabled()){
+                            productoSeleccionado = productoData.buscarProducto(idProducto);
+                            switch(tipoProducto){
+                                case "Producto":
                                     jcbProductos.removeAllItems();
+                                    jcbProductos.setEnabled(true);
                                     CargarComboProductos();
-                                    posicion=BuscarPosicionProductos(p);
-                                    jcbProductos.setSelectedIndex(posicion);
-                                }else{
+                                    posicionProducto=BuscarPosicionProductos(productoSeleccionado);
+                                    jcbProductos.setSelectedIndex(posicionProducto);
+                                    jbCrearProducto.setEnabled(false);
+                                    jbActualizarProducto.setEnabled(true);
                                     jcbInactivo.removeAllItems();
+                                    jcbInactivo.setEnabled(false);
+                                    break;
+                                case "Inactivos":
+                                    jcbInactivo.removeAllItems();
+                                    jcbInactivo.setEnabled(true);
                                     CargarComboInactivos();
-                                    posicion = BuscarPosicionInactivos(p);
-                                    jcbInactivo.setSelectedIndex(posicion);
-                                }
-                            }
+                                    posicionProducto=BuscarPosicionInactivos(productoSeleccionado);
+                                    jcbInactivo.setSelectedIndex(posicionProducto);
+                                    jbCrearProducto.setEnabled(false);
+                                    jbActualizarProducto.setEnabled(true);
+                                    jcbProductos.removeAllItems();
+                                    jcbProductos.setEnabled(false);
+                                    break;
+                                case "vacio":
+                                    JOptionPane.showMessageDialog(null,"Seleccion un Estado");
+                                    break;
+                            }   
                         }
                     }    
                 }    
@@ -410,6 +399,9 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
 
     private void jbCrearProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearProductoActionPerformed
         try {
+                String tipoProducto;
+                int posicionProducto;
+                Producto productoSeleccionado;
                 p = new Producto();
             if (jtNombre.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Ingrese nombre para el producto");
@@ -434,16 +426,36 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
                             p.setPrecio(Integer.parseInt(jtPrecio.getText()));
                             if (jrbActivo.isSelected()){
                                 p.setEstado(true);
-                            }else{
+                                tipoProducto="Producto";
+                            }else if (jrbInactivo.isSelected()){
                                 p.setEstado(false);
+                                tipoProducto="Inactivos";
+                            }else{
+                                tipoProducto="Vacio";
                             }
                             productoData.guardarProducto(p);
-                            int posicion=BuscarPosicionProductos(p);
-                            jcbProductos.setEnabled(true);
-                            CargarComboProductos();
-                            jcbProductos.setSelectedIndex(posicion);
-                            jbCrearProducto.setEnabled(false);
-                            jbActualizarProducto.setEnabled(true);
+                            productoSeleccionado=productoData.buscarProducto(p.getIdProducto());
+                            switch(tipoProducto){
+                                case "Producto":
+                                    jcbProductos.setEnabled(true);
+                                    CargarComboProductos();
+                                    posicionProducto=BuscarPosicionProductos(productoSeleccionado);
+                                    jcbProductos.setSelectedIndex(posicionProducto);
+                                    jbCrearProducto.setEnabled(false);
+                                    jbActualizarProducto.setEnabled(true);
+                                    break;
+                                case "Inactivos":
+                                    jcbInactivo.setEnabled(true);
+                                    CargarComboInactivos();
+                                    posicionProducto=BuscarPosicionInactivos(productoSeleccionado);
+                                    jcbInactivo.setSelectedIndex(posicionProducto);
+                                    jbCrearProducto.setEnabled(false);
+                                    jbActualizarProducto.setEnabled(true);
+                                    break;
+                                case "vacio":
+                                    JOptionPane.showMessageDialog(null,"Seleccion un Estado");
+                            
+                            }
                         }    
                     }    
                 }
@@ -594,6 +606,8 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
             for (Producto producto:listaProductos){
                 if (producto.getIdProducto()==p.getIdProducto()){
                     posicion = listaProductos.indexOf(producto);
+                    break;
+                    
                 }
             }
         return posicion;
@@ -603,10 +617,14 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
         int posicion =-1;
         List<Producto> listaInactivos = productoData.listarProductosInactivos();
             for (Producto producto:listaInactivos){
+                
                 if (producto.getIdProducto()==p.getIdProducto()){
                     posicion = listaInactivos.indexOf(producto);
+                    break;
                 }
+                
             }
+            
         return posicion;
     }
 
