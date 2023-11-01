@@ -333,20 +333,26 @@ public class PedidosView extends javax.swing.JInternalFrame {
                 if (importeCobradas ==0){
                     JOptionPane.showMessageDialog(null,"No tiene ningun pedido para Rendir");
                 }
-                if (importeCanceladas == 0){
+                if (importeCanceladas == 0 && importeCobradas>0){
                     JOptionPane.showMessageDialog(null,"Felicidades por no tener Mesas Canceladas");
                     JOptionPane.showMessageDialog(null,"Debe rendir al Encargado un Total de: $"+importeCobradas);
+                        for (Pedido pedido: listaPedidosPorMesero){
+                        if (pedido.getActividad().equals(Actividad.COBRADA)){
+                        pedidoData.facturarPedido(pedido.getIdPedido());
+                        }
+                        borrarFilas();
+                        cargarPedidosDeMesero(meseroActual,LocalDate.now());
                 }
-                if (importeCobradas >0){
+                }else if(importeCobradas >0){
                 JOptionPane.showMessageDialog(null,"Se cancelaron pedidos con un valor total a: $"+importeCanceladas);
                 JOptionPane.showMessageDialog(null,"Debe rendir al Encargado un Total de: $"+importeCobradas);
-                for (Pedido pedido: listaPedidosPorMesero){
-                    if (pedido.getActividad().equals(Actividad.COBRADA)){
-                    pedidoData.facturarPedido(pedido.getIdPedido());
+                    for (Pedido pedido: listaPedidosPorMesero){
+                        if (pedido.getActividad().equals(Actividad.COBRADA)){
+                        pedidoData.facturarPedido(pedido.getIdPedido());
+                        }
+                        borrarFilas();
+                        cargarPedidosDeMesero(meseroActual,LocalDate.now());
                     }
-                    borrarFilas();
-                    cargarPedidosDeMesero(meseroActual,LocalDate.now());
-                }
                 }
         
         }

@@ -350,7 +350,7 @@ public class PedidoData {
     
     public List<LocalDate> FechasConPedidos(Mesero mesero){
         List<LocalDate> listaFechas= new ArrayList();
-        sql = "SELECT FechaPedido FROM pedidos WHERE IdMesero = ? GROUP BY FechaPedido";
+        sql = "SELECT FechaPedido FROM pedidos WHERE IdMesero = ? GROUP BY FechaPedido DESC";
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, mesero.getIdMesero());
@@ -368,7 +368,7 @@ public class PedidoData {
     
     public List<LocalDate> FechasConPedidos(){
         List<LocalDate> listaFechas= new ArrayList();
-        sql = "SELECT FechaPedido FROM pedidos GROUP BY FechaPedido";
+        sql = "SELECT FechaPedido FROM pedidos GROUP BY FechaPedido DESC";
         try {
             ps = con.prepareStatement(sql);
             

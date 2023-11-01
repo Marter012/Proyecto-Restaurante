@@ -237,7 +237,7 @@ public final class ProductosView extends javax.swing.JInternalFrame {
 
         jtNumeroMesa.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         jtNumeroMesa.setForeground(new java.awt.Color(255, 255, 255));
-        Fondo.add(jtNumeroMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 30, 20));
+        Fondo.add(jtNumeroMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 30, 20));
 
         jlTituloAgregar.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
         jlTituloAgregar.setForeground(new java.awt.Color(255, 255, 255));

@@ -475,6 +475,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Debe Seleccionar una Fila.");
             }
         }
+        cargarTodosLosPedidos(meseroActual);
     }//GEN-LAST:event_jbCancelarPedidoActionPerformed
 
     private void jbCobrarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCobrarPedidoActionPerformed
@@ -510,6 +511,7 @@ public class MeserosView extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "Debe Seleccionar una Fila.");
             }
         }
+        cargarTodosLosPedidos(meseroActual);
     }//GEN-LAST:event_jbCobrarPedidoActionPerformed
           
     private void cargarMesasConPedidos(Mesero m){

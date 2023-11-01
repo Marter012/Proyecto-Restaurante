@@ -8,6 +8,8 @@ package proyecto.restaurante.Vistas;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -335,15 +337,34 @@ public class CargaMesasView extends javax.swing.JInternalFrame {
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         int fila=jtTablaListaMesa.getSelectedRow();
         m=new Mesa();
+        String pattern = "^[0-9]+$";
+        Pattern r = Pattern.compile(pattern);
+        Matcher match;
         if(fila!=-1){
             
-            int idMesa=Integer.parseInt(String.valueOf(jtTablaListaMesa.getValueAt(fila,0)));
-            int capacidad=Integer.parseInt(String.valueOf(jtTablaListaMesa.getValueAt(fila,1)));
-            m = mesaData.obtenerMesa(idMesa);
-            m.setCapacidad(capacidad);
-            mesaData.modificarMesa(m);
-            
-            //mesaData.modificarCapacidadMesa(idMesa,capacidad);
+            if (jtTablaListaMesa.getValueAt(fila,1).toString().isEmpty()){
+                JOptionPane.showMessageDialog(null, "No puede dejar Vacio el Campo cantidad");
+                jtTablaListaMesa.changeSelection(fila, 1, false, false);
+                jtTablaListaMesa.requestFocusInWindow();
+            }else{
+                match = r.matcher(jtTablaListaMesa.getValueAt(fila,1).toString());
+                if (!match.find()){
+                    JOptionPane.showMessageDialog(null,"Debe ingresar solo numeros para cantidad");
+                    jtTablaListaMesa.setValueAt("",fila,1);
+                    jtTablaListaMesa.changeSelection(fila, 1, false, false);
+                    jtTablaListaMesa.requestFocusInWindow();
+                }else{    
+                    int capacidad=Integer.parseInt(String.valueOf(jtTablaListaMesa.getValueAt(fila,1)));
+                    int idMesa=Integer.parseInt(String.valueOf(jtTablaListaMesa.getValueAt(fila,0)));
+                    m = mesaData.obtenerMesa(idMesa);
+                    m.setCapacidad(capacidad);
+                    //m.setEstado(Estado.OCUPADA);
+
+                    mesaData.modificarCapacidadMesa(m);
+
+                    //mesaData.modificarCapacidadMesa(idMesa,capacidad);
+                }
+            }    
         }else{
             JOptionPane.showMessageDialog(this,"Debe seleccionar una mesa");
         }
@@ -378,18 +399,22 @@ public class CargaMesasView extends javax.swing.JInternalFrame {
             m=new Mesa();
             int idMesa=Integer.parseInt(String.valueOf(jtTablaListaMesa.getValueAt(fila,0)));
             m=mesaData.obtenerMesa(idMesa);
-            m.setActividad(false);
-            mesaData.modificarMesa(m);
-            borrarFila();
-            jrbMesasActivas.setEnabled(false);
-            jrbMesasInactivas.setEnabled(true);
-            CargarMesasInactivas();
-            jrbMesasActivas.setSelected(false);
-            jrbMesasInactivas.setSelected(true);
-            jrbMesasActivas.setEnabled(true);
-            jrbMesasInactivas.setEnabled(false);
-            jbDesactivar.setEnabled(false);
-            jbActivar.setEnabled(true);
+            if (Estado.LIBRE.equals(m.getEstado())){
+                m.setActividad(false);
+                mesaData.modificarMesa(m);
+                borrarFila();
+                jrbMesasActivas.setEnabled(false);
+                jrbMesasInactivas.setEnabled(true);
+                CargarMesasInactivas();
+                jrbMesasActivas.setSelected(false);
+                jrbMesasInactivas.setSelected(true);
+                jrbMesasActivas.setEnabled(true);
+                jrbMesasInactivas.setEnabled(false);
+                jbDesactivar.setEnabled(false);
+                jbActivar.setEnabled(true);
+            }else{
+                JOptionPane.showMessageDialog(this,"la mesa "+idMesa+" esta OCUPADA");
+            }
         }else{
             JOptionPane.showMessageDialog(this,"Debe seleccionar una mesa");
         }

@@ -131,6 +131,11 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
         jlListaUsuarios.setText("Lista de Usuarios:");
         Fondo.add(jlListaUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 270, 30));
 
+        jcbUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbUsuariosMouseClicked(evt);
+            }
+        });
         jcbUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbUsuariosActionPerformed(evt);
@@ -627,6 +632,12 @@ public class CargaMeserosView extends javax.swing.JInternalFrame {
             jtPassword.setEchoChar('*');
         }
     }//GEN-LAST:event_jcMostrarContraseñaActionPerformed
+
+    private void jcbUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbUsuariosMouseClicked
+        if (!jcbCategoria.isEnabled()){
+            JOptionPane.showMessageDialog(null, "Seleccione tipo de usuario");
+        }
+    }//GEN-LAST:event_jcbUsuariosMouseClicked
     
     private void CargarDatosMesero(Mesero meseroSeleccionado){
             if (meseroSeleccionado!=null){

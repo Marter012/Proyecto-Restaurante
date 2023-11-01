@@ -96,6 +96,27 @@ public class MesaData {
         }
     }
     
+    public void modificarCapacidadMesa(Mesa m){
+        /*
+            Este metodo modifica el estado de la Mesa en la BD
+        */
+        String sql="UPDATE mesas SET Capacidad=? WHERE idMesa=?";
+        try {
+            ps=con.prepareStatement(sql);
+            ps.setInt(1,m.getCapacidad());
+            ps.setInt(2,m.getIdMesa());
+            int rst = ps.executeUpdate();
+            if(rst==1){
+                JOptionPane.showMessageDialog(null,"Se ha actualizado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null,"No se ha podido a podido actualizar");
+            }
+            ps.close();
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null,"MesaData: Error al Actualizar la Base de Datos");
+        }
+    }
+    
     
     public List<Mesa> obtenerMesasActivas(){
         /*

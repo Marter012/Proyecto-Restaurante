@@ -274,7 +274,7 @@ public class IngresosView1 extends javax.swing.JInternalFrame {
         jcbFechas.removeAllItems();
         jcbFechas.setEnabled(false);
         borrarFila();
-        cargarTabla(LocalDate.now());
+        cargarTabla();
         sumarTotal();
     }//GEN-LAST:event_jbListarTodoActionPerformed
 
@@ -770,10 +770,10 @@ public class IngresosView1 extends javax.swing.JInternalFrame {
     }
     
     private void cargarComboActividad(){
+        jcbActividad.addItem(Actividad.FACTURADA);
         jcbActividad.addItem(Actividad.COBRADA);
         jcbActividad.addItem(Actividad.INICIADA);
         jcbActividad.addItem(Actividad.CANCELADA);
-        jcbActividad.addItem(Actividad.FACTURADA);
     }
     
     private void acomodarTabla(){

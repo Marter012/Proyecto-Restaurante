@@ -284,69 +284,86 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
             
                 p.setIdProducto(Integer.parseInt(jlIdProducto.getText()));
                 
-            while (jtNombre.getText().isEmpty()){
+            if (jtNombre.getText().isEmpty()){
                 JOptionPane.showMessageDialog(null, "Ingrese nombre para el producto");
                 jtNombre.requestFocus();
-            }
-            p.setNombre(jtNombre.getText());
-            p.setCantidad(Integer.parseInt(jtCantidad.getText()));
-            p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
-            p.setPrecio(Double.parseDouble(jtPrecio.getText()));
-            
-            if (jrbActivo.isSelected()){
-                    p.setEstado(true);
-                }else{
-                    p.setEstado(false);
-            }
-            
-            Producto productoActual = productoData.buscarProducto(p.getIdProducto());
-            if (productoActual.isEstado()!=p.isEstado()){
-                cambiarTabla=true;
-            }
-            productoData.modificarProducto(p);
-            if (cambiarTabla){
-                if (jcbProductos.isEnabled()){
-                    List<Producto> listaInactivo = productoData.listarProductosInactivos();
-                        for (Producto prod:listaInactivo){
-                            if (prod.getIdProducto()==p.getIdProducto()){
-                                posicion = listaInactivo.indexOf(prod);
-                            }
-                        }
-                        jcbProductos.removeAllItems();
-                        jcbProductos.setEnabled(false);
-                        jcbInactivo.setEnabled(true);
-                        CargarComboInactivos();
-                        jcbInactivo.setSelectedIndex(posicion);
-                }else{
-                    if (jcbInactivo.isEnabled()){
-                        List<Producto> listaProductos = productoData.listarProductos();
-                        for (Producto prod:listaProductos){
-                            if (prod.getIdProducto()==p.getIdProducto()){
-                                posicion= listaProductos.indexOf(prod);
-                            }
-                        }
-                        jcbInactivo.removeAllItems();
-                        jcbInactivo.setEnabled(false);
-                        jcbProductos.setEnabled(true);
-                        CargarComboProductos();
-                        jcbProductos.setSelectedIndex(posicion);
-                    }
-                }
             }else{
-                if (jcbProductos.isEnabled()){
-                    jcbProductos.removeAllItems();
-                    CargarComboProductos();
-                    posicion=BuscarPosicionProductos(p);
-                    jcbProductos.setSelectedIndex(posicion);
+                p.setNombre(jtNombre.getText());
+                if (jtCantidad.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Ingrese cantidad");
+                    jtCantidad.requestFocus();
                 }else{
-                    jcbInactivo.removeAllItems();
-                    CargarComboInactivos();
-                    posicion = BuscarPosicionInactivos(p);
-                    jcbInactivo.setSelectedIndex(posicion);
-                }
-            }
+                    p.setCantidad(Integer.parseInt(jtCantidad.getText()));
+                    if (jcbCategoria.getSelectedItem()==null){
+                        JOptionPane.showMessageDialog(null, "Seleccione Categoria");
+                        jcbCategoria.setEnabled(true);
+                        CargarComboCategoria();
+                    }else{
+                        p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
+                        if (jtPrecio.getText().isEmpty()){
+                            JOptionPane.showMessageDialog(null, "Ingrese precio");
+                            jtPrecio.requestFocus();
+                        }else{
+                            p.setPrecio(Double.parseDouble(jtPrecio.getText()));
+
+                            if (jrbActivo.isSelected()){
+                                    p.setEstado(true);
+                                }else{
+                                    p.setEstado(false);
+                            }
+
+                            Producto productoActual = productoData.buscarProducto(p.getIdProducto());
+                            if (productoActual.isEstado()!=p.isEstado()){
+                                cambiarTabla=true;
+                            }
+                            productoData.modificarProducto(p);
+                            if (cambiarTabla){
+                                if (jcbProductos.isEnabled()){
+                                    List<Producto> listaInactivo = productoData.listarProductosInactivos();
+                                        for (Producto prod:listaInactivo){
+                                            if (prod.getIdProducto()==p.getIdProducto()){
+                                                posicion = listaInactivo.indexOf(prod);
+                                            }
+                                        }
+                                        jcbProductos.removeAllItems();
+                                        jcbProductos.setEnabled(false);
+                                        jcbInactivo.setEnabled(true);
+                                        CargarComboInactivos();
+                                        jcbInactivo.setSelectedIndex(posicion);
+                                }else{
+                                    if (jcbInactivo.isEnabled()){
+                                        List<Producto> listaProductos = productoData.listarProductos();
+                                        for (Producto prod:listaProductos){
+                                            if (prod.getIdProducto()==p.getIdProducto()){
+                                                posicion= listaProductos.indexOf(prod);
+                                            }
+                                        }
+                                        jcbInactivo.removeAllItems();
+                                        jcbInactivo.setEnabled(false);
+                                        jcbProductos.setEnabled(true);
+                                        CargarComboProductos();
+                                        jcbProductos.setSelectedIndex(posicion);
+                                    }
+                                }
+                            }else{
+                                if (jcbProductos.isEnabled()){
+                                    jcbProductos.removeAllItems();
+                                    CargarComboProductos();
+                                    posicion=BuscarPosicionProductos(p);
+                                    jcbProductos.setSelectedIndex(posicion);
+                                }else{
+                                    jcbInactivo.removeAllItems();
+                                    CargarComboInactivos();
+                                    posicion = BuscarPosicionInactivos(p);
+                                    jcbInactivo.setSelectedIndex(posicion);
+                                }
+                            }
+                        }
+                    }    
+                }    
+            }    
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,"No puede ingresar letras en el campo de 'Cantidad' ni 'Presio'");
+            JOptionPane.showMessageDialog(this,"No puede ingresar letras en el campo de 'Cantidad' ni 'Precio'");
         }catch(NullPointerException e){
             JOptionPane.showMessageDialog(this,"No puede haber campos vacios");
         }
@@ -393,23 +410,46 @@ public class CargaProductosView extends javax.swing.JInternalFrame {
 
     private void jbCrearProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearProductoActionPerformed
         try {
-            p = new Producto();
-            p.setNombre(jtNombre.getText());
-            p.setCantidad(Integer.parseInt(jtCantidad.getText()));
-            p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
-            p.setPrecio(Integer.parseInt(jtPrecio.getText()));
-            if (jrbActivo.isSelected()){
-                p.setEstado(true);
+                p = new Producto();
+            if (jtNombre.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Ingrese nombre para el producto");
+                jtNombre.requestFocus();
             }else{
-                p.setEstado(false);
-            }
-            productoData.guardarProducto(p);
-            int posicion=BuscarPosicionProductos(p);
-            jcbProductos.setEnabled(true);
-            CargarComboProductos();
-            jcbProductos.setSelectedIndex(posicion);
+                p.setNombre(jtNombre.getText());
+                if (jtCantidad.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Ingrese cantidad");
+                    jtCantidad.requestFocus();
+                }else{
+                    p.setCantidad(Integer.parseInt(jtCantidad.getText()));
+                    if (jcbCategoria.getSelectedItem()==null){
+                        JOptionPane.showMessageDialog(null, "Seleccione Categoria");
+                        jcbCategoria.setEnabled(true);
+                        CargarComboCategoria();
+                    }else{
+                        p.setCategoria((Categoria)jcbCategoria.getSelectedItem());
+                        if (jtPrecio.getText().isEmpty()){
+                            JOptionPane.showMessageDialog(null, "Ingrese precio");
+                            jtPrecio.requestFocus();
+                        }else{
+                            p.setPrecio(Integer.parseInt(jtPrecio.getText()));
+                            if (jrbActivo.isSelected()){
+                                p.setEstado(true);
+                            }else{
+                                p.setEstado(false);
+                            }
+                            productoData.guardarProducto(p);
+                            int posicion=BuscarPosicionProductos(p);
+                            jcbProductos.setEnabled(true);
+                            CargarComboProductos();
+                            jcbProductos.setSelectedIndex(posicion);
+                            jbCrearProducto.setEnabled(false);
+                            jbActualizarProducto.setEnabled(true);
+                        }    
+                    }    
+                }
+            }    
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,"No puede ingresar letras en el campo 'Cantidad' ni 'Presio'");
+            JOptionPane.showMessageDialog(this,"No puede ingresar letras en el campo 'Cantidad' ni 'Precio'");
         }catch(NullPointerException e){
             JOptionPane.showMessageDialog(this,"No puede haber campos vacios");
         }
